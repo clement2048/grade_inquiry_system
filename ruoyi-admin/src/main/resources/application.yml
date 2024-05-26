@@ -11,7 +11,7 @@ ruoyi:
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
-  captchaType: math
+  captchaType: char
 
 # 开发环境配置
 server:
@@ -95,7 +95,7 @@ token:
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
   # 令牌有效期（默认30分钟）
-  expireTime: 30
+  expireTime: 60
 
 # MyBatis配置
 mybatis:

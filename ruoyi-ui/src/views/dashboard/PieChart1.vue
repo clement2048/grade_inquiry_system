@@ -4,8 +4,10 @@
 
 <script>
 import * as echarts from 'echarts'
+
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import {data} from "@/api/system/config";
 
 export default {
   mixins: [resize],
@@ -43,9 +45,8 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-
       this.chart.setOption({
-        title:{
+        title: {
           text: '学分情况',
           left: 'center'
         },
@@ -60,7 +61,7 @@ export default {
         },
         series: [
           {
-            name:'学分',
+            name: '学分',
             type: 'pie',
             center: ['50%', '45%'],
             radius: ['20%', '60%'],
@@ -70,11 +71,11 @@ export default {
               borderWidth: 2
             },
             data: [
-              { value: 70, name: '专必' },
-              { value: 50, name: '专选' },
-              { value: 80, name: '公必' },
-              { value: 60, name: '公选' },
-              { value: 10, name: '其他' }
+              {value: 70, name: '专必'},
+              {value: 50, name: '专选'},
+              {value: 80, name: '公必'},
+              {value: 60, name: '公选'},
+              {value: 10, name: '其他'}
             ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
