@@ -1,6 +1,8 @@
 package com.ruoyi.tm.service;
 
 import java.util.List;
+
+import com.ruoyi.tm.domain.Score;
 import com.ruoyi.tm.domain.UserInfo;
 
 /**
@@ -58,5 +60,13 @@ public interface IUserInfoService
      * @return 结果
      */
     public int deleteUserInfoById(Long id);
+
+    /**
+     * 获取学生学分
+     *
+     * @param id 用户信息主键
+     * @return 结果
+     */
+    public List<Score>selectStuScoreById(Long id);
 
 }

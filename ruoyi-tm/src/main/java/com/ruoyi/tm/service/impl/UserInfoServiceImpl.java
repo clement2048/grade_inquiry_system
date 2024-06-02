@@ -2,6 +2,7 @@ package com.ruoyi.tm.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.tm.domain.Score;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,4 +94,10 @@ public class UserInfoServiceImpl implements IUserInfoService
     {
         return userInfoMapper.deleteUserInfoById(id);
     }
+
+    @Override
+    public List<Score>selectStuScoreById(Long id){
+        return userInfoMapper.selectStuScoreById(id);
+    }
+
 }
