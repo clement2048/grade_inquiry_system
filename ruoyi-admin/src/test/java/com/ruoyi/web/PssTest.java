@@ -1,7 +1,9 @@
 package com.ruoyi.web;
 
+import com.ruoyi.tm.domain.Score;
 import com.ruoyi.tm.domain.UserInfo;
 import com.ruoyi.tm.service.IUserInfoService;
+import com.ruoyi.web.controller.monitor.ServerController;
 import com.ruoyi.web.controller.tm.UserInfoController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,14 @@ public class PssTest {
     private UserInfoController  userInfoController;
     @Test
     public void testUserInfo(){
-//        UserInfo userInfo = new UserInfo();
-//        userInfo.setType((long)2);
-//        Long id = (long)1;
-//        System.out.println(userInfoService.selectUserInfoById(id));
+        UserInfo userInfo = new UserInfo();
+        userInfo.setType((long)2);
+        Long id = (long)1;
+        System.out.println(userInfoService.selectStuScoreById(id));
 //        System.out.println(userInfoService.selectUserInfoList(userInfo));
-        System.out.println(userInfoController.data());
+//        System.out.println(userInfoController.data());
+//        Score score = new Score();
+//        score.setId((long)1);
+//        System.out.println(userInfoController.data(score.getId()));
     }
 }

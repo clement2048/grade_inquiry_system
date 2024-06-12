@@ -70,7 +70,6 @@ public class UserInfoController extends BaseController
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(userInfoService.selectUserInfoById(id));
-
     }
 
     /**
@@ -100,7 +99,6 @@ public class UserInfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('tm:user:remove')")
 //    @Log(title = "用户信息", businessType = BusinessType.DELETE)
-
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
@@ -109,7 +107,6 @@ public class UserInfoController extends BaseController
 
     @PreAuthorize("@ss.hasPermi('tm:score:query')")
     @GetMapping("/data/{id}")
-//    @GetMapping(value ="/{sid}")
     public AjaxResult data(@PathVariable("id")Long id) {
         return success(userInfoService.selectStuScoreById(id));
     }

@@ -1,6 +1,8 @@
 package com.ruoyi.tm.mapper;
 
 import java.util.List;
+
+import com.ruoyi.tm.domain.Score;
 import com.ruoyi.tm.domain.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -60,4 +62,13 @@ public interface UserInfoMapper
      * @return 结果
      */
     public int deleteUserInfoByIds(Long[] ids);
+
+
+    /**
+     * 通过id查找对应学生的成绩
+     *
+     * @param id 查询的学生的逐渐
+     * @return 结果
+     */
+    public List<Score> selectStuScoreById(Long id);
 }
