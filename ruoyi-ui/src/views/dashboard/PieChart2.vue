@@ -23,7 +23,7 @@ export default {
     height: {
       type: String,
       default: '300px'
-    }
+    },
   },
   data() {
     return {
@@ -48,8 +48,11 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      data().then(response => {
+      const id = 1;
+      data(id) .then(response => {
+        console.log(response);
         this.listdata = response.data;
+        console.log(response.data);
         for(let i=0;i<this.listdata.length;i++){
           let info = {
             name: this.listdata[i].name,

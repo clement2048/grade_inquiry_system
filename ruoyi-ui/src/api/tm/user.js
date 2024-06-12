@@ -38,14 +38,15 @@ export function updateUser(data) {
 // 删除用户信息
 export function delUser(id) {
   return request({
-    url: '/tm/user/' + id,
-    method: 'delete'
+    url: '/tm/user/' +id,
+    method: 'delete',
+    data: id
   })
 }
 
-export function data() {
+export function data(id) {
   return request({
-    url: '/tm/user/data',
-    method: 'get',
+    url: '/tm/user/data' +id,
+    method: 'get'
   })
 }

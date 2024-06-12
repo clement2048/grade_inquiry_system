@@ -70,6 +70,7 @@ public class UserInfoController extends BaseController
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(userInfoService.selectUserInfoById(id));
+
     }
 
     /**
@@ -99,30 +100,17 @@ public class UserInfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('tm:user:remove')")
 //    @Log(title = "用户信息", businessType = BusinessType.DELETE)
+
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(userInfoService.deleteUserInfoByIds(ids));
     }
-    @GetMapping("/data")
-    public AjaxResult data() {
-        List<Map<String, Object>> data = new ArrayList<>();
 
-        Map<String, Object> item1 = new HashMap<>();
-        item1.put("value", 3);
-        item1.put("name", "一级预警");
-        data.add(item1);
-
-        Map<String, Object> item2 = new HashMap<>();
-        item2.put("value", 2);
-        item2.put("name", "二级预警");
-        data.add(item2);
-
-        Map<String, Object> item3 = new HashMap<>();
-        item3.put("value", 1);
-        item3.put("name", "三级预警");
-        data.add(item3);
-
-        return success(data);
+    @PreAuthorize("@ss.hasPermi('tm:score:query')")
+    @GetMapping("/data/{id}")
+//    @GetMapping(value ="/{sid}")
+    public AjaxResult data(@PathVariable("id")Long id) {
+        return success(userInfoService.selectStuScoreById(id));
     }
 }
