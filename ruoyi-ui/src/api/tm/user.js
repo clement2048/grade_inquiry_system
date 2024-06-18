@@ -46,7 +46,7 @@ export function delUser(id) {
 
 export function data(id) {
   return request({
-    url: '/tm/user/data' +id,
+    url: '/tm/user/data/' +id,
     method: 'get'
   })
 }
