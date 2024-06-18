@@ -39,16 +39,16 @@ export default {
     }
   },
   mounted(){
-    this.handleSetLineChartData()
+    // this.handleSetLineChartData()
   },
   methods: {
-    async handleSetLineChartData() {
-      await data().then(response=>{
-        this.chartData = response.data.data
-      })
-      // 重新渲染，否则数据不会生效
-      this.$refs.child.initChart();
-    }
+    // async handleSetLineChartData() {
+    //   await data().then(response=>{
+    //     this.chartData = response.data.data
+    //   })
+    //   // 重新渲染，否则数据不会生效
+    //   this.$refs.child.initChart();
+    // }
   }
 }
 </script>

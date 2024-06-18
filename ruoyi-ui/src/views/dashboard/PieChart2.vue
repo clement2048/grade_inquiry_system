@@ -55,10 +55,10 @@ export default {
         console.log(response.data);
         for(let i=0;i<this.listdata.length;i++){
           let info = {
-            name: this.listdata[i].name,
-            value: this.listdata[i].value
+            name: this.listdata[i].ctype,
+            value: this.listdata[i].score
           };
-          this.name.push(this.listdata[i].name)
+          this.name.push(this.listdata[i].ctype)
           this.dataset.push(info);
       }
         console.log(this.dataset)

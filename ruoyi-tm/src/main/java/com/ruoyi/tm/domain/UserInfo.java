@@ -16,9 +16,11 @@ public class UserInfo extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @Excel(name = "用户ID")
     private Long id;
 
     /** 密码 */
+    @Excel(name = "密码")
     private String password;
 
     /** 用户类型 */
