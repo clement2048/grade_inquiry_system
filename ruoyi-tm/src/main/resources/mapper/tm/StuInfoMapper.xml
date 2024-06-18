@@ -39,46 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <sql id="insertStuInfoVo">
-        -- 插入第一条记录
-        INSERT INTO sys_user(user_name, nick_name, password)
-        VALUES (#{user_name},#{nick_name},#{password});
-
-        -- 获取自增ID
-        SET @last_id = LAST_INSERT_ID();
-
-        -- 使用获取的自增ID插入第二条记录
-        INSERT INTO stu_info(id, name, sex, type, in_school, class_id, major_id)
-        VALUES (@last_id, #{name}, #{sex}, #{type}, #{inSchool}, #{classId}, #{majorId});
-
-    </sql>
-
     <insert id="insertStuInfo" parameterType="StuInfo">
-<!--        INSERT INTO sys_user(user_name, nick_name, password) VALUES(123,"test",123456);-->
-<!--        insert into stu_info-->
-<!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
-<!--            <if test="id != null">id,</if>-->
-<!--            <if test="name != null and name != ''">name,</if>-->
-<!--            <if test="sex != null">sex,</if>-->
-<!--            <if test="type != null and type != ''">type,</if>-->
-<!--            <if test="admMethod != null and admMethod != ''">adm_method,</if>-->
-<!--            <if test="inSchool != null">in_school,</if>-->
-<!--            <if test="stuStatus != null">stu_status,</if>-->
-<!--            <if test="classId != null">class_id,</if>-->
-<!--            <if test="majorId != null">major_id,</if>-->
-<!--         </trim>-->
-<!--        <trim prefix="values (" suffix=")" suffixOverrides=",">-->
-<!--            <if test="id != null">#{id},</if>-->
-<!--            <if test="name != null and name != ''">#{name},</if>-->
-<!--            <if test="sex != null">#{sex},</if>-->
-<!--            <if test="type != null and type != ''">#{type},</if>-->
-<!--            <if test="admMethod != null and admMethod != ''">#{admMethod},</if>-->
-<!--            <if test="inSchool != null">#{inSchool},</if>-->
-<!--            <if test="stuStatus != null">#{stuStatus},</if>-->
-<!--            <if test="classId != null">#{classId},</if>-->
-<!--            <if test="majorId != null">#{majorId},</if>-->
-<!--         </trim>-->
-        <include refid="insertStuInfoVo"/>
+        INSERT INTO stu_info(id, name, sex, type, in_school, class_id, major_id)
+        VALUES (#{id}, #{name}, #{sex}, #{type}, #{inSchool}, #{classId}, #{majorId});
     </insert>
 
     <update id="updateStuInfo" parameterType="StuInfo">

@@ -5,6 +5,7 @@ import java.util.List;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanValidators;
+import com.ruoyi.tm.domain.UserInfo;
 import com.ruoyi.tm.mapper.UserInfoMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class StuInfoServiceImpl implements IStuInfoService
 {
     @Autowired
     private StuInfoMapper stuInfoMapper;
+
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     /**
      * 查询Student
@@ -61,6 +65,13 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public int insertStuInfo(StuInfo stuInfo)
     {
+        UserInfo userInfo = new UserInfo();
+//        userInfo.setUsername(stuInfo.getName());
+        userInfo.setPassword("123456");
+        userInfo.setType((long)1);
+        userInfoMapper.insertUserInfo(userInfo);
+
+        stuInfo.setId(userInfo.getId());
         return stuInfoMapper.insertStuInfo(stuInfo);
     }
 

@@ -2,6 +2,8 @@ package com.ruoyi.tm.service;
 
 import java.util.List;
 import com.ruoyi.tm.domain.StuInfo;
+import org.springframework.stereotype.Service;
+
 
 /**
  * StudentService接口
@@ -9,6 +11,9 @@ import com.ruoyi.tm.domain.StuInfo;
  * @author clement
  * @date 2024-06-18
  */
+
+
+
 public interface IStuInfoService 
 {
     /**

@@ -27,6 +27,17 @@ public class UserInfo extends BaseEntity
     @Excel(name = "用户类型")
     private Long type;
 
+//    @Excel(name = "用户名")
+//    private String username;
+//
+//    public void setUsername(String username){
+//        this.username = username;
+//    }
+//
+//    public String getUsername(){
+//        return username;
+//    }
+
     public void setId(Long id) 
     {
         this.id = id;

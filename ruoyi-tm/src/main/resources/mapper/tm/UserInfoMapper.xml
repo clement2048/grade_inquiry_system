@@ -41,7 +41,7 @@
         <include refid="selectScoreInfoVo"/>
     </select>
 
-    <insert id="insertUserInfo" parameterType="UserInfo">
+    <insert id="insertUserInfo" parameterType="UserInfo" useGeneratedKeys="true" keyProperty="id">
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
