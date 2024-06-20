@@ -109,5 +109,11 @@ public class StuInfoController extends BaseController
         String message = stuInfoService.importUser(userList, updateSupport, operName);
         return AjaxResult.success(message);
     }
-
+    @PostMapping("/importTemplate")
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<StuInfo> util = new ExcelUtil<>(StuInfo.class);
+        // sheetName可能有问题
+        return util.importTemplateExcel("用户数据");
+    }
 }
