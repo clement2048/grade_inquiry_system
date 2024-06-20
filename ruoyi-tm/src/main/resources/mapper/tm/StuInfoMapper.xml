@@ -40,8 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insertStuInfo" parameterType="StuInfo">
-        INSERT INTO stu_info(id, name, sex, type, in_school, class_id, major_id)
-        VALUES (#{id}, #{name}, #{sex}, #{type}, #{inSchool}, #{classId}, #{majorId});
+        INSERT INTO stu_info(id, name, sex, type, adm_method,in_school, stu_status, class_id, major_id)
+        VALUES (#{id}, #{name}, #{sex}, #{type},#{admMethod}, #{inSchool}, #{stuStatus}, #{classId}, #{majorId});
     </insert>
 
     <update id="updateStuInfo" parameterType="StuInfo">

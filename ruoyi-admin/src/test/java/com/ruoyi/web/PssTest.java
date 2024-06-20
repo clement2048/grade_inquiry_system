@@ -31,8 +31,8 @@ public class PssTest {
         stuInfo.setSex((long)1);
         stuInfo.setType("普通本科");
         stuInfo.setInSchool((long)1);
-//        stuInfo.setStuStatus((long)1);
-//        stuInfo.setAdmMethod("1");
+        stuInfo.setStuStatus((long)1);
+        stuInfo.setAdmMethod("1");
         stuInfo.setMajorId((long)1);
         stuInfo.setClassId((long)1);
 
