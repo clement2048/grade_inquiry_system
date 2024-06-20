@@ -41,6 +41,7 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public StuInfo selectStuInfoById(Long id)
     {
+
         return stuInfoMapper.selectStuInfoById(id);
     }
 
