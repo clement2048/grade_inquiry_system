@@ -11,7 +11,7 @@
  Target Server Version : 80037 (8.0.37)
  File Encoding         : 65001
 
- Date: 21/06/2024 12:44:40
+ Date: 21/06/2024 13:09:04
 */
 
 SET NAMES utf8mb4;
@@ -68,17 +68,17 @@ INSERT INTO `class_info` VALUES (1, 21, 100);
 -- ----------------------------
 DROP TABLE IF EXISTS `course_info`;
 CREATE TABLE `course_info`  (
-  `id` int NOT NULL,
-  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `peo_limit` int NOT NULL,
-  `score` int NOT NULL,
-  `tot_time` int NOT NULL,
-  `final_method` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `start_year` int NOT NULL,
-  `start_sem` int NOT NULL,
-  `fac_id` int NOT NULL,
-  `teach_id` int NOT NULL,
+  `id` int NOT NULL COMMENT '课程id',
+  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '课程名字',
+  `type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '课程类型（专必、专选、公必、公选）',
+  `peo_limit` int NOT NULL COMMENT '人数限制',
+  `credit` int NOT NULL COMMENT '学分',
+  `tot_time` int NOT NULL COMMENT '总学时',
+  `final_method` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '期末考试方法(考试还是考察)',
+  `start_year` int NOT NULL COMMENT '开办学年',
+  `start_sem` int NOT NULL COMMENT '开办学期',
+  `fac_id` int NOT NULL COMMENT '开办学院id',
+  `teach_id` int NOT NULL COMMENT '授课老师id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_fac`(`fac_id` ASC) USING BTREE,
   INDEX `fk_teach`(`teach_id` ASC) USING BTREE,
@@ -490,6 +490,7 @@ INSERT INTO `stu_info` VALUES (116, 'test', '1', NULL, 1, NULL, 1, 1);
 INSERT INTO `stu_info` VALUES (119, '李四', '普通本科', '1', 1, 1, 1, 1);
 INSERT INTO `stu_info` VALUES (121, '李四', '普通本科', '1', 1, 1, 1, 1);
 INSERT INTO `stu_info` VALUES (122, '李四', '普通本科', '1', 1, 1, 1, 1);
+INSERT INTO `stu_info` VALUES (123, '李四', '普通本科', '1', 1, 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -707,7 +708,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -725,6 +726,7 @@ INSERT INTO `sys_logininfor` VALUES (109, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (110, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '验证码错误', '2024-06-20 22:17:53');
 INSERT INTO `sys_logininfor` VALUES (111, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-20 22:17:58');
 INSERT INTO `sys_logininfor` VALUES (112, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-21 08:48:53');
+INSERT INTO `sys_logininfor` VALUES (113, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-21 12:46:00');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1148,12 +1150,12 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 124 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-06-21 08:48:54', 'admin', '2024-05-31 23:32:47', '', '2024-06-21 08:48:53', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-06-21 12:46:00', 'admin', '2024-05-31 23:32:47', '', '2024-06-21 12:46:00', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-05-31 23:32:47', 'admin', '2024-05-31 23:32:47', '', NULL, '测试员');
 INSERT INTO `sys_user` VALUES (100, 104, '苏某人', '苏某', '00', '15@qq.com', '15016248165', '0', '', '$2a$10$/ww8Kt.rGe7bdhJXG7xIIu0H51t/dWQdsIwe/8WLGKQyWIw9U33ye', '0', '0', '', NULL, 'admin', '2024-06-01 19:39:51', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (101, 104, '吴某人', '吴某', '00', '156@qq.com', '15094826584', '0', '', '$2a$10$uG1MKS8uSlFNHmwwtQ5VCuNTldGe0vsUmU9YMNBBiDUwx2zv7y4rC', '0', '0', '', NULL, 'admin', '2024-06-01 19:40:49', '', NULL, NULL);
@@ -1163,6 +1165,7 @@ INSERT INTO `sys_user` VALUES (119, 1, '李四', '李四', '00', NULL, NULL, '0'
 INSERT INTO `sys_user` VALUES (120, NULL, '123', 'test', '00', '', '', '0', '', '123456', '0', '0', '', NULL, '', NULL, '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (121, 1, '121', '李四', '00', NULL, NULL, '0', NULL, '123456', '0', '0', '', NULL, NULL, '2024-06-21 10:23:33', '', '2024-06-21 10:23:33', '学生');
 INSERT INTO `sys_user` VALUES (122, 1, '122', '李四', '00', NULL, NULL, '0', NULL, NULL, '0', '0', '', NULL, NULL, '2024-06-21 10:28:55', '', '2024-06-21 10:28:55', '学生');
+INSERT INTO `sys_user` VALUES (123, 1, '123', '李四', '00', NULL, NULL, '0', NULL, NULL, '0', '0', '', NULL, NULL, '2024-06-21 12:54:16', '', '2024-06-21 12:54:16', '学生');
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -1204,6 +1207,7 @@ INSERT INTO `sys_user_role` VALUES (118, 100);
 INSERT INTO `sys_user_role` VALUES (119, 100);
 INSERT INTO `sys_user_role` VALUES (121, 100);
 INSERT INTO `sys_user_role` VALUES (122, 100);
+INSERT INTO `sys_user_role` VALUES (123, 100);
 
 -- ----------------------------
 -- Table structure for tea_info
