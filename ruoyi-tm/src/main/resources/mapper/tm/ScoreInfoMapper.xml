@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tm.mapper.ScoreInfoMapper">
+    
+    <resultMap type="ScoreInfo" id="ScoreInfoResult">
+        <result property="id"    column="id"    />
+        <result property="usualPor"    column="usual_por"    />
+        <result property="usualSco"    column="usual_sco"    />
+        <result property="midPor"    column="mid_por"    />
+        <result property="midSco"    column="mid_sco"    />
+        <result property="finalPor"    column="final_por"    />
+        <result property="finalSco"    column="final_sco"    />
+        <result property="others"    column="others"    />
+        <result property="chooseId"    column="choose_id"    />
+    </resultMap>
+
+    <sql id="selectScoreInfoVo">
+        select id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, choose_id from score_info
+    </sql>
+
+    <select id="selectScoreInfoList" parameterType="ScoreInfo" resultMap="ScoreInfoResult">
+        <include refid="selectScoreInfoVo"/>
+        <where>  
+            <if test="usualPor != null "> and usual_por = #{usualPor}</if>
+            <if test="usualSco != null "> and usual_sco = #{usualSco}</if>
+            <if test="midPor != null "> and mid_por = #{midPor}</if>
+            <if test="midSco != null "> and mid_sco = #{midSco}</if>
+            <if test="finalPor != null "> and final_por = #{finalPor}</if>
+            <if test="finalSco != null "> and final_sco = #{finalSco}</if>
+            <if test="others != null  and others != ''"> and others = #{others}</if>
+            <if test="chooseId != null "> and choose_id = #{chooseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectScoreInfoById" parameterType="Long" resultMap="ScoreInfoResult">
+        <include refid="selectScoreInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertScoreInfo" parameterType="ScoreInfo">
+        insert into score_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="usualPor != null">usual_por,</if>
+            <if test="usualSco != null">usual_sco,</if>
+            <if test="midPor != null">mid_por,</if>
+            <if test="midSco != null">mid_sco,</if>
+            <if test="finalPor != null">final_por,</if>
+            <if test="finalSco != null">final_sco,</if>
+            <if test="others != null and others != ''">others,</if>
+            <if test="chooseId != null">choose_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="usualPor != null">#{usualPor},</if>
+            <if test="usualSco != null">#{usualSco},</if>
+            <if test="midPor != null">#{midPor},</if>
+            <if test="midSco != null">#{midSco},</if>
+            <if test="finalPor != null">#{finalPor},</if>
+            <if test="finalSco != null">#{finalSco},</if>
+            <if test="others != null and others != ''">#{others},</if>
+            <if test="chooseId != null">#{chooseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateScoreInfo" parameterType="ScoreInfo">
+        update score_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="usualPor != null">usual_por = #{usualPor},</if>
+            <if test="usualSco != null">usual_sco = #{usualSco},</if>
+            <if test="midPor != null">mid_por = #{midPor},</if>
+            <if test="midSco != null">mid_sco = #{midSco},</if>
+            <if test="finalPor != null">final_por = #{finalPor},</if>
+            <if test="finalSco != null">final_sco = #{finalSco},</if>
+            <if test="others != null and others != ''">others = #{others},</if>
+            <if test="chooseId != null">choose_id = #{chooseId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteScoreInfoById" parameterType="Long">
+        delete from score_info where id = #{id}
+    </delete>
+
+    <delete id="deleteScoreInfoByIds" parameterType="String">
+        delete from score_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -39,7 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectStuInfoById" parameterType="Long" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
-        where stu_info.id = #{id} and stu_info.id = sys_user.user_id and sys_user.status = 0
+        where stu_info.id = #{id} and
+        stu_info.id = sys_user.user_id and
+        sys_user.status = 0
     </select>
 
     <insert id="insertStuInfo" parameterType="StuInfo">

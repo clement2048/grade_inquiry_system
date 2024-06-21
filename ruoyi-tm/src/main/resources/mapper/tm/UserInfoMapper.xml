@@ -20,7 +20,7 @@
     </sql>
 
     <sql id="selectScoreInfoVo">
-        SELECT SUM(C.score) AS total_score , C.type
+        SELECT SUM(C.credit) AS total_score , C.type
         FROM stu_info AS S, choose_course AS CH ,course_info as C
         WHERE S.id = #{id} and S.id = CH.stu_id AND CH.course_id = C.id AND CH.pass = 1
         GROUP BY C.type
