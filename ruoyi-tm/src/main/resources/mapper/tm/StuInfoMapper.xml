@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--    只显示未被删除的学生信息-->
     <sql id="selectStuInfoVo">
         select id, name, sex, type, adm_method, in_school, stu_status, class_id, major_id from stu_info, sys_user
-        where stu_info.id = sys_user.user_id and sys_user.status = 0
+--         where stu_info.id = sys_user.user_id and sys_user.status = 0
     </sql>
 
     <select id="selectStuInfoList" parameterType="StuInfo" resultMap="StuInfoResult">
@@ -32,12 +32,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="stuStatus != null "> and stu_status = #{stuStatus}</if>
             <if test="classId != null "> and class_id = #{classId}</if>
             <if test="majorId != null "> and major_id = #{majorId}</if>
+            stu_info.id = sys_user.user_id and
+            sys_user.status = 0
         </where>
     </select>
     
     <select id="selectStuInfoById" parameterType="Long" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
-        where id = #{id}
+        where stu_info.id = #{id} and stu_info.id = sys_user.user_id and sys_user.status = 0
     </select>
 
     <insert id="insertStuInfo" parameterType="StuInfo">
