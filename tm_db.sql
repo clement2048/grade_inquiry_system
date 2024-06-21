@@ -1,7 +1,7 @@
 /*
  Navicat Premium Dump SQL
 
- Source Server         : connect1
+ Source Server         : tm_connect
  Source Server Type    : MySQL
  Source Server Version : 80037 (8.0.37)
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80037 (8.0.37)
  File Encoding         : 65001
 
- Date: 02/06/2024 11:04:18
+ Date: 21/06/2024 12:44:40
 */
 
 SET NAMES utf8mb4;
@@ -141,11 +141,12 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table
 -- ----------------------------
+INSERT INTO `gen_table` VALUES (1, 'stu_info', '学生信息表', NULL, NULL, 'StuInfo', 'crud', 'element-ui', 'com.ruoyi.system', 'system', 'info', 'Student', 'clement', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24', NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -175,11 +176,20 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
 -- ----------------------------
+INSERT INTO `gen_table_column` VALUES (1, 1, 'id', '学生id', 'int', 'Long', 'id', '1', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (2, 1, 'name', '学生姓名', 'varchar(45)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (3, 1, 'sex', '学生性别', 'int', 'Long', 'sex', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'select', '', 3, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (4, 1, 'type', '学生类型', 'varchar(45)', 'String', 'type', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'select', '', 4, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (5, 1, 'adm_method', '入学方法', 'varchar(45)', 'String', 'admMethod', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (6, 1, 'in_school', '是否在校', 'int', 'Long', 'inSchool', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (7, 1, 'stu_status', '学生状态', 'int', 'Long', 'stuStatus', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 7, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (8, 1, 'class_id', '班级id', 'int', 'Long', 'classId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
+INSERT INTO `gen_table_column` VALUES (9, 1, 'major_id', '专业id', 'int', 'Long', 'majorId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2024-06-18 11:04:33', '', '2024-06-18 13:44:24');
 
 -- ----------------------------
 -- Table structure for major_info
@@ -454,15 +464,14 @@ INSERT INTO `score_info` VALUES (4, 20, 100, 20, 100, 60, 76, '0', 4);
 -- ----------------------------
 DROP TABLE IF EXISTS `stu_info`;
 CREATE TABLE `stu_info`  (
-  `id` int NOT NULL,
-  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `sex` int NOT NULL,
-  `type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `adm_method` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `in_school` int NOT NULL,
-  `stu_status` int NOT NULL,
-  `class_id` int NOT NULL,
-  `major_id` int NOT NULL,
+  `id` int NOT NULL COMMENT '学生id',
+  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学生姓名',
+  `type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学生类型',
+  `adm_method` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '入学方式',
+  `in_school` int NULL DEFAULT NULL COMMENT '是否在校（0在校，1不在校）',
+  `stu_status` int NULL DEFAULT NULL COMMENT '学生状态（0正常，1异常3）',
+  `class_id` int NOT NULL COMMENT '班级id',
+  `major_id` int NOT NULL COMMENT '专业id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_classid`(`class_id` ASC) USING BTREE,
   INDEX `fk_majorid`(`major_id` ASC) USING BTREE,
@@ -473,7 +482,14 @@ CREATE TABLE `stu_info`  (
 -- ----------------------------
 -- Records of stu_info
 -- ----------------------------
-INSERT INTO `stu_info` VALUES (1, 'admin', 0, '普通考生', '一般统考', 1, 1, 1, 1);
+INSERT INTO `stu_info` VALUES (1, 'admin', '普通考生', '一般统考', 0, 1, 1, 1);
+INSERT INTO `stu_info` VALUES (2, '李四', '普通本科', NULL, 1, NULL, 1, 1);
+INSERT INTO `stu_info` VALUES (3, '李四', '普通本科', NULL, 1, NULL, 1, 1);
+INSERT INTO `stu_info` VALUES (4, '李四', '普通本科', '1', 1, 1, 1, 1);
+INSERT INTO `stu_info` VALUES (116, 'test', '1', NULL, 1, NULL, 1, 1);
+INSERT INTO `stu_info` VALUES (119, '李四', '普通本科', '1', 1, 1, 1, 1);
+INSERT INTO `stu_info` VALUES (121, '李四', '普通本科', '1', 1, 1, 1, 1);
+INSERT INTO `stu_info` VALUES (122, '李四', '普通本科', '1', 1, 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -528,7 +544,7 @@ CREATE TABLE `sys_dept`  (
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-05-31 23:32:47', '', NULL);
+INSERT INTO `sys_dept` VALUES (100, 0, '0', '中山大学', 0, '钟明廷', '15888888888', 'test@qq.com', '0', '0', 'admin', '2024-05-31 23:32:47', 'admin', '2024-06-21 09:31:50');
 INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-05-31 23:32:47', '', NULL);
 INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-05-31 23:32:47', '', NULL);
 INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-05-31 23:32:47', '', NULL);
@@ -691,7 +707,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -702,6 +718,13 @@ INSERT INTO `sys_logininfor` VALUES (102, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (103, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-01 20:47:42');
 INSERT INTO `sys_logininfor` VALUES (104, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-06-01 20:49:57');
 INSERT INTO `sys_logininfor` VALUES (105, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-01 20:50:02');
+INSERT INTO `sys_logininfor` VALUES (106, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-18 11:02:00');
+INSERT INTO `sys_logininfor` VALUES (107, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-18 12:24:40');
+INSERT INTO `sys_logininfor` VALUES (108, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-18 13:33:34');
+INSERT INTO `sys_logininfor` VALUES (109, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-18 16:36:27');
+INSERT INTO `sys_logininfor` VALUES (110, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '验证码错误', '2024-06-20 22:17:53');
+INSERT INTO `sys_logininfor` VALUES (111, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-20 22:17:58');
+INSERT INTO `sys_logininfor` VALUES (112, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-06-21 08:48:53');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -728,7 +751,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2009 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -736,7 +759,7 @@ CREATE TABLE `sys_menu`  (
 INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 1, 'system', NULL, '', 1, 0, 'M', '0', '0', '', 'system', 'admin', '2024-05-31 23:32:47', '', NULL, '系统管理目录');
 INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 2, 'monitor', NULL, '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', '2024-05-31 23:32:47', '', NULL, '系统监控目录');
 INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 3, 'tool', NULL, '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', '2024-05-31 23:32:47', '', NULL, '系统工具目录');
-INSERT INTO `sys_menu` VALUES (4, '若依官网', 0, 4, 'http://ruoyi.vip', NULL, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin', '2024-05-31 23:32:47', '', NULL, '若依官网地址');
+INSERT INTO `sys_menu` VALUES (4, '若依官网', 0, 4, 'http://ruoyi.vip', NULL, '', 0, 0, 'M', '1', '1', '', 'guide', 'admin', '2024-05-31 23:32:47', 'admin', '2024-06-14 15:49:59', '若依官网地址');
 INSERT INTO `sys_menu` VALUES (100, '用户管理', 1, 1, 'user', 'system/user/index', '', 1, 0, 'C', '0', '0', 'system:user:list', 'user', 'admin', '2024-05-31 23:32:47', '', NULL, '用户管理菜单');
 INSERT INTO `sys_menu` VALUES (101, '角色管理', 1, 2, 'role', 'system/role/index', '', 1, 0, 'C', '0', '0', 'system:role:list', 'peoples', 'admin', '2024-05-31 23:32:47', '', NULL, '角色管理菜单');
 INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 3, 'menu', 'system/menu/index', '', 1, 0, 'C', '0', '0', 'system:menu:list', 'tree-table', 'admin', '2024-05-31 23:32:47', '', NULL, '菜单管理菜单');
@@ -818,6 +841,15 @@ INSERT INTO `sys_menu` VALUES (1057, '生成删除', 116, 3, '#', '', '', 1, 0, 
 INSERT INTO `sys_menu` VALUES (1058, '导入代码', 116, 4, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', '2024-05-31 23:32:47', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1059, '预览代码', 116, 5, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2024-05-31 23:32:47', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1060, '生成代码', 116, 6, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2024-05-31 23:32:47', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2000, '成绩分析', 0, 0, 'tm', NULL, NULL, 1, 0, 'M', '0', '0', '', 'chart', 'admin', '2024-06-12 19:09:17', 'admin', '2024-06-12 19:11:59', '');
+INSERT INTO `sys_menu` VALUES (2001, '成绩', 2000, 0, 'score', 'tm/score/index', NULL, 1, 0, 'C', '0', '0', 'tm:score:query', '#', 'admin', '2024-06-12 19:10:25', 'admin', '2024-06-12 19:13:42', '');
+INSERT INTO `sys_menu` VALUES (2002, '学分图', 2000, 1, 'analysis', 'tm/analysis/index', NULL, 1, 0, 'C', '0', '0', 'tm:score:query', '#', 'admin', '2024-06-12 19:19:26', 'admin', '2024-06-12 19:21:58', '');
+INSERT INTO `sys_menu` VALUES (2003, 'Student', 2000, 1, 'info', 'system/info/index', NULL, 1, 0, 'C', '0', '0', 'system:info:list', '#', 'admin', '2024-06-18 13:48:44', '', NULL, 'Student菜单');
+INSERT INTO `sys_menu` VALUES (2004, 'Student查询', 2003, 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'system:info:query', '#', 'admin', '2024-06-18 13:48:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2005, 'Student新增', 2003, 2, '#', '', NULL, 1, 0, 'F', '0', '0', 'system:info:add', '#', 'admin', '2024-06-18 13:48:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2006, 'Student修改', 2003, 3, '#', '', NULL, 1, 0, 'F', '0', '0', 'system:info:edit', '#', 'admin', '2024-06-18 13:48:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2007, 'Student删除', 2003, 4, '#', '', NULL, 1, 0, 'F', '0', '0', 'system:info:remove', '#', 'admin', '2024-06-18 13:48:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2008, 'Student导出', 2003, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'system:info:export', '#', 'admin', '2024-06-18 13:48:44', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -869,13 +901,34 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
 INSERT INTO `sys_oper_log` VALUES (100, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.add()', 'POST', 1, 'admin', '研发部门', '/system/user', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptId\":104,\"email\":\"15@qq.com\",\"nickName\":\"苏某\",\"params\":{},\"phonenumber\":\"15016248165\",\"postIds\":[4],\"roleIds\":[2],\"sex\":\"0\",\"status\":\"0\",\"userId\":100,\"userName\":\"苏某人\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-01 19:39:51', 86);
 INSERT INTO `sys_oper_log` VALUES (101, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.add()', 'POST', 1, 'admin', '研发部门', '/system/user', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptId\":104,\"email\":\"156@qq.com\",\"nickName\":\"吴某\",\"params\":{},\"phonenumber\":\"15094826584\",\"postIds\":[4],\"roleIds\":[2],\"sex\":\"0\",\"status\":\"0\",\"userId\":101,\"userName\":\"吴某人\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-01 19:40:49', 74);
+INSERT INTO `sys_oper_log` VALUES (102, '代码生成', 6, 'com.ruoyi.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"stu_info\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-18 11:04:33', 76);
+INSERT INTO `sys_oper_log` VALUES (103, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"info\",\"className\":\"StuInfo\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"学生id\",\"columnId\":1,\"columnName\":\"id\",\"columnType\":\"int\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":1,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Name\",\"columnComment\":\"学生姓名\",\"columnId\":2,\"columnName\":\"name\",\"columnType\":\"varchar(45)\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"name\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"LIKE\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":1,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Sex\",\"columnComment\":\"学生性别\",\"columnId\":3,\"columnName\":\"sex\",\"columnType\":\"int\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"select\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"sex\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":1,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Type\",\"columnComment\":\"学生类型\",\"columnId\":4,\"columnName\":\"type\",\"columnType\":\"varchar(45)\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"select\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"type\",\"javaType\":\"String\",\"list\":true,\"params\":{},', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-18 11:06:10', 74);
+INSERT INTO `sys_oper_log` VALUES (104, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"stu_info\"}', NULL, 0, NULL, '2024-06-18 11:06:15', 353);
+INSERT INTO `sys_oper_log` VALUES (105, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"info\",\"className\":\"StuInfo\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"学生id\",\"columnId\":1,\"columnName\":\"id\",\"columnType\":\"int\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":1,\"updateBy\":\"\",\"updateTime\":\"2024-06-18 11:06:10\",\"usableColumn\":false},{\"capJavaField\":\"Name\",\"columnComment\":\"学生姓名\",\"columnId\":2,\"columnName\":\"name\",\"columnType\":\"varchar(45)\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"name\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"LIKE\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":1,\"updateBy\":\"\",\"updateTime\":\"2024-06-18 11:06:10\",\"usableColumn\":false},{\"capJavaField\":\"Sex\",\"columnComment\":\"学生性别\",\"columnId\":3,\"columnName\":\"sex\",\"columnType\":\"int\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"select\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"sex\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":1,\"updateBy\":\"\",\"updateTime\":\"2024-06-18 11:06:10\",\"usableColumn\":false},{\"capJavaField\":\"Type\",\"columnComment\":\"学生类型\",\"columnId\":4,\"columnName\":\"type\",\"columnType\":\"varchar(45)\",\"createBy\":\"admin\",\"createTime\":\"2024-06-18 11:04:33\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"select\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-18 13:44:24', 151);
+INSERT INTO `sys_oper_log` VALUES (106, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"stu_info\"}', NULL, 0, NULL, '2024-06-18 13:44:29', 220);
+INSERT INTO `sys_oper_log` VALUES (107, 'Student', 1, 'com.ruoyi.tm.controller.StuInfoController.add()', 'POST', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"1\",\"classId\":1,\"inSchool\":1,\"majorId\":1,\"name\":\"test\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\r\n### The error may exist in file [F:\\grade_sys\\grade_inquiry_system\\ruoyi-tm\\target\\classes\\mapper\\tm\\StuInfoMapper.xml]\r\n### The error may involve com.ruoyi.tm.mapper.StuInfoMapper.insertStuInfo-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into stu_info          ( name,                                       adm_method,             in_school,                          class_id,             major_id )           values ( ?,                                       ?,             ?,                          ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\n; Field \'id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'id\' doesn\'t have a default value', '2024-06-18 14:43:34', 368);
+INSERT INTO `sys_oper_log` VALUES (108, 'Student', 1, 'com.ruoyi.tm.controller.StuInfoController.add()', 'POST', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"1\",\"classId\":1,\"inSchool\":1,\"majorId\":1,\"name\":\"test\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\r\n### The error may exist in file [F:\\grade_sys\\grade_inquiry_system\\ruoyi-tm\\target\\classes\\mapper\\tm\\StuInfoMapper.xml]\r\n### The error may involve com.ruoyi.tm.mapper.StuInfoMapper.insertStuInfo-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into stu_info          ( name,                                       adm_method,             in_school,                          class_id,             major_id )           values ( ?,                                       ?,             ?,                          ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\n; Field \'id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'id\' doesn\'t have a default value', '2024-06-18 14:43:38', 4);
+INSERT INTO `sys_oper_log` VALUES (109, 'Student', 1, 'com.ruoyi.tm.controller.StuInfoController.add()', 'POST', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"2\",\"classId\":1,\"inSchool\":2,\"majorId\":1,\"name\":\"王灵\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\r\n### The error may exist in file [F:\\grade_sys\\grade_inquiry_system\\ruoyi-tm\\target\\classes\\mapper\\tm\\StuInfoMapper.xml]\r\n### The error may involve com.ruoyi.tm.mapper.StuInfoMapper.insertStuInfo-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into stu_info          ( name,                                       adm_method,             in_school,                          class_id,             major_id )           values ( ?,                                       ?,             ?,                          ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'id\' doesn\'t have a default value\n; Field \'id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'id\' doesn\'t have a default value', '2024-06-18 16:36:53', 9);
+INSERT INTO `sys_oper_log` VALUES (110, 'Student', 1, 'com.ruoyi.tm.controller.StuInfoController.add()', 'POST', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"2\",\"classId\":1,\"inSchool\":2,\"majorId\":1,\"name\":\"王灵\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        -- 使用获取的自增ID插入第二\' at line 6\r\n### The error may exist in file [F:\\grade_sys\\grade_inquiry_system\\ruoyi-tm\\target\\classes\\mapper\\tm\\StuInfoMapper.xml]\r\n### The error may involve com.ruoyi.tm.mapper.StuInfoMapper.insertStuInfo-Inline\r\n### The error occurred while setting parameters\r\n### SQL: -- 插入第一条记录         INSERT INTO sys_user(user_name, nick_name, password)         VALUES (?, ?, \"123456\");          -- 获取自增ID         SET @last_id = LAST_INSERT_ID();          -- 使用获取的自增ID插入第二条记录         INSERT INTO stu_info(id, name, sex, type, in_school, class_id, major_id)         VALUES (@last_id, ?, ?, ?, ?, ?, ?);\r\n### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        -- 使用获取的自增ID插入第二\' at line 6\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        -- 使用获取的自增ID插入第二\' at line 6', '2024-06-18 16:46:12', 190);
+INSERT INTO `sys_oper_log` VALUES (111, 'Student', 1, 'com.ruoyi.tm.controller.StuInfoController.add()', 'POST', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"2\",\"classId\":1,\"inSchool\":2,\"majorId\":1,\"name\":\"王灵\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        INSERT INTO stu_info(id, name, sex, ty\' at line 4\r\n### The error may exist in file [F:\\grade_sys\\grade_inquiry_system\\ruoyi-tm\\target\\classes\\mapper\\tm\\StuInfoMapper.xml]\r\n### The error may involve com.ruoyi.tm.mapper.StuInfoMapper.insertStuInfo-Inline\r\n### The error occurred while setting parameters\r\n### SQL: INSERT INTO sys_user(user_name, nick_name, password)         VALUES (?, ?, \"123456\");          SET @last_id = LAST_INSERT_ID();          INSERT INTO stu_info(id, name, sex, type, in_school, class_id, major_id)         VALUES (@last_id, ?, ?, ?, ?, ?, ?);\r\n### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        INSERT INTO stu_info(id, name, sex, ty\' at line 4\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        INSERT INTO stu_info(id, name, sex, ty\' at line 4', '2024-06-18 16:46:57', 188);
+INSERT INTO `sys_oper_log` VALUES (112, 'Student', 1, 'com.ruoyi.tm.controller.StuInfoController.add()', 'POST', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"2\",\"classId\":1,\"inSchool\":2,\"majorId\":1,\"name\":\"王灵\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        INSERT INTO stu_info(id, name, sex, ty\' at line 4\r\n### The error may exist in file [F:\\grade_sys\\grade_inquiry_system\\ruoyi-tm\\target\\classes\\mapper\\tm\\StuInfoMapper.xml]\r\n### The error may involve com.ruoyi.tm.mapper.StuInfoMapper.insertStuInfo-Inline\r\n### The error occurred while setting parameters\r\n### SQL: INSERT INTO sys_user(user_name, nick_name, password)         VALUES (?, ?, \"123456\");          SET @last_id = LAST_INSERT_ID();          INSERT INTO stu_info(id, name, sex, type, in_school, class_id, major_id)         VALUES (@last_id, ?, ?, ?, ?, ?, ?);\r\n### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        INSERT INTO stu_info(id, name, sex, ty\' at line 4\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n\n        INSERT INTO stu_info(id, name, sex, ty\' at line 4', '2024-06-18 16:48:25', 8);
+INSERT INTO `sys_oper_log` VALUES (113, 'Student', 1, 'com.ruoyi.tm.controller.StuInfoController.add()', 'POST', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"2\",\"classId\":1,\"inSchool\":2,\"majorId\":1,\"name\":\"王灵\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n        INSERT INTO stu_info(id, name, sex, typ\' at line 5\r\n### The error may exist in file [F:\\grade_sys\\grade_inquiry_system\\ruoyi-tm\\target\\classes\\mapper\\tm\\StuInfoMapper.xml]\r\n### The error may involve com.ruoyi.tm.mapper.StuInfoMapper.insertStuInfo-Inline\r\n### The error occurred while setting parameters\r\n### SQL: INSERT INTO sys_user(user_name, nick_name, password)         VALUES (?, ?, \"123456\");                         SET @last_id = LAST_INSERT_ID();         INSERT INTO stu_info(id, name, sex, type, in_school, class_id, major_id)         VALUES (@last_id, ?, ?, ?, ?, ?, ?);\r\n### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n        INSERT INTO stu_info(id, name, sex, typ\' at line 5\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'SET @last_id = LAST_INSERT_ID();\n        INSERT INTO stu_info(id, name, sex, typ\' at line 5', '2024-06-18 16:58:13', 591);
+INSERT INTO `sys_oper_log` VALUES (114, 'Student', 2, 'com.ruoyi.tm.controller.StuInfoController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/info', '127.0.0.1', '内网IP', '{\"admMethod\":\"一般统考\",\"classId\":1,\"id\":1,\"inSchool\":0,\"majorId\":1,\"name\":\"admin\",\"params\":{},\"sex\":0,\"stuStatus\":1,\"type\":\"普通考生\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-20 22:42:27', 16);
+INSERT INTO `sys_oper_log` VALUES (115, '角色管理', 1, 'com.ruoyi.web.controller.system.SysRoleController.add()', 'POST', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptCheckStrictly\":true,\"deptIds\":[],\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2001],\"params\":{},\"remark\":\"学生的权限\",\"roleId\":100,\"roleKey\":\"@PreAuthorize(`@ss.hasRole(\'teacher\')`)\",\"roleName\":\"学生\",\"roleSort\":3,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-21 08:50:07', 35);
+INSERT INTO `sys_oper_log` VALUES (116, '角色管理', 1, 'com.ruoyi.web.controller.system.SysRoleController.add()', 'POST', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"deptCheckStrictly\":true,\"deptIds\":[],\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2001,2002,2003,2004,2005,2006,2007,2008],\"params\":{},\"roleKey\":\"@PreAuthorize(`@ss.hasRole(\'teacher\')`)\",\"roleName\":\"教师\",\"roleSort\":4,\"status\":\"0\"}', '{\"msg\":\"新增角色\'教师\'失败，角色权限已存在\",\"code\":500}', 0, NULL, '2024-06-21 08:50:28', 11);
+INSERT INTO `sys_oper_log` VALUES (117, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createTime\":\"2024-06-21 08:50:06\",\"dataScope\":\"1\",\"delFlag\":\"0\",\"deptCheckStrictly\":true,\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2001],\"params\":{},\"remark\":\"学生的权限\",\"roleId\":100,\"roleKey\":\"@PreAuthorize(`@ss.hasRole(\'student\')`)\",\"roleName\":\"学生\",\"roleSort\":3,\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-21 08:50:38', 19);
+INSERT INTO `sys_oper_log` VALUES (118, '角色管理', 1, 'com.ruoyi.web.controller.system.SysRoleController.add()', 'POST', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptCheckStrictly\":true,\"deptIds\":[],\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2001,2002,2003,2004,2005,2006,2007,2008],\"params\":{},\"roleId\":101,\"roleKey\":\"@PreAuthorize(`@ss.hasRole(\'teacher\')`)\",\"roleName\":\"教师\",\"roleSort\":4,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-21 08:50:55', 14);
+INSERT INTO `sys_oper_log` VALUES (119, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createTime\":\"2024-06-21 08:50:06\",\"dataScope\":\"1\",\"delFlag\":\"0\",\"deptCheckStrictly\":true,\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2001],\"params\":{},\"remark\":\"学生的权限\",\"roleId\":100,\"roleKey\":\"student\",\"roleName\":\"学生\",\"roleSort\":3,\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-21 08:51:07', 15);
+INSERT INTO `sys_oper_log` VALUES (120, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createTime\":\"2024-06-21 08:50:55\",\"dataScope\":\"1\",\"delFlag\":\"0\",\"deptCheckStrictly\":true,\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2001,2002,2003,2004,2005,2006,2007,2008],\"params\":{},\"roleId\":101,\"roleKey\":\"teacher\",\"roleName\":\"教师\",\"roleSort\":4,\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-21 08:51:12', 15);
+INSERT INTO `sys_oper_log` VALUES (121, '角色管理', 1, 'com.ruoyi.web.controller.system.SysRoleController.add()', 'POST', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptCheckStrictly\":true,\"deptIds\":[],\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2001,2002,2003,2004,2005,2006,2007,2008],\"params\":{},\"roleId\":102,\"roleKey\":\"m_teacher\",\"roleName\":\"教务老师\",\"roleSort\":5,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-21 08:51:36', 16);
+INSERT INTO `sys_oper_log` VALUES (122, '部门管理', 2, 'com.ruoyi.web.controller.system.SysDeptController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dept', '127.0.0.1', '内网IP', '{\"ancestors\":\"0\",\"children\":[],\"deptId\":100,\"deptName\":\"中山大学\",\"email\":\"test@qq.com\",\"leader\":\"钟明廷\",\"orderNum\":0,\"params\":{},\"parentId\":0,\"phone\":\"15888888888\",\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-06-21 09:31:50', 11);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -923,13 +976,16 @@ CREATE TABLE `sys_role`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', '0', 'admin', '2024-05-31 23:32:47', '', NULL, '超级管理员');
 INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 1, 1, '0', '0', 'admin', '2024-05-31 23:32:47', '', NULL, '普通角色');
+INSERT INTO `sys_role` VALUES (100, '学生', 'student', 3, '1', 1, 1, '0', '0', 'admin', '2024-06-21 08:50:06', 'admin', '2024-06-21 08:51:06', '学生的权限');
+INSERT INTO `sys_role` VALUES (101, '教师', 'teacher', 4, '1', 1, 1, '0', '0', 'admin', '2024-06-21 08:50:55', 'admin', '2024-06-21 08:51:12', '教师权限');
+INSERT INTO `sys_role` VALUES (102, '教务老师', 'm_teacher', 5, '1', 1, 1, '0', '0', 'admin', '2024-06-21 08:51:36', '', NULL, '教务老师权限');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -1046,6 +1102,26 @@ INSERT INTO `sys_role_menu` VALUES (2, 1057);
 INSERT INTO `sys_role_menu` VALUES (2, 1058);
 INSERT INTO `sys_role_menu` VALUES (2, 1059);
 INSERT INTO `sys_role_menu` VALUES (2, 1060);
+INSERT INTO `sys_role_menu` VALUES (100, 2000);
+INSERT INTO `sys_role_menu` VALUES (100, 2001);
+INSERT INTO `sys_role_menu` VALUES (101, 2000);
+INSERT INTO `sys_role_menu` VALUES (101, 2001);
+INSERT INTO `sys_role_menu` VALUES (101, 2002);
+INSERT INTO `sys_role_menu` VALUES (101, 2003);
+INSERT INTO `sys_role_menu` VALUES (101, 2004);
+INSERT INTO `sys_role_menu` VALUES (101, 2005);
+INSERT INTO `sys_role_menu` VALUES (101, 2006);
+INSERT INTO `sys_role_menu` VALUES (101, 2007);
+INSERT INTO `sys_role_menu` VALUES (101, 2008);
+INSERT INTO `sys_role_menu` VALUES (102, 2000);
+INSERT INTO `sys_role_menu` VALUES (102, 2001);
+INSERT INTO `sys_role_menu` VALUES (102, 2002);
+INSERT INTO `sys_role_menu` VALUES (102, 2003);
+INSERT INTO `sys_role_menu` VALUES (102, 2004);
+INSERT INTO `sys_role_menu` VALUES (102, 2005);
+INSERT INTO `sys_role_menu` VALUES (102, 2006);
+INSERT INTO `sys_role_menu` VALUES (102, 2007);
+INSERT INTO `sys_role_menu` VALUES (102, 2008);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -1055,7 +1131,7 @@ CREATE TABLE `sys_user`  (
   `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `dept_id` bigint NULL DEFAULT NULL COMMENT '部门ID',
   `user_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户账号',
-  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户昵称',
+  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '用户昵称',
   `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '00' COMMENT '用户类型（00系统用户）',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '用户邮箱',
   `phonenumber` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '手机号码',
@@ -1072,15 +1148,21 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-06-01 20:50:03', 'admin', '2024-05-31 23:32:47', '', '2024-06-01 20:50:02', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-06-21 08:48:54', 'admin', '2024-05-31 23:32:47', '', '2024-06-21 08:48:53', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-05-31 23:32:47', 'admin', '2024-05-31 23:32:47', '', NULL, '测试员');
 INSERT INTO `sys_user` VALUES (100, 104, '苏某人', '苏某', '00', '15@qq.com', '15016248165', '0', '', '$2a$10$/ww8Kt.rGe7bdhJXG7xIIu0H51t/dWQdsIwe/8WLGKQyWIw9U33ye', '0', '0', '', NULL, 'admin', '2024-06-01 19:39:51', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (101, 104, '吴某人', '吴某', '00', '156@qq.com', '15094826584', '0', '', '$2a$10$uG1MKS8uSlFNHmwwtQ5VCuNTldGe0vsUmU9YMNBBiDUwx2zv7y4rC', '0', '0', '', NULL, 'admin', '2024-06-01 19:40:49', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (117, 1, '李四', '李四', '00', NULL, NULL, '0', NULL, '123456', '0', '0', '', NULL, NULL, '2024-06-21 09:02:19', '', NULL, '学生');
+INSERT INTO `sys_user` VALUES (118, 1, '李四', '李四', '00', NULL, NULL, '0', NULL, '123456', '0', '0', '', NULL, NULL, '2024-06-21 09:04:51', '', NULL, '学生');
+INSERT INTO `sys_user` VALUES (119, 1, '李四', '李四', '00', NULL, NULL, '0', NULL, '123456', '0', '0', '', NULL, NULL, '2024-06-21 09:06:38', '', NULL, '学生');
+INSERT INTO `sys_user` VALUES (120, NULL, '123', 'test', '00', '', '', '0', '', '123456', '0', '0', '', NULL, '', NULL, '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (121, 1, '121', '李四', '00', NULL, NULL, '0', NULL, '123456', '0', '0', '', NULL, NULL, '2024-06-21 10:23:33', '', '2024-06-21 10:23:33', '学生');
+INSERT INTO `sys_user` VALUES (122, 1, '122', '李四', '00', NULL, NULL, '0', NULL, NULL, '0', '0', '', NULL, NULL, '2024-06-21 10:28:55', '', '2024-06-21 10:28:55', '学生');
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -1117,6 +1199,11 @@ INSERT INTO `sys_user_role` VALUES (1, 1);
 INSERT INTO `sys_user_role` VALUES (2, 2);
 INSERT INTO `sys_user_role` VALUES (100, 2);
 INSERT INTO `sys_user_role` VALUES (101, 2);
+INSERT INTO `sys_user_role` VALUES (117, 100);
+INSERT INTO `sys_user_role` VALUES (118, 100);
+INSERT INTO `sys_user_role` VALUES (119, 100);
+INSERT INTO `sys_user_role` VALUES (121, 100);
+INSERT INTO `sys_user_role` VALUES (122, 100);
 
 -- ----------------------------
 -- Table structure for tea_info
@@ -1141,14 +1228,18 @@ INSERT INTO `tea_info` VALUES (101, '吴某人', '教师');
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `password` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
+INSERT INTO `user_info` VALUES (1, '123456', '1');
+INSERT INTO `user_info` VALUES (2, '123456', '1');
+INSERT INTO `user_info` VALUES (3, '123456', '1');
+INSERT INTO `user_info` VALUES (4, '123456', '1');
 
 SET FOREIGN_KEY_CHECKS = 1;
