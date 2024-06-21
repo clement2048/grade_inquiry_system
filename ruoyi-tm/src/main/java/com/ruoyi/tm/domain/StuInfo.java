@@ -19,13 +19,17 @@ public class StuInfo extends BaseEntity
     @Excel(name = "学生id")
     private Long id;
 
+    private String user_name;
+
+    private String password;
+
     /** 学生姓名 */
     @Excel(name = "学生姓名")
     private String name;
 
     /** 学生性别 */
     @Excel(name = "学生性别")
-    private Long sex;
+    private String sex;
 
     /** 学生类型 */
     @Excel(name = "学生类型")
@@ -69,18 +73,33 @@ public class StuInfo extends BaseEntity
     {
         return name;
     }
-    public void setSex(Long sex) 
+    public void setSex(String sex)
     {
         this.sex = sex;
     }
 
-    public Long getSex() 
+    public String getSex()
     {
         return sex;
     }
     public void setType(String type) 
     {
         this.type = type;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getUser_name() {
+        return user_name;
     }
 
     public String getType() 

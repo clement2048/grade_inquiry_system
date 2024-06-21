@@ -2,9 +2,12 @@ package com.ruoyi.tm.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanValidators;
+import com.ruoyi.system.mapper.SysUserMapper;
+import com.ruoyi.system.service.impl.SysUserServiceImpl;
 import com.ruoyi.tm.domain.UserInfo;
 import com.ruoyi.tm.mapper.UserInfoMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.tm.mapper.StuInfoMapper;
 import com.ruoyi.tm.domain.StuInfo;
 import com.ruoyi.tm.service.IStuInfoService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Validator;
 
@@ -30,7 +34,10 @@ public class StuInfoServiceImpl implements IStuInfoService
     private StuInfoMapper stuInfoMapper;
 
     @Autowired
-    private UserInfoMapper userInfoMapper;
+    private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private SysUserServiceImpl sysUserService;
 
     /**
      * 查询Student
@@ -41,7 +48,6 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public StuInfo selectStuInfoById(Long id)
     {
-
         return stuInfoMapper.selectStuInfoById(id);
     }
 
@@ -64,15 +70,31 @@ public class StuInfoServiceImpl implements IStuInfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int insertStuInfo(StuInfo stuInfo)
     {
-        UserInfo userInfo = new UserInfo();
-//        userInfo.setUsername(stuInfo.getName());
-        userInfo.setPassword("123456");
-        userInfo.setType((long)1);
-        userInfoMapper.insertUserInfo(userInfo);
+        SysUser sysUser = new SysUser();
+        sysUser.setDeptId(stuInfo.getMajorId());    // 设置专业id（目前未修改完成，在考虑是否将dept表修改为专业表）
+        sysUser.setUserName(stuInfo.getName());    // 设置用户名
+        sysUser.setNickName(stuInfo.getName());     // 给sys_user昵称赋值
+        sysUser.setSex(stuInfo.getSex());   // 给用户性别赋值
+        sysUser.setStatus("0"); // 默认状态正常
+        sysUser.setDelFlag("0");    // 默认用户未删除
+        sysUser.setRemark("学生");    // sys_user备注为学生
+        sysUser.setPassword(stuInfo.getPassword());
 
-        stuInfo.setId(userInfo.getId());
+        sysUserMapper.insertStuUser(sysUser);
+
+        // 插入用户的对应角色，便于进行权限控制
+        Long sid = (long)100;   // 100为学生权限编号
+        Long[] roleIds = {sid};
+        sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+
+        stuInfo.setId(sysUser.getUserId());
+
+        sysUser.setUserName(sysUser.getUserId().toString());
+        sysUserMapper.updateUser(sysUser);
+
         return stuInfoMapper.insertStuInfo(stuInfo);
     }
 
@@ -97,7 +119,8 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public int deleteStuInfoByIds(Long[] ids)
     {
-        return stuInfoMapper.deleteStuInfoByIds(ids);
+        return sysUserMapper.deleteUserByIds(ids);
+//        return stuInfoMapper.deleteStuInfoByIds(ids);
     }
 
     /**
@@ -109,7 +132,8 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public int deleteStuInfoById(Long id)
     {
-        return stuInfoMapper.deleteStuInfoById(id);
+//        return stuInfoMapper.deleteStuInfoById(id);
+        return sysUserMapper.deleteUserById(id);
     }
 
     @Override

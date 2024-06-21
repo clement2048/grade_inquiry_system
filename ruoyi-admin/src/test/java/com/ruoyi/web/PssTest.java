@@ -28,7 +28,7 @@ public class PssTest {
 
         StuInfo stuInfo = new StuInfo();
         stuInfo.setName("李四");
-        stuInfo.setSex((long)1);
+        stuInfo.setSex("0");
         stuInfo.setType("普通本科");
         stuInfo.setInSchool((long)1);
         stuInfo.setStuStatus((long)1);

@@ -173,7 +173,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			sysdate()
  		)
 	</insert>
-	
+
+
+	<insert id="insertStuUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
+		insert into sys_user(user_id,dept_id,user_name,nick_name,email,avatar,phonenumber,sex,password,status,create_by,remark,create_time)
+		values(#{userId},#{deptId},#{userName},#{nickName},#{email},#{avatar},#{phonenumber},#{sex},#{password},#{status},#{createBy},#{remark},sysdate())
+	</insert>
+
 	<update id="updateUser" parameterType="SysUser">
  		update sys_user
  		<set>

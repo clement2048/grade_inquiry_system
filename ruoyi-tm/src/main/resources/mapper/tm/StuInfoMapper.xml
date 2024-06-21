@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="StuInfo" id="StuInfoResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
-        <result property="sex"    column="sex"    />
         <result property="type"    column="type"    />
         <result property="admMethod"    column="adm_method"    />
         <result property="inSchool"    column="in_school"    />
@@ -16,8 +15,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="majorId"    column="major_id"    />
     </resultMap>
 
+<!--    只显示未被删除的学生信息-->
     <sql id="selectStuInfoVo">
-        select id, name, sex, type, adm_method, in_school, stu_status, class_id, major_id from stu_info
+        select id, name, sex, type, adm_method, in_school, stu_status, class_id, major_id from stu_info, sys_user
+        where stu_info.id = sys_user.user_id and sys_user.status = 0
     </sql>
 
     <select id="selectStuInfoList" parameterType="StuInfo" resultMap="StuInfoResult">
@@ -40,15 +41,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insertStuInfo" parameterType="StuInfo">
-        INSERT INTO stu_info(id, name, sex, type, adm_method,in_school, stu_status, class_id, major_id)
-        VALUES (#{id}, #{name}, #{sex}, #{type},#{admMethod}, #{inSchool}, #{stuStatus}, #{classId}, #{majorId});
+        INSERT INTO stu_info(id, name, type, adm_method,in_school, stu_status, class_id, major_id)
+        VALUES (#{id}, #{name}, #{type},#{admMethod}, #{inSchool}, #{stuStatus}, #{classId}, #{majorId});
     </insert>
 
     <update id="updateStuInfo" parameterType="StuInfo">
         update stu_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
-            <if test="sex != null">sex = #{sex},</if>
             <if test="type != null and type != ''">type = #{type},</if>
             <if test="admMethod != null and admMethod != ''">adm_method = #{admMethod},</if>
             <if test="inSchool != null">in_school = #{inSchool},</if>

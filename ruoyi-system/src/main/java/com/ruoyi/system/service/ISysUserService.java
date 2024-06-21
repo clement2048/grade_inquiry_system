@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import org.springframework.stereotype.Service;
 
 /**
  * 用户 业务层
