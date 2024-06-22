@@ -24,15 +24,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectStuInfoList" parameterType="StuInfo" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="sex != null "> and sex = #{sex}</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="admMethod != null  and admMethod != ''"> and adm_method = #{admMethod}</if>
-            <if test="inSchool != null "> and in_school = #{inSchool}</if>
-            <if test="stuStatus != null "> and stu_status = #{stuStatus}</if>
-            <if test="classId != null "> and class_id = #{classId}</if>
-            <if test="majorId != null "> and major_id = #{majorId}</if>
-            and stu_info.id = sys_user.user_id
+<!--            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>-->
+<!--            <if test="sex != null "> and sex = #{sex}</if>-->
+<!--            <if test="type != null  and type != ''"> and type = #{type}</if>-->
+<!--            <if test="admMethod != null  and admMethod != ''"> and adm_method = #{admMethod}</if>-->
+<!--            <if test="inSchool != null "> and in_school = #{inSchool}</if>-->
+<!--            <if test="stuStatus != null "> and stu_status = #{stuStatus}</if>-->
+<!--            <if test="classId != null "> and class_id = #{classId}</if>-->
+<!--            <if test="majorId != null "> and major_id = #{majorId}</if>-->
+<!--            and -->
+            stu_info.id = sys_user.user_id
             and sys_user.status = 0
         </where>
     </select>
