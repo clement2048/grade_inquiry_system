@@ -50,9 +50,9 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       const id = 1;
       data(id) .then(response => {
-        console.log(response);
+        // console.log(response);
         this.listdata = response.data;
-        console.log(response.data);
+        // console.log(response.data);
         for(let i=0;i<this.listdata.length;i++){
           let info = {
             name: this.listdata[i].ctype,
@@ -61,7 +61,7 @@ export default {
           this.name.push(this.listdata[i].ctype)
           this.dataset.push(info);
       }
-        console.log(this.dataset)
+        // console.log(this.dataset)
         this.chart.setOption({
 
           title: {

@@ -63,14 +63,9 @@
 
     <el-table v-loading="loading" :data="scoreList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="课程名" align="center" prop="courseId" />
-      <el-table-column label="平时占比" align="center" prop="usualPor" />
-      <el-table-column label="平时成绩" align="center" prop="usualSco" />
-      <el-table-column label="期中占比" align="center" prop="midPor" />
-      <el-table-column label="其中成绩" align="center" prop="midSco" />
-      <el-table-column label="期末占比" align="center" prop="finalPor" />
-      <el-table-column label="期末成绩" align="center" prop="finalSco" />
-      <el-table-column label="其他备注" align="center" prop="others" />
+      <el-table-column label="课程名" align="center" prop="courseName" />
+      <el-table-column label="总成绩" align="center" prop="finalSco" />
+
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -103,30 +98,13 @@
     <!-- 添加或修改课程成绩对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="平时占比" prop="usualPor">
-          <el-input v-model="form.usualPor" placeholder="请输入平时占比" />
+        <el-form-item label="课程名" prop="courseName">
+        <el-input v-model="form.courseName" placeholder="请输入课程名" />
         </el-form-item>
-        <el-form-item label="平时成绩" prop="usualSco">
-          <el-input v-model="form.usualSco" placeholder="请输入平时成绩" />
+        <el-form-item label="总成绩" prop="totalSco">
+          <el-input v-model="form.totalSco" placeholder="请输入总成绩" />
         </el-form-item>
-        <el-form-item label="期中占比" prop="midPor">
-          <el-input v-model="form.midPor" placeholder="请输入期中占比" />
-        </el-form-item>
-        <el-form-item label="其中成绩" prop="midSco">
-          <el-input v-model="form.midSco" placeholder="请输入其中成绩" />
-        </el-form-item>
-        <el-form-item label="期末占比" prop="finalPor">
-          <el-input v-model="form.finalPor" placeholder="请输入期末占比" />
-        </el-form-item>
-        <el-form-item label="期末成绩" prop="finalSco">
-          <el-input v-model="form.finalSco" placeholder="请输入期末成绩" />
-        </el-form-item>
-        <el-form-item label="其他备注" prop="others">
-          <el-input v-model="form.others" placeholder="请输入其他备注" />
-        </el-form-item>
-        <el-form-item label="课程ID" prop="courseId">
-          <el-input v-model="form.courseId" placeholder="请输入课程ID" />
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -171,28 +149,10 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        usualPor: [
-          { required: true, message: "平时占比不能为空", trigger: "blur" }
+        totalSco: [
+          { required: true, message: "总成绩不能为空", trigger: "blur" }
         ],
-        usualSco: [
-          { required: true, message: "平时成绩不能为空", trigger: "blur" }
-        ],
-        midPor: [
-          { required: true, message: "期中占比不能为空", trigger: "blur" }
-        ],
-        midSco: [
-          { required: true, message: "其中成绩不能为空", trigger: "blur" }
-        ],
-        finalPor: [
-          { required: true, message: "期末占比不能为空", trigger: "blur" }
-        ],
-        finalSco: [
-          { required: true, message: "期末成绩不能为空", trigger: "blur" }
-        ],
-        others: [
-          { required: true, message: "其他备注不能为空", trigger: "blur" }
-        ],
-        courseId: [
+        courseName: [
           { required: true, message: "课程ID不能为空", trigger: "blur" }
         ]
       }
@@ -209,6 +169,7 @@ export default {
         this.scoreList = response.rows;
         this.total = response.total;
         this.loading = false;
+        console.log(response);
       });
     },
     // 取消按钮
@@ -220,14 +181,8 @@ export default {
     reset() {
       this.form = {
         id: null,
-        usualPor: null,
-        usualSco: null,
-        midPor: null,
-        midSco: null,
-        finalPor: null,
-        finalSco: null,
-        others: null,
-        courseId: null
+        courseName: null,
+        totalSco: null
       };
       this.resetForm("form");
     },

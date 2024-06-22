@@ -117,7 +117,6 @@
       <el-table-column label="用户名" align="center" prop="user_name" />
       <el-table-column label="密码" align="center" prop="password" />
       <el-table-column label="学生姓名" align="center" prop="name" />
-      <el-table-column label="学生性别" align="center" prop="sex" />
       <el-table-column label="学生类型" align="center" prop="type" />
       <el-table-column label="入学方法" align="center" prop="admMethod" />
       <el-table-column label="是否在校" align="center" prop="inSchool" />
@@ -155,9 +154,6 @@
     <!-- 添加或修改Student对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户名" prop="user_name">
-          <el-input v-model="form.user_name" placeholder="请输入用户名" />
-        </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="form.password" placeholder="请输入密码" />
         </el-form-item>
@@ -247,43 +243,24 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        sex: null,
         type: null,
         admMethod: null,
-        inSchool: null,
+        inSchool: 0,
         stuStatus: null,
         classId: null,
         majorId: null,
         user_name: null,
-        password: null
+        password: 123456
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        user_name: [
-          { required: true, message: "用户名不能为空", trigger: "blur" }
-        ],
-        password: [
-          { required: true, message: "密码不能为空", trigger: "blur" }
-        ],
         name: [
           { required: true, message: "学生姓名不能为空", trigger: "blur" }
         ],
-        sex: [
-          { required: true, message: "学生性别不能为空", trigger: "change" }
-        ],
         type: [
           { required: true, message: "学生类型不能为空", trigger: "change" }
-        ],
-        admMethod: [
-          { required: true, message: "入学方法不能为空", trigger: "blur" }
-        ],
-        inSchool: [
-          { required: true, message: "是否在校不能为空", trigger: "blur" }
-        ],
-        stuStatus: [
-          { required: true, message: "学生状态不能为空", trigger: "change" }
         ],
         classId: [
           { required: true, message: "班级id不能为空", trigger: "blur" }
@@ -332,7 +309,6 @@ export default {
       this.form = {
         id: null,
         name: null,
-        sex: null,
         type: null,
         admMethod: null,
         inSchool: null,
