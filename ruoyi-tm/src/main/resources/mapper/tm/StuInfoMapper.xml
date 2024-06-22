@@ -32,15 +32,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="stuStatus != null "> and stu_status = #{stuStatus}</if>
             <if test="classId != null "> and class_id = #{classId}</if>
             <if test="majorId != null "> and major_id = #{majorId}</if>
-            and stu_info.id = sys_user.user_id and sys_user.status = 0
+            and stu_info.id = sys_user.user_id
+            and sys_user.status = 0
         </where>
     </select>
 
     <select id="selectStuInfoById" parameterType="Long" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
-        where stu_info.id = #{id} and
-        stu_info.id = sys_user.user_id and
-        sys_user.status = 0
+        where stu_info.id = #{id}
+        and stu_info.id = sys_user.user_id
+        and sys_user.status = 0
     </select>
 
     <insert id="insertStuInfo" parameterType="StuInfo">
