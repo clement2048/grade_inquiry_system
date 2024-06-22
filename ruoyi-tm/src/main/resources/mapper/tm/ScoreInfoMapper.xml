@@ -14,8 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="finalSco"    column="final_sco"    />
         <result property="others"    column="others"    />
         <result property="chooseId"    column="choose_id"    />
-        <result property="courseID" column="course_id"/>
-        <result property="courseName" column="name" />
+        <result property="courseId"  column="course_id"/>
+        <result property="courseName" column="courseName" />
     </resultMap>
 
     <sql id="selectScoreInfoVo">
