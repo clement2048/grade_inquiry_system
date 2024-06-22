@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="finalPor != null">final_por,</if>
             <if test="finalSco != null">final_sco,</if>
             <if test="others != null and others != ''">others,</if>
-            <if test="chooseId != null">choose_id,</if>
+             <if test="chooseId != null">choose_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>

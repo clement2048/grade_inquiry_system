@@ -46,6 +46,7 @@ public interface StuInfoMapper
      */
     public int updateStuInfo(StuInfo stuInfo);
 
+
     /**
      * 删除Student
      * 
@@ -61,6 +62,8 @@ public interface StuInfoMapper
      * @return 结果
      */
     public int deleteStuInfoByIds(Long[] ids);
+
+
 
 
 }

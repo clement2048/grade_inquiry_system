@@ -50,6 +50,28 @@ public class ScoreInfo extends BaseEntity
     @Excel(name = "选课id")
     private Long chooseId;
 
+    /** 课程id */
+    private Long CourseId;
+
+    /** 课程名 */
+    private Long CourseName;
+
+    public void setCourseId(Long courseId) {
+        CourseId = courseId;
+    }
+
+    public Long getCourseId() {
+        return CourseId;
+    }
+
+    public void setCourseName(Long courseName) {
+        CourseName = courseName;
+    }
+
+    public Long getCourseName() {
+        return CourseName;
+    }
+
     public void setId(Long id) 
     {
         this.id = id;
