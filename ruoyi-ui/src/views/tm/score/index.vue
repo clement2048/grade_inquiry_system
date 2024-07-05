@@ -108,23 +108,23 @@
         <el-form-item label="课程名" prop="courseName">
         <el-input v-model="form.courseName" placeholder="请输入课程名" />
         </el-form-item>
-        <el-form-item label="平时成绩占比" prop="usualPor">
-          <el-input v-model="form.usualPor" placeholder="请输入课程名" />
+        <el-form-item label="平时占比" prop="usualPor">
+          <el-input v-model="form.usualPor" placeholder="输入平时成绩占比" />
         </el-form-item>
-        <el-form-item label="平时成绩" prop="usualScore">
-          <el-input v-model="form.usualScore" placeholder="请输入课程名" />
+        <el-form-item label="平时成绩" prop="usualSco">
+          <el-input v-model="form.usualSco" placeholder="请输入平时成绩" />
         </el-form-item>
-        <el-form-item label="期中成绩占比" prop="midPor">
-          <el-input v-model="form.midPor" placeholder="请输入课程名" />
+        <el-form-item label="期中占比" prop="midPor">
+          <el-input v-model="form.midPor" placeholder="请输入期中成绩占比" />
         </el-form-item>
-        <el-form-item label="期中成绩" prop="midScore">
-          <el-input v-model="form.midScore" placeholder="请输入课程名" />
+        <el-form-item label="期中成绩" prop="midSco">
+          <el-input v-model="form.midSco" placeholder="请输入期中成绩" />
         </el-form-item>
-        <el-form-item label="期末成绩占比" prop="finalPor">
-          <el-input v-model="form.finalPor" placeholder="请输入课程名" />
+        <el-form-item label="期末占比" prop="finalPor">
+          <el-input v-model="form.finalPor" placeholder="请输入期末成绩占比" />
         </el-form-item>
-        <el-form-item label="期末成绩" prop="finalScore">
-          <el-input v-model="form.finalScore" placeholder="请输入课程名" />
+        <el-form-item label="期末成绩" prop="finalSco">
+          <el-input v-model="form.finalSco" placeholder="请输入期末成绩" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -205,7 +205,7 @@ export default {
       this.loading = true;
       listScore(this.queryParams).then(response => {
         this.scoreList = response.rows;
-        console.log(response);
+        // console.log(response);
         this.handleScore();
         this.total = response.total;
         this.loading = false;
@@ -221,7 +221,6 @@ export default {
       this.form = {
         id: null,
         courseName: null,
-
         midPor: null,
         midScore: null,
         usualPor: null,
