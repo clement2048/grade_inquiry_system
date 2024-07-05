@@ -1,14 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户名" prop="user_name">
-        <el-input
-          v-model="queryParams.user_name"
-          placeholder="请输入用户名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="学生姓名" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -114,7 +107,6 @@
     <el-table v-loading="loading" :data="infoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="学生id" align="center" prop="id" />
-      <el-table-column label="用户名" align="center" prop="user_name" />
       <el-table-column label="学生姓名" align="center" prop="name" />
       <el-table-column label="学生类型" align="center" prop="type" />
       <el-table-column label="入学方法" align="center" prop="admMethod" />
@@ -215,7 +207,7 @@
 </template>
 
 <script>
-import { listInfo, getInfo, delInfo, addInfo, updateInfo } from "@/api/system/info";
+import { listInfo, getInfo, delInfo, addInfo, updateInfo } from "@/api/tm/info";
 import {getToken} from "@/utils/auth";
 
 export default {
@@ -250,9 +242,7 @@ export default {
         inSchool: 0,
         stuStatus: 0,
         classId: null,
-        majorId: null,
-        user_name: null,
-        password: null
+        majorId: null
       },
       // 表单参数
       form: {},
@@ -315,8 +305,7 @@ export default {
         stuStatus: null,
         classId: null,
         majorId: null,
-        user_name: null,
-        password: null
+        password: 123456
       };
       this.resetForm("form");
     },
@@ -348,6 +337,7 @@ export default {
       const id = row.id || this.ids
       getInfo(id).then(response => {
         this.form = response.data;
+        console.log(response);
         this.open = true;
         this.title = "修改学生信息";
       });
