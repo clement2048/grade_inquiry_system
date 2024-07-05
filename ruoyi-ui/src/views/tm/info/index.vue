@@ -1,14 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户名" prop="user_name">
-        <el-input
-          v-model="queryParams.user_name"
-          placeholder="请输入用户名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="学生姓名" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -114,8 +107,6 @@
     <el-table v-loading="loading" :data="infoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="学生id" align="center" prop="id" />
-      <el-table-column label="用户名" align="center" prop="user_name" />
-      <el-table-column label="密码" align="center" prop="password" />
       <el-table-column label="学生姓名" align="center" prop="name" />
       <el-table-column label="学生类型" align="center" prop="type" />
       <el-table-column label="入学方法" align="center" prop="admMethod" />
@@ -154,17 +145,20 @@
     <!-- 添加或修改Student对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" placeholder="请输入密码" />
-        </el-form-item>
         <el-form-item label="学生姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入学生姓名" />
         </el-form-item>
         <el-form-item label="入学方法" prop="admMethod">
           <el-input v-model="form.admMethod" placeholder="请输入入学方法" />
         </el-form-item>
+        <el-form-item label="学生类型" prop="type">
+          <el-input v-model="form.type" placeholder="请输入学生类型" />
+        </el-form-item>
         <el-form-item label="是否在校" prop="inSchool">
           <el-input v-model="form.inSchool" placeholder="请输入是否在校" />
+        </el-form-item>
+        <el-form-item label="学生状态" prop="stuStatus">
+          <el-input v-model="form.stuStatus" placeholder="请输入学生状态" />
         </el-form-item>
         <el-form-item label="班级id" prop="classId">
           <el-input v-model="form.classId" placeholder="请输入班级id" />
@@ -213,7 +207,7 @@
 </template>
 
 <script>
-import { listInfo, getInfo, delInfo, addInfo, updateInfo } from "@/api/system/info";
+import { listInfo, getInfo, delInfo, addInfo, updateInfo } from "@/api/tm/info";
 import {getToken} from "@/utils/auth";
 
 export default {
@@ -246,11 +240,9 @@ export default {
         type: null,
         admMethod: null,
         inSchool: 0,
-        stuStatus: null,
+        stuStatus: 0,
         classId: null,
-        majorId: null,
-        user_name: null,
-        password: 123456
+        majorId: null
       },
       // 表单参数
       form: {},
@@ -258,9 +250,6 @@ export default {
       rules: {
         name: [
           { required: true, message: "学生姓名不能为空", trigger: "blur" }
-        ],
-        type: [
-          { required: true, message: "学生类型不能为空", trigger: "change" }
         ],
         classId: [
           { required: true, message: "班级id不能为空", trigger: "blur" }
@@ -297,6 +286,7 @@ export default {
         this.infoList = response.rows;
         this.total = response.total;
         this.loading = false;
+        console.log(response);
       });
     },
     // 取消按钮
@@ -315,8 +305,7 @@ export default {
         stuStatus: null,
         classId: null,
         majorId: null,
-        user_name: null,
-        password: null
+        password: 123456
       };
       this.resetForm("form");
     },
@@ -340,7 +329,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加Student";
+      this.title = "添加学生信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -348,8 +337,9 @@ export default {
       const id = row.id || this.ids
       getInfo(id).then(response => {
         this.form = response.data;
+        console.log(response);
         this.open = true;
-        this.title = "修改Student";
+        this.title = "修改学生信息";
       });
     },
     /** 提交按钮 */

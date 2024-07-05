@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanValidators;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -18,7 +19,9 @@ import com.ruoyi.tm.domain.StuInfo;
 import com.ruoyi.tm.service.IStuInfoService;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  * StudentService业务层处理
@@ -81,7 +84,8 @@ public class StuInfoServiceImpl implements IStuInfoService
         sysUser.setStatus("0"); // 默认状态正常
         sysUser.setDelFlag("0");    // 默认用户未删除
         sysUser.setRemark("学生");    // sys_user备注为学生
-        sysUser.setPassword(stuInfo.getPassword());
+        sysUser.setPassword("123456");
+        sysUser.setPassword(SecurityUtils.encryptPassword(sysUser.getPassword()));
 
         sysUserMapper.insertStuUser(sysUser);
 
@@ -132,7 +136,7 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public int deleteStuInfoById(Long id)
     {
-//        return stuInfoMapper.deleteStuInfoById(id);
+//        stuInfoMapper.deleteStuInfoById(id);
         return sysUserMapper.deleteUserById(id);
     }
 
@@ -150,7 +154,9 @@ public class StuInfoServiceImpl implements IStuInfoService
         {
             try
             {
-                Validator validator = null;
+//                Validator validator = null;
+                ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+                Validator validator = factory.getValidator();
                 BeanValidators.validateWithException(validator, user);
                 user.setCreateBy(operName);
                 this.insertStuInfo(user);

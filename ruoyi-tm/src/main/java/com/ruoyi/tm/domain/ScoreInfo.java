@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+
 /**
  * 成绩管理对象 score_info
  * 
@@ -51,25 +52,26 @@ public class ScoreInfo extends BaseEntity
     private Long chooseId;
 
     /** 课程id */
-    private Long CourseId;
+    private Long courseId;
 
     /** 课程名 */
-    private Long CourseName;
+    @Excel(name = "课程名")
+    private String courseName;
 
     public void setCourseId(Long courseId) {
-        CourseId = courseId;
+        courseId = courseId;
     }
 
     public Long getCourseId() {
-        return CourseId;
+        return courseId;
     }
 
-    public void setCourseName(Long courseName) {
-        CourseName = courseName;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public Long getCourseName() {
-        return CourseName;
+    public String getCourseName() {
+        return courseName;
     }
 
     public void setId(Long id) 
@@ -166,6 +168,10 @@ public class ScoreInfo extends BaseEntity
             .append("finalSco", getFinalSco())
             .append("others", getOthers())
             .append("chooseId", getChooseId())
+            .append("courseId",getCourseId())
+            .append("courseName",getCourseName())
             .toString();
     }
 }
+
+
