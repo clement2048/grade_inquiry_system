@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectStuInfoList" parameterType="StuInfo" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
-        <where>  
+        <where>
 <!--            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>-->
 <!--            <if test="sex != null "> and sex = #{sex}</if>-->
 <!--            <if test="type != null  and type != ''"> and type = #{type}</if>-->

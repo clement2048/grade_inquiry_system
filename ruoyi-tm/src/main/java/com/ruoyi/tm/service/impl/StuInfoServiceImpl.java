@@ -19,7 +19,9 @@ import com.ruoyi.tm.domain.StuInfo;
 import com.ruoyi.tm.service.IStuInfoService;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  * StudentService业务层处理
@@ -82,7 +84,7 @@ public class StuInfoServiceImpl implements IStuInfoService
         sysUser.setStatus("0"); // 默认状态正常
         sysUser.setDelFlag("0");    // 默认用户未删除
         sysUser.setRemark("学生");    // sys_user备注为学生
-        sysUser.setPassword(stuInfo.getPassword());
+        sysUser.setPassword("123456");
         sysUser.setPassword(SecurityUtils.encryptPassword(sysUser.getPassword()));
 
         sysUserMapper.insertStuUser(sysUser);
@@ -152,10 +154,11 @@ public class StuInfoServiceImpl implements IStuInfoService
         {
             try
             {
-                Validator validator = null;
+//                Validator validator = null;
+                ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+                Validator validator = factory.getValidator();
                 BeanValidators.validateWithException(validator, user);
                 user.setCreateBy(operName);
-                user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
                 this.insertStuInfo(user);
                 successNum++;
                 successMsg.append("<br/>" + successNum + "、账号 " + user.getName() + " 导入成功");

@@ -19,10 +19,8 @@ public class StuInfo extends BaseEntity
     @Excel(name = "学生id")
     private Long id;
 
-    @Excel(name = "用户名")
     private String user_name;
 
-    @Excel(name = "密码")
     private String password;
 
     /** 学生姓名 */
