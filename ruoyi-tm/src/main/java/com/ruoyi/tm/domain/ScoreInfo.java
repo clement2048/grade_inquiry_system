@@ -58,6 +58,28 @@ public class ScoreInfo extends BaseEntity
     @Excel(name = "课程名")
     private String courseName;
 
+    @Excel(name = "学年")
+    private String year;
+
+    @Excel(name = "学期")
+    private String term;
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
     public void setCourseId(Long courseId) {
         courseId = courseId;
     }

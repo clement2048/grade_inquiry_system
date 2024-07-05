@@ -15,12 +15,14 @@ public class StuInfo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 学生id */
-    @Excel(name = "学生id")
+    /** 用户id */
     private Long id;
 
+    /** 学生id(学号)*/
+    @Excel(name = "学生id")
     private String user_name;
 
+    /** 密码*/
     private String password;
 
     /** 学生姓名 */

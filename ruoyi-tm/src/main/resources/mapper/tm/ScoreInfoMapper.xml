@@ -16,10 +16,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="chooseId"    column="choose_id"    />
         <result property="courseId"  column="course_id"/>
         <result property="courseName" column="courseName" />
+        <result property="term" column="start_sem"/>
+        <result property="year" column="start_year"/>
     </resultMap>
 
     <sql id="selectScoreInfoVo">
-        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, choose_id,C.id AS course_id, C.name AS courseName
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
         FROM score_info AS S, choose_course AS CH, course_info AS C
     </sql>
 

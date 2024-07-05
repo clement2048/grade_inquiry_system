@@ -43,6 +43,7 @@ public interface ScoreInfoMapper
      */
     public int updateScoreInfo(ScoreInfo scoreInfo);
 
+
     /**
      * 删除成绩管理
      * 
