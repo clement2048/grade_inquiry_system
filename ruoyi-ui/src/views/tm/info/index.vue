@@ -106,7 +106,7 @@
 
     <el-table v-loading="loading" :data="infoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学生id" align="center" prop="id" />
+      <el-table-column label="学生id" align="center" prop="user_name" />
       <el-table-column label="学生姓名" align="center" prop="name" />
       <el-table-column label="学生类型" align="center" prop="type" />
       <el-table-column label="入学方法" align="center" prop="admMethod" />
@@ -145,6 +145,9 @@
     <!-- 添加或修改Student对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="用户名" prop="user_name">
+          <el-input v-model="form.user_name" placeholder="请输入用户名" />
+        </el-form-item>
         <el-form-item label="学生姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入学生姓名" />
         </el-form-item>
@@ -248,6 +251,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        user_name:[
+          {required: true, message: "学生用户名不能为空", trigger: "blur"}
+        ],
         name: [
           { required: true, message: "学生姓名不能为空", trigger: "blur" }
         ],
@@ -297,7 +303,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: null,
+        user_name: null,
         name: null,
         type: null,
         admMethod: null,
@@ -305,7 +311,7 @@ export default {
         stuStatus: null,
         classId: null,
         majorId: null,
-        password: 123456
+        password: 123456,
       };
       this.resetForm("form");
     },
