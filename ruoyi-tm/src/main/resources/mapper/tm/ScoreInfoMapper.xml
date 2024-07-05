@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectScoreInfoById" parameterType="Long" resultMap="ScoreInfoResult">
         <include refid="selectScoreInfoVo"/>
-        where id = #{id} and
+        where S.id = #{id} and
         S.id = CH.id and
         C.id = CH.course_id
     </select>
