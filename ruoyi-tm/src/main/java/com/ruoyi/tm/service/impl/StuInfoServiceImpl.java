@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanValidators;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -82,6 +83,7 @@ public class StuInfoServiceImpl implements IStuInfoService
         sysUser.setDelFlag("0");    // 默认用户未删除
         sysUser.setRemark("学生");    // sys_user备注为学生
         sysUser.setPassword(stuInfo.getPassword());
+        sysUser.setPassword(SecurityUtils.encryptPassword(sysUser.getPassword()));
 
         sysUserMapper.insertStuUser(sysUser);
 
@@ -153,6 +155,7 @@ public class StuInfoServiceImpl implements IStuInfoService
                 Validator validator = null;
                 BeanValidators.validateWithException(validator, user);
                 user.setCreateBy(operName);
+                user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
                 this.insertStuInfo(user);
                 successNum++;
                 successMsg.append("<br/>" + successNum + "、账号 " + user.getName() + " 导入成功");
