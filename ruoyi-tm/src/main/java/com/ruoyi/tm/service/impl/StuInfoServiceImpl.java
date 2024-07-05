@@ -132,7 +132,7 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public int deleteStuInfoById(Long id)
     {
-//        return stuInfoMapper.deleteStuInfoById(id);
+//        stuInfoMapper.deleteStuInfoById(id);
         return sysUserMapper.deleteUserById(id);
     }
 
