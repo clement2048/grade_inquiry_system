@@ -79,6 +79,7 @@
       <el-table-column label="学期" align="center" prop="term" />
       <el-table-column label="总成绩" align="center" prop="totalSco" />
       <el-table-column label="是否通过" align="center" prop="pass" />
+      <el-table-column label="排名" align="center" prop="rank" />
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
