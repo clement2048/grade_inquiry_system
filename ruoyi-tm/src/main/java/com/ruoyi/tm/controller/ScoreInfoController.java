@@ -131,7 +131,6 @@ public class ScoreInfoController extends BaseController
     @GetMapping("/Analysis/{id}")
     public AjaxResult Analysis(@PathVariable("id") Long id)
     {
-        return success(scoreInfoService.selectScoreInfoByMTeacherId(id));
+        return success(scoreInfoService.selectAvgScoreInfoByMTeacherId(id));
     }
-
 }
