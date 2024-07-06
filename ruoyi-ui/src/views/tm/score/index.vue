@@ -63,9 +63,12 @@
 
     <el-table v-loading="loading" :data="scoreList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="课程ID" align="center" prop="chooseId" />
       <el-table-column label="课程名" align="center" prop="courseName" />
+      <el-table-column label="学年" align="center" prop="year" />
+      <el-table-column label="学期" align="center" prop="term" />
       <el-table-column label="总成绩" align="center" prop="totalSco" />
-
+      <el-table-column label="是否通过" align="center" prop="pass" />
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -105,8 +108,14 @@
     <!-- 添加或修改课程成绩对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="isDisabled">
-        <el-form-item label="课程名" prop="courseName">
-        <el-input v-model="form.courseName" placeholder="请输入课程名" />
+        <el-form-item label="课程ID" prop="chooseId">
+        <el-input v-model="form.chooseId" placeholder="请输入课程ID" />
+        </el-form-item>
+        <el-form-item label="学期" prop="term">
+          <el-input v-model="form.term" placeholder="请输入学期" />
+        </el-form-item>
+        <el-form-item label="学年" prop="year">
+          <el-input v-model="form.year" placeholder="请输入学年" />
         </el-form-item>
         <el-form-item label="平时占比" prop="usualPor">
           <el-input v-model="form.usualPor" placeholder="输入平时成绩占比" />
@@ -190,8 +199,14 @@ export default {
         finalPor: [
           { required: true, message: "期末成绩占比不能为空", trigger: "blur" }
         ],
-        courseName: [
-          { required: true, message: "课程名不能为空", trigger: "blur" }
+        chooseId: [
+          { required: true, message: "课程ID不能为空", trigger: "blur" }
+        ],
+        year: [
+          { required: true, message: "学年不能为空", trigger: "blur" }
+        ],
+        term: [
+          { required: true, message: "学期不能为空", trigger: "blur" }
         ]
       },
     };
@@ -205,7 +220,7 @@ export default {
       this.loading = true;
       listScore(this.queryParams).then(response => {
         this.scoreList = response.rows;
-        // console.log(response);
+        console.log(response.rows);
         this.handleScore();
         this.total = response.total;
         this.loading = false;
@@ -220,13 +235,15 @@ export default {
     reset() {
       this.form = {
         id: null,
-        courseName: null,
+        chooseId: null,
         midPor: null,
         midScore: null,
         usualPor: null,
         usualScore: null,
         finalPor: null,
-        finalScore: null
+        finalScore: null,
+        year: null,
+        term: null
       };
       this.resetForm("form");
     },
@@ -243,6 +260,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
+      console.log(selection)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
