@@ -104,4 +104,12 @@ public interface ScoreInfoMapper
      * @return 结果
      */
     public List<ScoreInfo> selectUnPassByTeacherId(Long id);
+
+    /**
+     * 根据班级获取对应班级所有学生的所有成绩
+     *
+     * @param id 班级id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreByClassId(Long id);
 }
