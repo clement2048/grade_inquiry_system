@@ -11,7 +11,7 @@
  Target Server Version : 80037 (8.0.37)
  File Encoding         : 65001
 
- Date: 06/07/2024 14:31:36
+ Date: 06/07/2024 16:14:05
 */
 
 SET NAMES utf8mb4;
@@ -55,6 +55,7 @@ CREATE TABLE `class_info`  (
   `id` int NOT NULL COMMENT '班级id',
   `grade` int NOT NULL COMMENT '所在年级',
   `teach_id` int NOT NULL COMMENT '班主任id',
+  `class_num` int NOT NULL COMMENT '班号',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_class_idx`(`teach_id` ASC) USING BTREE,
   CONSTRAINT `fk_class` FOREIGN KEY (`teach_id`) REFERENCES `tea_info` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -63,7 +64,7 @@ CREATE TABLE `class_info`  (
 -- ----------------------------
 -- Records of class_info
 -- ----------------------------
-INSERT INTO `class_info` VALUES (1, 21, 100);
+INSERT INTO `class_info` VALUES (1, 21, 100, 0);
 
 -- ----------------------------
 -- Table structure for course_info
@@ -744,7 +745,7 @@ CREATE TABLE `sys_job_log`  (
   `exception_info` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '异常信息',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`job_log_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_job_log
