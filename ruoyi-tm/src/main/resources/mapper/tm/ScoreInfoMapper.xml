@@ -19,12 +19,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="term" column="start_sem"/>
         <result property="year" column="start_year"/>
         <result property="pass" column="pass"/>
+        <result property="rank" column="rank"/>
     </resultMap>
 
     <sql id="selectScoreInfoVo">
         SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
         FROM score_info AS S, choose_course AS CH, course_info AS C
     </sql>
+
+    <sql id = "selectRankInfoVo">
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem,RANK() OVER(PARTITION BY C.id ORDER BY AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) desc) AS 'rank'
+        FROM score_info AS S, choose_course AS CH, course_info AS C
+        WHERE S.choose_id = CH.id AND C.id = CH.course_id
+        GROUP BY S.id
+    </sql>
+
+    <select id="selectRankInfoList" parameterType="ScoreInfo" resultMap="ScoreInfoResult">
+        <include refid="selectRankInfoVo"/>
+        WHERE S.choose_id = C.id AND course_id = #{courseId}
+        GROUP BY id
+    </select>
+
 
     <select id="selectScoreInfoList" parameterType="ScoreInfo" resultMap="ScoreInfoResult">
         <include refid="selectScoreInfoVo"/>
@@ -37,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="finalSco != null "> and final_sco = #{finalSco}</if>
             <if test="others != null  and others != ''"> and others = #{others}</if>
             <if test="chooseId != null "> and choose_id = #{chooseId}</if>
-            and S.id = CH.id and
+            and S.choose_id = CH.id and
             C.id = CH.course_id
         </where>
     </select>
@@ -50,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectScoreInfoByCourseId" resultType="com.ruoyi.tm.domain.ScoreInfo">
-        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
         FROM score_info AS S, choose_course AS CH, course_info AS C
         where C.id = #{courseId} and
         S.id = CH.id and

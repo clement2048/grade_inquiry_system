@@ -76,4 +76,12 @@ public interface IScoreInfoService
      * @return 结果
      */
     public String importScore(List<ScoreInfo> ScoreList, boolean updateSupport,String operName);
+
+    /**
+     * 设置排名信息
+     *
+     * @param ScoreList 成绩信息集合
+     * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
+     * @return 结果
+     */
 }
