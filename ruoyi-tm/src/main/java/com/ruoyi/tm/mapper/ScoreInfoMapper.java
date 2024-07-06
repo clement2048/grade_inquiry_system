@@ -88,4 +88,12 @@ public interface ScoreInfoMapper
      */
     public List<ScoreInfo> selectAvgScoreInfoByMTeacherId(Long id);
 
+
+    /**
+     * 教务老师获取学院平均分信息
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreInfoByTeacherId(Long id);
 }
