@@ -91,6 +91,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY S.id
     </select>
 
+    <sql id="selectAvgScoreInfoByMTeacherVo">
+        SELECT start_year, start_sem, SUM(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) as average
+        FROM score_info AS S, choose_course AS CH, course_info AS C, tea_info AS T, major_info AS M, faculties_info AS F
+    </sql>
+
+    <select id="selectAvgScoreInfoByMTeacherId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        <include refid="selectAvgScoreInfoByMTeacherVo"/>
+        WHERE S.choose_id = CH.id
+          AND C.id = CH.course_id
+          AND T.type = "教务老师"
+          AND C.fac_id = F.id
+          AND F.teach_id = T.id
+          AND T.id = #{id}
+        GROUP BY start_sem, start_year
+    </select>
+
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

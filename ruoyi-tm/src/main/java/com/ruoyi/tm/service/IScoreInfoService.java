@@ -87,10 +87,19 @@ public interface IScoreInfoService
 
 
     /**
-     * 教务老师获取成绩信息
+     * 教务老师获取成绩详细信息
      *
      * @param id 教务老师
      * @return 结果
      */
     public List<ScoreInfo> selectScoreInfoByMTeacherId(Long id);
+
+
+    /**
+     * 教务老师获取平均成绩信息
+     *
+     * @param id 教务老师
+     * @return 结果
+     */
+    public List<ScoreInfo> selectAvgScoreInfoByMTeacherId(Long id);
 }

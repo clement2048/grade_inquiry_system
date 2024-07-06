@@ -166,4 +166,9 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
         return scoreInfoMapper.selectScoreInfoByMTeacherId(id);
     }
 
+
+    @Override
+    public List<ScoreInfo> selectAvgScoreInfoByMTeacherId(Long id) {
+        return scoreInfoMapper.selectAvgScoreInfoByMTeacherId(id);
+    }
 }
