@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tm.mapper.TeaInfoMapper">
+    
+    <resultMap type="TeaInfo" id="TeaInfoResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectTeaInfoVo">
+        select id, name, type from tea_info
+    </sql>
+
+    <select id="selectTeaInfoList" parameterType="TeaInfo" resultMap="TeaInfoResult">
+        <include refid="selectTeaInfoVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaInfoById" parameterType="Long" resultMap="TeaInfoResult">
+        <include refid="selectTeaInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaInfo" parameterType="TeaInfo">
+        insert into tea_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null and type != ''">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null and type != ''">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaInfo" parameterType="TeaInfo">
+        update tea_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaInfoById" parameterType="Long">
+        delete from tea_info where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaInfoByIds" parameterType="String">
+        delete from tea_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

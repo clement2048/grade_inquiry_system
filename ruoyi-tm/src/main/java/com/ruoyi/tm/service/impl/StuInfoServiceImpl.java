@@ -78,7 +78,7 @@ public class StuInfoServiceImpl implements IStuInfoService
     {
         SysUser sysUser = new SysUser();
         sysUser.setDeptId(stuInfo.getMajorId());    // 设置专业id（目前未修改完成，在考虑是否将dept表修改为专业表）
-        sysUser.setUserName(stuInfo.getName());    // 设置用户名
+        sysUser.setUserName(stuInfo.getUser_name());    // 设置用户名
         sysUser.setNickName(stuInfo.getName());     // 给sys_user昵称赋值
         sysUser.setSex(stuInfo.getSex());   // 给用户性别赋值
         sysUser.setStatus("0"); // 默认状态正常
@@ -95,9 +95,9 @@ public class StuInfoServiceImpl implements IStuInfoService
         sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
 
         stuInfo.setId(sysUser.getUserId());
-
-        sysUser.setUserName(sysUser.getUserId().toString());
-        sysUserMapper.updateUser(sysUser);
+        stuInfo.setUser_name(sysUser.getUserName());
+//        sysUser.setUserName(sysUser.getUserName());
+//        sysUserMapper.updateUser(sysUser);
 
         return stuInfoMapper.insertStuInfo(stuInfo);
     }
@@ -111,6 +111,7 @@ public class StuInfoServiceImpl implements IStuInfoService
     @Override
     public int updateStuInfo(StuInfo stuInfo)
     {
+        stuInfoMapper.updateSysUser(stuInfo);
         return stuInfoMapper.updateStuInfo(stuInfo);
     }
 

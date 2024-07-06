@@ -13,11 +13,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="stuStatus"    column="stu_status"    />
         <result property="classId"    column="class_id"    />
         <result property="majorId"    column="major_id"    />
+        <result property="user_name"    column="user_name"    />
     </resultMap>
 
 <!--    只显示未被删除的学生信息-->
     <sql id="selectStuInfoVo">
-        select id, name, sex, type, adm_method, in_school, stu_status, class_id, major_id
+        select id, name, sex, type, adm_method, in_school, stu_status, class_id, major_id, user_name
         from stu_info, sys_user
     </sql>
 
@@ -62,6 +63,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="majorId != null">major_id = #{majorId},</if>
         </trim>
         where id = #{id}
+    </update>
+
+    <update id="updateSysUser" parameterType="StuInfo">
+        update sys_user
+        set user_name = #{user_name}
+        where user_id = #{id}
     </update>
 
 

@@ -48,6 +48,15 @@ public interface StuInfoMapper
 
 
     /**
+     * 修改SysUser里的username信息
+     *
+     * @param stuInfo Student
+     * @return 结果
+     */
+    public int updateSysUser(StuInfo stuInfo);
+
+
+    /**
      * 删除Student
      * 
      * @param id Student主键

@@ -65,7 +65,7 @@ export default {
         this.chart.setOption({
 
           title: {
-            text: '学业预警',
+            text: '学分分布',
             left: 'center'
           },
           tooltip: {
@@ -94,7 +94,7 @@ export default {
           ],
           series: [
             {
-              name: '预警',
+              name: '学分',
               type: 'pie',
               center: ['50%', '45%'],
               radius: ['20%', '60%'],

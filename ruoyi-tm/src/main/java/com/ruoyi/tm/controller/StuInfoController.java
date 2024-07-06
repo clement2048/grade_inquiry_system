@@ -98,6 +98,10 @@ public class StuInfoController extends BaseController
         return toAjax(stuInfoService.deleteStuInfoByIds(ids));
     }
 
+
+    /**
+     * 导入Student数据
+     */
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
@@ -109,6 +113,7 @@ public class StuInfoController extends BaseController
         String message = stuInfoService.importUser(userList, updateSupport, operName);
         return AjaxResult.success(message);
     }
+
     @PostMapping("/importTemplate")
     public AjaxResult importTemplate()
     {

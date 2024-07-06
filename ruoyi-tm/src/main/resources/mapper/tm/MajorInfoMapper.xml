@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tm.mapper.MajorInfoMapper">
+    
+    <resultMap type="MajorInfo" id="MajorInfoResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="dura"    column="dura"    />
+        <result property="majMust"    column="maj_must"    />
+        <result property="majChoose"    column="maj_choose"    />
+        <result property="pubMust"    column="pub_must"    />
+        <result property="pubChoose"    column="pub_choose"    />
+        <result property="graScore"    column="gra_score"    />
+        <result property="facId"    column="fac_id"    />
+    </resultMap>
+
+    <sql id="selectMajorInfoVo">
+        select id, name, dura, maj_must, maj_choose, pub_must, pub_choose, gra_score, fac_id from major_info
+    </sql>
+
+    <select id="selectMajorInfoList" parameterType="MajorInfo" resultMap="MajorInfoResult">
+        <include refid="selectMajorInfoVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="dura != null "> and dura = #{dura}</if>
+            <if test="majMust != null "> and maj_must = #{majMust}</if>
+            <if test="majChoose != null "> and maj_choose = #{majChoose}</if>
+            <if test="pubMust != null "> and pub_must = #{pubMust}</if>
+            <if test="pubChoose != null "> and pub_choose = #{pubChoose}</if>
+            <if test="graScore != null "> and gra_score = #{graScore}</if>
+            <if test="facId != null "> and fac_id = #{facId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMajorInfoById" parameterType="Long" resultMap="MajorInfoResult">
+        <include refid="selectMajorInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMajorInfo" parameterType="MajorInfo">
+        insert into major_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="dura != null">dura,</if>
+            <if test="majMust != null">maj_must,</if>
+            <if test="majChoose != null">maj_choose,</if>
+            <if test="pubMust != null">pub_must,</if>
+            <if test="pubChoose != null">pub_choose,</if>
+            <if test="graScore != null">gra_score,</if>
+            <if test="facId != null">fac_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="dura != null">#{dura},</if>
+            <if test="majMust != null">#{majMust},</if>
+            <if test="majChoose != null">#{majChoose},</if>
+            <if test="pubMust != null">#{pubMust},</if>
+            <if test="pubChoose != null">#{pubChoose},</if>
+            <if test="graScore != null">#{graScore},</if>
+            <if test="facId != null">#{facId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMajorInfo" parameterType="MajorInfo">
+        update major_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="dura != null">dura = #{dura},</if>
+            <if test="majMust != null">maj_must = #{majMust},</if>
+            <if test="majChoose != null">maj_choose = #{majChoose},</if>
+            <if test="pubMust != null">pub_must = #{pubMust},</if>
+            <if test="pubChoose != null">pub_choose = #{pubChoose},</if>
+            <if test="graScore != null">gra_score = #{graScore},</if>
+            <if test="facId != null">fac_id = #{facId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMajorInfoById" parameterType="Long">
+        delete from major_info where id = #{id}
+    </delete>
+
+    <delete id="deleteMajorInfoByIds" parameterType="String">
+        delete from major_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

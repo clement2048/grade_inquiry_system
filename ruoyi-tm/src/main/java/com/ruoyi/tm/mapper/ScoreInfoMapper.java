@@ -2,6 +2,7 @@ package com.ruoyi.tm.mapper;
 
 import java.util.List;
 import com.ruoyi.tm.domain.ScoreInfo;
+import org.springframework.stereotype.Service;
 
 /**
  * 成绩管理Mapper接口
@@ -9,6 +10,7 @@ import com.ruoyi.tm.domain.ScoreInfo;
  * @author clement
  * @date 2024-06-21
  */
+@Service
 public interface ScoreInfoMapper 
 {
     /**
@@ -43,6 +45,7 @@ public interface ScoreInfoMapper
      */
     public int updateScoreInfo(ScoreInfo scoreInfo);
 
+
     /**
      * 删除成绩管理
      * 
@@ -58,4 +61,13 @@ public interface ScoreInfoMapper
      * @return 结果
      */
     public int deleteScoreInfoByIds(Long[] ids);
+
+
+    /**
+     * 根据课程id查询成绩
+     *
+     * @param courseId 课程id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreInfoByCourseId(Long courseId);
 }

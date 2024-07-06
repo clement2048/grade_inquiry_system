@@ -62,15 +62,12 @@ export default {
       this.setOptions(this.chartData)
     },
     setOptions(data) {
-      // console.log(cType);
-      // console.log(score);
       this.chart.setOption({
-        title: {
-          text: '学分分布',
-          left: 'center'
+        title:{
+          text:'各年级成绩平均分对比'
         },
         xAxis: {
-          data: data.cType,
+          data: ['大一上','大一下','大二上','大二下','大三上','大三下'],
           boundaryGap: false,
           axisTick: {
             show: false
@@ -93,47 +90,26 @@ export default {
         yAxis: {
           axisTick: {
             show: false
-          }
+          },
+          type: 'value',
+          scale:true
         },
         legend: {
-          data: []
+          data: ['21级','22级','23级']
         },
         series: [{
-          name: '学分', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
+          name: '23级',
           type: 'line',
-          data: data.score,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
+          data: [86, 90],
+        },{
+          name: '22级',
+          type: 'line',
+          data: [83, 85, 82, 90]
+        },{
+          name: '21级',
+          type: 'line',
+          data: [86, 88, 87, 90, 91, 92]
         }
-        // {
-        //   name: 'actual',
-        //   smooth: true,
-        //   type: 'line',
-        //   itemStyle: {
-        //     normal: {
-        //       color: '#3888fa',
-        //       lineStyle: {
-        //         color: '#3888fa',
-        //         width: 2
-        //       },
-        //       areaStyle: {
-        //         color: '#f3f8ff'
-        //       }
-        //     }
-        //   },
-        //   data: actualData,
-        //   animationDuration: 2800,
-        //   animationEasing: 'quadraticOut'
-        // }
         ]
       })
     }
