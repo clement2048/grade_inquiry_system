@@ -42,3 +42,19 @@ export function delScore(id) {
     method: 'delete'
   })
 }
+
+// 按照教师按照课程获取成绩
+export function getScoreCourse(teacherId,courseId) {
+  return request({
+    url: '/tm/score/'+ teacherId+'/'+courseId,
+    method: 'get'
+  })
+}
+
+// 年级成绩分析
+export function analysisScore(id) {
+  return request({
+    url: '/tm/score/Analysis/'+ id,
+    method: 'get'
+  })
+}

@@ -48,7 +48,7 @@
     <el-row :gutter="32">
       <el-col :span="12">
         <div class="chart-wrapper">
-          <line-chart ref="child" :chart-data="chartData" />
+          <StuIndexScore/>
         </div>
       </el-col>
       <el-col :span="12">
@@ -78,12 +78,14 @@ import PieChart2 from "@/views/dashboard/PieChart2.vue";
 import LineChart from "@/views/dashboard/LineChart.vue";
 import {data} from "@/api/tm/user";
 import {analysisScore} from "@/api/tm/score";
+import StuIndexScore from "@/views/tm/score/StuIndexScore.vue";
 
 export default {
   name: 'Index',
   components: {
     LineChart,
     PieChart2,
+    StuIndexScore
   },
   data() {
     return {
