@@ -87,6 +87,18 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/normal_teacher',
+    component: Layout,
+    children: [
+      {
+        path: 'welcome',
+        component: () => import('@/views/normal_teacher.vue'),
+        name: 'NormalTeacherWelcome',
+        meta: { title: '普通教师欢迎界面', icon: 'education' }
+      }
+    ]
+  },
+  {
     path: '/user',
     component: Layout,
     hidden: true,

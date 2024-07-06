@@ -221,7 +221,7 @@ export default {
       analysisData: {
         average: 85,
         excellentRate: 20,
-        goodRate: 50,
+        goodRate: 70,
         failingRate: 10
       },
       rankings: [
