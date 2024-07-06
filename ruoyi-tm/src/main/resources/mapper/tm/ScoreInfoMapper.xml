@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="finalSco != null "> and final_sco = #{finalSco}</if>
             <if test="others != null  and others != ''"> and others = #{others}</if>
             <if test="chooseId != null "> and choose_id = #{chooseId}</if>
-            and S.id = CH.id and
+            and S.choose_id = CH.id and
             C.id = CH.course_id
         </where>
         group by S.id
