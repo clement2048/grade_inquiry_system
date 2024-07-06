@@ -161,5 +161,9 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
         return successMsg.toString();
     }
 
+    @Override
+    public List<ScoreInfo> selectScoreInfoByMTeacherId(Long id) {
+        return scoreInfoMapper.selectScoreInfoByMTeacherId(id);
+    }
 
 }

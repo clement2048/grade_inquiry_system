@@ -84,4 +84,13 @@ public interface IScoreInfoService
      * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
      * @return 结果
      */
+
+
+    /**
+     * 教务老师获取成绩信息
+     *
+     * @param id 教务老师
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreInfoByMTeacherId(Long id);
 }

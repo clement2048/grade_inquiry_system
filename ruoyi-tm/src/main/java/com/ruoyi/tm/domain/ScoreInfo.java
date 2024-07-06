@@ -74,6 +74,17 @@ public class ScoreInfo extends BaseEntity
     /** 成绩排名 */
     private Long rank;
 
+    /** 平均分 */
+    private Long average;
+
+    public void setAverage(Long average) {
+        this.average = average;
+    }
+
+    public Long getAverage() {
+        return average;
+    }
+
     public void setRank(Long rank) {
         this.rank = rank;
     }

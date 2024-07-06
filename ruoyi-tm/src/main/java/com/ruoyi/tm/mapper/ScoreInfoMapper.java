@@ -70,4 +70,13 @@ public interface ScoreInfoMapper
      * @return 结果
      */
     public List<ScoreInfo> selectScoreInfoByCourseId(Long courseId);
+
+
+    /**
+     * 根据教务老师id查询成绩
+     *
+     * @param id 课程id
+     * @return 结果
+     */
+    public List<ScoreInfo>selectScoreInfoByMTeacherId(Long id);
 }

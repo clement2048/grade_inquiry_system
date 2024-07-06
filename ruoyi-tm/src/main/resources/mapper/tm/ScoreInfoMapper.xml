@@ -20,10 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="year" column="start_year"/>
         <result property="pass" column="pass"/>
         <result property="rank" column="rank"/>
+        <result property="average" column="average"/>
     </resultMap>
 
     <sql id="selectScoreInfoVo">
-        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem, AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) as average
         FROM score_info AS S, choose_course AS CH, course_info AS C
     </sql>
 
@@ -52,9 +53,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="finalSco != null "> and final_sco = #{finalSco}</if>
             <if test="others != null  and others != ''"> and others = #{others}</if>
             <if test="chooseId != null "> and choose_id = #{chooseId}</if>
-            and S.choose_id = CH.id and
+            and S.id = CH.id and
             C.id = CH.course_id
         </where>
+        group by S.id
     </select>
     
     <select id="selectScoreInfoById" parameterType="Long" resultMap="ScoreInfoResult">
@@ -62,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where S.id = #{id} and
         S.id = CH.id and
         C.id = CH.course_id
+        group by S.id
     </select>
 
     <select id="selectScoreInfoByCourseId" resultType="com.ruoyi.tm.domain.ScoreInfo">
@@ -70,6 +73,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where C.id = #{courseId} and
         S.id = CH.id and
         C.id = CH.course_id
+    </select>
+
+    <sql id="selectScoreInfoByMTeacherVo">
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
+        FROM score_info AS S, choose_course AS CH, course_info AS C, tea_info AS T, major_info AS M, faculties_info AS F
+    </sql>
+
+    <select id="selectScoreInfoByMTeacherId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        <include refid="selectScoreInfoByMTeacherVo"/>
+        WHERE S.choose_id = CH.id
+        AND C.id = CH.course_id
+        AND T.type = "教务老师"
+        AND C.fac_id = F.id
+        AND F.teach_id = T.id
+        AND T.id = #{id}
     </select>
 
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
