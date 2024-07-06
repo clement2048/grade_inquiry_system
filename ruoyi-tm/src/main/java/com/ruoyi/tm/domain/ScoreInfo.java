@@ -64,6 +64,18 @@ public class ScoreInfo extends BaseEntity
     @Excel(name = "学期")
     private String term;
 
+    /** 课程名 */
+    @Excel(name = "是否挂科")
+    private String pass;
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
     public void setTerm(String term) {
         this.term = term;
     }
