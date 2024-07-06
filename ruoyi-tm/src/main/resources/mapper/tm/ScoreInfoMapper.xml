@@ -61,9 +61,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectScoreInfoById" parameterType="Long" resultMap="ScoreInfoResult">
         <include refid="selectScoreInfoVo"/>
-        where S.id = #{id} and
-        S.id = CH.id and
-        C.id = CH.course_id
+        where S.id = #{id}
+        and S.choose_id = CH.id
+        and C.id = CH.course_id
         group by S.id
     </select>
 
@@ -128,6 +128,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND C.teach_id = #{id}
         AND pass = 0
         GROUP BY S.id
+    </select>
+
+
+    <sql id="selectScoreByClassId">
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem, STU.name
+        FROM score_info AS S, choose_course AS CH, course_info AS C, class_info AS CS, stu_info AS STU
+    </sql>
+
+    <select id="selectScoreByClassId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        <include refid="selectScoreByClassId"/>
+        WHERE S.choose_id = CH.id
+        AND C.id = CH.course_id
+        AND STU.class_id = CS.id
+        AND STU.id = CH.stu_id
+        AND CS.id = #{id}
     </select>
 
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
