@@ -120,6 +120,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY S.id
     </select>
 
+
+    <select id="selectUnPassByTeacherId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        <include refid="selectScoreInfoByTeacherVo"/>
+        WHERE S.choose_id = CH.id
+        AND C.id = CH.course_id
+        AND C.teach_id = #{id}
+        AND pass = 0
+        GROUP BY S.id
+    </select>
+
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

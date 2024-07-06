@@ -194,4 +194,14 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
     public List<ScoreInfo> selectScoreInfoByTeacherId(Long id) {
         return scoreInfoMapper.selectScoreInfoByTeacherId(id);
     }
+
+    /**
+     * 老师获取挂科成绩名单
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectUnPassByTeacherId(Long id){
+        return scoreInfoMapper.selectUnPassByTeacherId(id);
+    }
 }

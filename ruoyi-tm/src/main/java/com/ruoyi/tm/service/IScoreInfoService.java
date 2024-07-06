@@ -110,4 +110,12 @@ public interface IScoreInfoService
      * @return 结果
      */
     public List<ScoreInfo> selectScoreInfoByTeacherId(Long id);
+
+    /**
+     * 老师获取挂科名单
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectUnPassByTeacherId(Long id);
 }
