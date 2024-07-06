@@ -3,7 +3,7 @@
     <div class="title">
       <el-row type="flex" align="middle" >
         <el-col :span="12" :offset="6">
-          <div class="center">成绩</div>
+          <div class="center"><span>成绩</span></div>
         </el-col>
         <el-col :span="6">
           <div class="right"><el-button type="text">更多</el-button></div>
@@ -73,11 +73,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.center{
+.container .center{
   font-size: 24px;
   margin-left: 120px;
 }
-.right{
+.container .right{
   margin-left: 80px;
   font-size: 18px;
 }
