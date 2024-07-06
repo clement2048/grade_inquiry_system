@@ -3,8 +3,47 @@
     <el-row>
       <el-col>
         <div class="welcome">欢迎回来！</div>
+        <div class="infoShow">
+          <el-row :gutter="40">
+            <el-col :span="6">
+              <div class="data-container">
+                <i class="el-icon-user"></i>
+                <div class="text-container">
+                  <span class="text-top">排名</span>
+                  <span class="text-bottom">{{ rank }}/{{rankTotal}}</span>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="6">
+              <div class="data-container">
+                <i class="el-icon-trophy"></i>
+                <div class="text-container">
+                  <span class="text-top">平均分</span>
+                  <span class="text-bottom">{{ average }}</span>
+                </div>
+              </div>
+            </el-col >
+            <el-col :span="6">
+              <div class="data-container">
+                <i class="el-icon-warning-outline"></i>
+                <div class="text-container">
+                  <span class="text-top">挂科提醒</span>
+                  <span class="text-bottom">{{ passNum }}</span>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="6">
+              <div class="data-container">
+                <i class="el-icon-coffee-cup"></i>
+                <div class="text-container">
+                  <span class="text-top">学分</span>
+                  <span class="text-bottom">{{ scoreCurrent  }}/{{scoreTotal}}</span>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
       </el-col>
-
     </el-row>
     <el-row :gutter="32">
       <el-col :span="12">
@@ -38,6 +77,7 @@
 import PieChart2 from "@/views/dashboard/PieChart2.vue";
 import LineChart from "@/views/dashboard/LineChart.vue";
 import {data} from "@/api/tm/user";
+import {analysisScore} from "@/api/tm/score";
 
 export default {
   name: 'Index',
@@ -61,11 +101,18 @@ export default {
       }],
       value: '',
       activePieChart: true,
-      activeLineChart: false
+      activeLineChart: false,
+      passNum: 1,
+      rank: 50,
+      rankTotal: 150,
+      average: 90,
+      scoreCurrent: 60,
+      scoreTotal: 160
     }
   },
   mounted(){
-    this.handleSetLineChartData()
+    this.handleSetLineChartData();
+    this.doTest();
   },
   methods: {
     async handleSetLineChartData() {
@@ -89,6 +136,11 @@ export default {
         this.activePieChart = false;
         this.activeLineChart = true;
       }
+    },
+    doTest(){
+      analysisScore(2).then(response=> {
+        console.log(response);
+      })
     }
   }
 }
@@ -127,5 +179,39 @@ export default {
 }
 .pieChart{
   margin: 10px auto;
+}
+.infoShow{
+
+  margin-top: 20px;
+}
+.data-container {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  height: 100px;
+}
+
+.data-container i {
+  font-size: 48px;
+  margin-right: 16px;
+  margin-left: 40px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: 48px;
+}
+
+.text-container .text-top {
+  font-size: 18px;
+  color: #333;
+}
+
+.text-container .text-bottom {
+  font-size: 24px;
+  color: #666;
 }
 </style>

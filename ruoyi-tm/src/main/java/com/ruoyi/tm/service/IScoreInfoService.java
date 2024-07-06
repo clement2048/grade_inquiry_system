@@ -76,4 +76,46 @@ public interface IScoreInfoService
      * @return 结果
      */
     public String importScore(List<ScoreInfo> ScoreList, boolean updateSupport,String operName);
+
+    /**
+     * 设置排名信息
+     *
+     * @param ScoreList 成绩信息集合
+     * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
+     * @return 结果
+     */
+
+
+    /**
+     * 教务老师获取成绩详细信息
+     *
+     * @param id 教务老师
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreInfoByMTeacherId(Long id);
+
+
+    /**
+     * 教务老师获取平均成绩信息
+     *
+     * @param id 教务老师
+     * @return 结果
+     */
+    public List<ScoreInfo> selectAvgScoreInfoByMTeacherId(Long id);
+
+    /**
+     * 老师获取教过的课程的详细成绩信息
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreInfoByTeacherId(Long id);
+
+    /**
+     * 老师获取挂科名单
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectUnPassByTeacherId(Long id);
 }

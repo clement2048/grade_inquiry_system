@@ -123,4 +123,14 @@ public class ScoreInfoController extends BaseController
         String message = scoreInfoService.importScore(ScoreList, updateSupport, operName);
         return AjaxResult.success(message);
     }
+
+
+    /**
+     * 年级成绩分析
+     */
+    @GetMapping("/Analysis/{id}")
+    public AjaxResult Analysis(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.selectAvgScoreInfoByMTeacherId(id));
+    }
 }

@@ -52,21 +52,46 @@ public class ScoreInfo extends BaseEntity
     private Long chooseId;
 
     /** 课程id */
+//    @Excel(name = "课程id")
     private Long courseId;
 
     /** 课程名 */
     @Excel(name = "课程名")
     private String courseName;
 
+    /** 学年 */
     @Excel(name = "学年")
     private String year;
 
+    /** 学期 */
     @Excel(name = "学期")
     private String term;
 
-    /** 课程名 */
+    /** 是否挂科 */
     @Excel(name = "是否挂科")
     private String pass;
+
+    /** 成绩排名 */
+    private Long rank;
+
+    /** 平均分 */
+    private Long average;
+
+    public void setAverage(Long average) {
+        this.average = average;
+    }
+
+    public Long getAverage() {
+        return average;
+    }
+
+    public void setRank(Long rank) {
+        this.rank = rank;
+    }
+
+    public Long getRank() {
+        return rank;
+    }
 
     public void setPass(String pass) {
         this.pass = pass;

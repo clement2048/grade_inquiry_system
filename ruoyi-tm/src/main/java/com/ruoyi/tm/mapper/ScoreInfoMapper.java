@@ -70,4 +70,38 @@ public interface ScoreInfoMapper
      * @return 结果
      */
     public List<ScoreInfo> selectScoreInfoByCourseId(Long courseId);
+
+
+    /**
+     * 根据教务老师id查询成绩
+     *
+     * @param id 课程id
+     * @return 结果
+     */
+    public List<ScoreInfo>selectScoreInfoByMTeacherId(Long id);
+
+    /**
+     * 根据教务老师id查询平均成绩
+     *
+     * @param id 课程id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectAvgScoreInfoByMTeacherId(Long id);
+
+
+    /**
+     * 教务老师获取学院平均分信息
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreInfoByTeacherId(Long id);
+
+    /**
+     * 老师获取挂科成绩名单
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectUnPassByTeacherId(Long id);
 }
