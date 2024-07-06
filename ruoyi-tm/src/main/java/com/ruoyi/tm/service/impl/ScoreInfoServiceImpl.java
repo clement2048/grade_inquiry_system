@@ -161,14 +161,37 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
         return successMsg.toString();
     }
 
+    /**
+     * 教务老师获取学院成绩详细信息
+     *
+     * @param id 教务老师id
+     * @return 结果
+     */
     @Override
     public List<ScoreInfo> selectScoreInfoByMTeacherId(Long id) {
         return scoreInfoMapper.selectScoreInfoByMTeacherId(id);
     }
 
 
+    /**
+     * 教务老师获取学院平均分信息
+     *
+     * @param id 教务老师id
+     * @return 结果
+     */
     @Override
     public List<ScoreInfo> selectAvgScoreInfoByMTeacherId(Long id) {
         return scoreInfoMapper.selectAvgScoreInfoByMTeacherId(id);
+    }
+
+    /**
+     * 教务老师获取学院平均分信息
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    @Override
+    public List<ScoreInfo> selectScoreInfoByTeacherId(Long id) {
+        return scoreInfoMapper.selectScoreInfoByTeacherId(id);
     }
 }

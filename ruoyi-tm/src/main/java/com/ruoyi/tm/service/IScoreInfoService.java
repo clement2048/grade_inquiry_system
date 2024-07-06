@@ -102,4 +102,12 @@ public interface IScoreInfoService
      * @return 结果
      */
     public List<ScoreInfo> selectAvgScoreInfoByMTeacherId(Long id);
+
+    /**
+     * 老师获取教过的课程的详细成绩信息
+     *
+     * @param id 老师id
+     * @return 结果
+     */
+    public List<ScoreInfo> selectScoreInfoByTeacherId(Long id);
 }
