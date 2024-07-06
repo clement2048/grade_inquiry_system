@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tm.mapper.ChooseCourseMapper">
+    
+    <resultMap type="ChooseCourse" id="ChooseCourseResult">
+        <result property="id"    column="id"    />
+        <result property="numRebuild"    column="num_rebuild"    />
+        <result property="numMakeup"    column="num_makeup"    />
+        <result property="deferSign"    column="defer_sign"    />
+        <result property="pass"    column="pass"    />
+        <result property="stuId"    column="stu_id"    />
+        <result property="courseId"    column="course_id"    />
+    </resultMap>
+
+    <sql id="selectChooseCourseVo">
+        select id, num_rebuild, num_makeup, defer_sign, pass, stu_id, course_id from choose_course
+    </sql>
+
+    <select id="selectChooseCourseList" parameterType="ChooseCourse" resultMap="ChooseCourseResult">
+        <include refid="selectChooseCourseVo"/>
+        <where>  
+            <if test="numRebuild != null "> and num_rebuild = #{numRebuild}</if>
+            <if test="numMakeup != null "> and num_makeup = #{numMakeup}</if>
+            <if test="deferSign != null "> and defer_sign = #{deferSign}</if>
+            <if test="pass != null "> and pass = #{pass}</if>
+            <if test="stuId != null "> and stu_id = #{stuId}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectChooseCourseById" parameterType="Long" resultMap="ChooseCourseResult">
+        <include refid="selectChooseCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChooseCourse" parameterType="ChooseCourse">
+        insert into choose_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="numRebuild != null">num_rebuild,</if>
+            <if test="numMakeup != null">num_makeup,</if>
+            <if test="deferSign != null">defer_sign,</if>
+            <if test="pass != null">pass,</if>
+            <if test="stuId != null">stu_id,</if>
+            <if test="courseId != null">course_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="numRebuild != null">#{numRebuild},</if>
+            <if test="numMakeup != null">#{numMakeup},</if>
+            <if test="deferSign != null">#{deferSign},</if>
+            <if test="pass != null">#{pass},</if>
+            <if test="stuId != null">#{stuId},</if>
+            <if test="courseId != null">#{courseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChooseCourse" parameterType="ChooseCourse">
+        update choose_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="numRebuild != null">num_rebuild = #{numRebuild},</if>
+            <if test="numMakeup != null">num_makeup = #{numMakeup},</if>
+            <if test="deferSign != null">defer_sign = #{deferSign},</if>
+            <if test="pass != null">pass = #{pass},</if>
+            <if test="stuId != null">stu_id = #{stuId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChooseCourseById" parameterType="Long">
+        delete from choose_course where id = #{id}
+    </delete>
+
+    <delete id="deleteChooseCourseByIds" parameterType="String">
+        delete from choose_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

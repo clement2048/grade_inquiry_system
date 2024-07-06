@@ -98,6 +98,10 @@ public class StuInfoController extends BaseController
         return toAjax(stuInfoService.deleteStuInfoByIds(ids));
     }
 
+
+    /**
+     * 导入Student数据
+     */
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception

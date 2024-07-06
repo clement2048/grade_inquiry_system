@@ -81,7 +81,7 @@ public class ScoreInfo extends BaseEntity
     }
 
     public void setCourseId(Long courseId) {
-        courseId = courseId;
+        this.courseId = courseId;
     }
 
     public Long getCourseId() {

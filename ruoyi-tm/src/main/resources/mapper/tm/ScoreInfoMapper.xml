@@ -47,11 +47,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         S.id = CH.id and
         C.id = CH.course_id
     </select>
-        
-    <insert id="insertScoreInfo" parameterType="ScoreInfo">
+
+    <select id="selectScoreInfoByCourseId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
+        FROM score_info AS S, choose_course AS CH, course_info AS C
+        where C.id = #{courseId} and
+        S.id = CH.id and
+        C.id = CH.course_id
+    </select>
+
+    <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
             <if test="usualPor != null">usual_por,</if>
             <if test="usualSco != null">usual_sco,</if>
             <if test="midPor != null">mid_por,</if>
@@ -62,7 +69,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="chooseId != null">choose_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
             <if test="usualPor != null">#{usualPor},</if>
             <if test="usualSco != null">#{usualSco},</if>
             <if test="midPor != null">#{midPor},</if>

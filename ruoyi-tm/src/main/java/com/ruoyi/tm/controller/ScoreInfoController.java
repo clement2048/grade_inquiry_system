@@ -2,16 +2,12 @@ package com.ruoyi.tm.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.tm.domain.StuInfo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -20,6 +16,7 @@ import com.ruoyi.tm.domain.ScoreInfo;
 import com.ruoyi.tm.service.IScoreInfoService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 成绩管理Controller
@@ -100,5 +97,30 @@ public class ScoreInfoController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(scoreInfoService.deleteScoreInfoByIds(ids));
+    }
+
+
+    /**
+     * 按照教师按照课程获取成绩
+     */
+    @GetMapping("/{TeacherId}/{courseId}")
+    public AjaxResult getScoreByCourse(@PathVariable("TeacherId") Long TeacherId, @PathVariable("courseId") Long courseId)
+    {
+        return success(scoreInfoService.selectScoreInfoByCourseId(courseId));
+    }
+
+    /**
+     * 导入Score数据
+     */
+    @PostMapping("/importScore")
+    @ResponseBody
+    public AjaxResult importScore(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<ScoreInfo> util = new ExcelUtil<ScoreInfo>(ScoreInfo.class);
+        List<ScoreInfo> ScoreList = util.importExcel(file.getInputStream());
+        LoginUser loginUser = getLoginUser();
+        String operName = loginUser.getUsername();
+        String message = scoreInfoService.importScore(ScoreList, updateSupport, operName);
+        return AjaxResult.success(message);
     }
 }
