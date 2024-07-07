@@ -148,4 +148,11 @@ public class ChooseCourseServiceImpl implements IChooseCourseService
         }
         return successMsg.toString();
     }
+
+    /**
+     * 获取挂科数量
+     */
+    public ChooseCourse getPassNum(){
+        return chooseCourseMapper.getPassNum();
+    }
 }

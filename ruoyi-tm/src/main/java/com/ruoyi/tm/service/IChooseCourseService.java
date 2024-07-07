@@ -1,8 +1,11 @@
 package com.ruoyi.tm.service;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.tm.domain.ChooseCourse;
 import com.ruoyi.tm.domain.ClassInfo;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * 选课Service接口
@@ -68,4 +71,9 @@ public interface IChooseCourseService
      * @return 结果
      */
     public String importChoose(List<ChooseCourse> chooseList, boolean updateSupport, String operName);
+
+    /**
+     * 获取挂科数量
+     */
+    public ChooseCourse getPassNum();
 }

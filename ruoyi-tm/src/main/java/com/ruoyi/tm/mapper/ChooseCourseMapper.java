@@ -60,4 +60,10 @@ public interface ChooseCourseMapper
      * @return 结果
      */
     public int deleteChooseCourseByIds(Long[] ids);
+
+
+    /**
+     * 获取挂科数量
+     */
+    public ChooseCourse getPassNum();
 }

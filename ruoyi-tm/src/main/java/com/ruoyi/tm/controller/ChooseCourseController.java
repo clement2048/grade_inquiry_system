@@ -113,4 +113,13 @@ public class ChooseCourseController extends BaseController
         String message = chooseCourseService.importChoose(chooseList, updateSupport, operName);
         return AjaxResult.success(message);
     }
+
+    /**
+     * 获取挂科数量
+     */
+    @GetMapping(value = "/getPassNum")
+    public AjaxResult getPassNum()
+    {
+        return success(chooseCourseService.getPassNum());
+    }
 }

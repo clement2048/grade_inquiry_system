@@ -42,6 +42,18 @@ public class ChooseCourse extends BaseEntity
     @Excel(name = "课程id")
     private Long courseId;
 
+    /** 通过人数 */
+    private Long passNum;
+
+    public Long getPassNum() {
+		return passNum;
+	}
+
+    public void setPassNum(Long passNum) {
+		this.passNum = passNum;
+	}
+
+
     public void setId(Long id) 
     {
         this.id = id;
