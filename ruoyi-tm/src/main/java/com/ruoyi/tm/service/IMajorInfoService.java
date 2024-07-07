@@ -2,6 +2,7 @@ package com.ruoyi.tm.service;
 
 import java.util.List;
 import com.ruoyi.tm.domain.MajorInfo;
+import com.ruoyi.tm.domain.StuInfo;
 
 /**
  * 专业Service接口
@@ -72,4 +73,13 @@ public interface IMajorInfoService
      * @return 结果
      */
     public MajorInfo getMajorPeoNumByStuId(Long id);
+
+    /**
+     * 批量导入信息
+     *
+     * @param majorList 专业信息集合
+     * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
+     * @return 结果
+     */
+    public String importMajor(List<MajorInfo> majorList, boolean updateSupport, String operName);
 }
