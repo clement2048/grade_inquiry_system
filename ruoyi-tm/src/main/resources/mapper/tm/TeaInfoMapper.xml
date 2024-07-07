@@ -27,6 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
+    <select id="getStuInfo" resultType="com.ruoyi.tm.domain.StuInfo">
+        select stu_info.id
+        from stu_info, class_info
+        where class_info.id = class_id
+        and teach_id = #{id}
+    </select>
+
     <insert id="insertTeaInfo" parameterType="TeaInfo">
         insert into tea_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

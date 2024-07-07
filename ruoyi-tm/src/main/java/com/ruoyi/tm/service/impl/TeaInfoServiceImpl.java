@@ -11,6 +11,7 @@ import com.ruoyi.common.utils.bean.BeanValidators;
 import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.system.service.impl.SysUserServiceImpl;
 import com.ruoyi.tm.domain.CourseInfo;
+import com.ruoyi.tm.domain.StuInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.tm.mapper.TeaInfoMapper;
@@ -185,6 +186,17 @@ public class TeaInfoServiceImpl implements ITeaInfoService {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
+    }
+
+
+    /**
+     * 根据教师id获取对应学生信息
+     *
+     * @param id 教师信息主键
+     * @return 教师信息
+     */
+    public List<StuInfo> getStuInfo(Long id){
+        return teaInfoMapper.getStuInfo(id);
     }
 }
 

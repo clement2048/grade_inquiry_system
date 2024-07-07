@@ -39,6 +39,8 @@ public class TeaInfoController extends BaseController
     @Autowired
     private IClassInfoService classInfoService;
 
+
+
     /**
      * 查询教师信息列表
      */
@@ -140,5 +142,16 @@ public class TeaInfoController extends BaseController
         String operName = loginUser.getUsername();
         String message = teaInfoService.importTea(teaList, updateSupport, operName);
         return AjaxResult.success(message);
+    }
+
+
+    /**
+     * 根据教师id获取学生信息
+     */
+    @PreAuthorize("@ss.hasPermi('tm:teacher:query')")
+    @GetMapping(value = "/getStuInfo/{id}")
+    public AjaxResult getStuInfo(@PathVariable("id") Long id)
+    {
+        return success(teaInfoService.getStuInfo(id));
     }
 }

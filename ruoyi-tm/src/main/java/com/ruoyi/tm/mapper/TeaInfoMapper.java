@@ -3,6 +3,7 @@ package com.ruoyi.tm.mapper;
 import java.util.List;
 
 import com.ruoyi.tm.domain.CourseInfo;
+import com.ruoyi.tm.domain.StuInfo;
 import com.ruoyi.tm.domain.TeaInfo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -63,4 +64,11 @@ public interface TeaInfoMapper
      */
     public int deleteTeaInfoByIds(Long[] ids);
 
+    /**
+     * 根据教师id获取对应学生信息
+     *
+     * @param id 教师信息主键
+     * @return 教师信息
+     */
+    public List<StuInfo> getStuInfo(Long id);
 }
