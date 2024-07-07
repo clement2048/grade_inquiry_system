@@ -172,7 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <include refid="selectScoreInfoVo"/>
         WHERE S.choose_id  = CH.id
         AND CH.course_id = C.id
-        AND CH.stu_id = 157
+        AND CH.stu_id = #{id}
         GROUP BY S.id
     </select>
 
