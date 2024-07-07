@@ -138,4 +138,19 @@ public interface IScoreInfoService
      */
     public ScoreInfo getStuScoreByStuId(Long id);
 
+    /**
+     * 根据学生id获取平均分
+     *
+     * @param id 班级id
+     * @return 结果
+     */
+    public ScoreInfo getStuAvgScoreByStuId(Long id);
+
+    /**
+     * 根据学生id获取成绩详情
+     *
+     * @param id 班级id
+     * @return 结果
+     */
+    public ScoreInfo getStuScoreInfoByStuId(Long id);
 }

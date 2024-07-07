@@ -144,4 +144,21 @@ public class StuInfoController extends BaseController
         return success(scoreInfoService.getStuScoreByStuId(id));
     }
 
+    /**
+     * 根据学生id获取平均分
+     */
+    @GetMapping(value = "/StuAvgScore/{id}")
+    public AjaxResult getStuAvgScoreByStuId(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getStuAvgScoreByStuId(id));
+    }
+
+    /**
+     * 根据学生id获取成绩详情
+     */
+    @GetMapping(value = "/StuScoreInfo/{id}")
+    public AjaxResult getStuScoreInfoByStuId(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getStuScoreInfoByStuId(id));
+    }
 }

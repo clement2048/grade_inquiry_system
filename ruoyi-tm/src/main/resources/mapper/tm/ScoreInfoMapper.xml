@@ -156,6 +156,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY CH.stu_id
     </select>
 
+    <select id="getStuAvgScoreByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        -- 计算平均分
+        SELECT AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) as average
+        FROM score_info AS S, choose_course AS CH, course_info AS C
+        WHERE S.choose_id = CH.id
+          AND C.id = CH.course_id
+          AND CH.stu_id = #{id}
+          AND CH.pass = 1
+        GROUP BY CH.stu_id
+    </select>
+
+    <select id="getStuScoreInfoByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+     -- 通过学生id获取成绩信息
+    <include refid="selectScoreInfoVo"/>
+        WHERE S.choose_id  = CH.id
+        AND CH.course_id = C.id
+        AND CH.stu_id = 157
+        GROUP BY S.id
+    </select>
+
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
