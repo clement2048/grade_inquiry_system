@@ -131,5 +131,4 @@ public class MajorInfoController extends BaseController
         String message = majorInfoService.importMajor(majorList, updateSupport, operName);
         return AjaxResult.success(message);
     }
-
 }

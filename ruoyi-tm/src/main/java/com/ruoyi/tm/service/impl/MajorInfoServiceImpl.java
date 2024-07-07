@@ -132,7 +132,7 @@ public class MajorInfoServiceImpl implements IMajorInfoService
     public String importMajor(List<MajorInfo> majorList ,boolean updateSupport, String operName) {
         if (StringUtils.isNull(majorList) || majorList.size() == 0)
         {
-            throw new ServiceException("导入用户数据不能为空！");
+            throw new ServiceException("导入专业数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;
