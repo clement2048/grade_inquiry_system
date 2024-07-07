@@ -112,9 +112,9 @@ public class ScoreInfoController extends BaseController
     /**
      * 导入Score数据
      */
-    @PostMapping("/importDate")
+    @PostMapping("/importData")
     @ResponseBody
-    public AjaxResult importScore(MultipartFile file, boolean updateSupport) throws Exception
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {
         ExcelUtil<ScoreInfo> util = new ExcelUtil<ScoreInfo>(ScoreInfo.class);
         List<ScoreInfo> ScoreList = util.importExcel(file.getInputStream());
