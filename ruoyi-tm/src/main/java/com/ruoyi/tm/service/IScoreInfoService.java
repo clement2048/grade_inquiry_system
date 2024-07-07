@@ -152,7 +152,7 @@ public interface IScoreInfoService
      * @param id 班级id
      * @return 结果
      */
-    public ScoreInfo getStuScoreInfoByStuId(Long id);
+    public List<ScoreInfo> getStuScoreInfoByStuId(Long id);
 
     /**
      * 根据课程ID获取参加课程的学生成绩信息

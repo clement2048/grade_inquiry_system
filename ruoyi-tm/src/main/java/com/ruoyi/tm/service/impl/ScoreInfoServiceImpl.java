@@ -241,7 +241,7 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
      * @param id 班级id
      * @return 结果
      */
-    public ScoreInfo getStuScoreInfoByStuId(Long id){
+    public List<ScoreInfo> getStuScoreInfoByStuId(Long id){
         return scoreInfoMapper.getStuScoreInfoByStuId(id);
     }
 
