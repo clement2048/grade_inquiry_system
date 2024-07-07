@@ -2,6 +2,7 @@ package com.ruoyi.tm.mapper;
 
 import java.util.List;
 import com.ruoyi.tm.domain.TeaInfo;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 教师信息Mapper接口
@@ -9,6 +10,7 @@ import com.ruoyi.tm.domain.TeaInfo;
  * @author clement
  * @date 2024-07-06
  */
+@Mapper
 public interface TeaInfoMapper 
 {
     /**

@@ -132,8 +132,16 @@ public interface SysUserMapper
     /**
      * 新增学生信息的附属方法
      *
-     * @param user 用户信息
+     * @param user 学生信息
      * @return 结果
      */
     public int insertStuUser(SysUser user);
+
+    /**
+     * 新增教师信息的附属方法
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    public int insertTeacherUser(SysUser user);
 }

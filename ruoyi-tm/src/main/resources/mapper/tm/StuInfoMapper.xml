@@ -38,7 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             and sys_user.status = 0 and sys_user.del_flag = '0'
         </where>
     </select>
-
     <select id="selectStuInfoById" parameterType="Long" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
         where stu_info.id = #{id}

@@ -26,6 +26,17 @@ public class TeaInfo extends BaseEntity
     @Excel(name = "教师类型")
     private String type;
 
+    /** 学生数量 */
+    private Long StudentNum;
+
+    public Long getStudentNum() {
+		return StudentNum;
+	}
+
+    public void setStudentNum(Long studentNum) {
+		StudentNum = studentNum;
+	}
+
     public void setId(Long id) 
     {
         this.id = id;

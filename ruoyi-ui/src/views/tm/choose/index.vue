@@ -25,7 +25,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="通过标志(0为通过，1为不通过)" prop="pass">
+      <el-form-item label="通过标志" prop="pass">
         <el-input
           v-model="queryParams.pass"
           placeholder="请输入通过标志(0为通过，1为不通过)"
@@ -107,7 +107,12 @@
       <el-table-column label="重修次数" align="center" prop="numRebuild" />
       <el-table-column label="补考次数" align="center" prop="numMakeup" />
       <el-table-column label="缓考标志" align="center" prop="deferSign" />
-      <el-table-column label="通过标志(0为通过，1为不通过)" align="center" prop="pass" />
+<!--      <el-table-column label="通过标志(0为通过，1为不通过)" align="center" prop="pass"/>-->
+      <el-table-column label="通过标志(0为通过，1为不通过)" align="center" prop="pass">
+        <template slot-scope="scope">
+          {{ scope.row.pass === 0 ? '通过' : '不通过' }}
+        </template>
+      </el-table-column>
       <el-table-column label="学生id" align="center" prop="stuId" />
       <el-table-column label="课程id" align="center" prop="courseId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -129,7 +134,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
