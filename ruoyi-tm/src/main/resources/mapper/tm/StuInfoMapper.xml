@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND STU.id = #{id}
         AND STU.major_id = M.id
         AND CH.stu_id = STU.id
-        AND CH.pass = 0
+        AND CH.pass = 1
         AND CH.course_id = CS.id
         GROUP BY STU.id;
     </select>
