@@ -88,4 +88,10 @@ public interface IMajorInfoService
      * @return 结果
      */
     public MajorInfo getPeoNum();
+
+    /**
+     * 获取专业内老师人数
+     * @return 结果
+     */
+    public MajorInfo getTeacherNum();
 }

@@ -133,11 +133,20 @@ public class MajorInfoController extends BaseController
     }
 
     /**
-     * 通过获取专业内人数
+     * 通过获取专业内学生人数
      */
     @GetMapping(value = "/getPeoNum")
     public AjaxResult getPeoNum()
     {
         return success(majorInfoService.getPeoNum());
+    }
+
+    /**
+     * 通过获取专业内老师人数
+     */
+    @GetMapping(value = "/getTeacherNum")
+    public AjaxResult getTeacherNum()
+    {
+        return success(majorInfoService.getTeacherNum());
     }
 }

@@ -53,6 +53,17 @@ public class MajorInfo extends BaseEntity
     /** 专业内人数 */
     private Long peopleNum;
 
+    /** 专业内老师数量 */
+    private Long TeacherNum;
+
+    public Long getTeacherNum() {
+		return TeacherNum;
+	}
+
+    public void setTeacherNum(Long teacherNum) {
+		TeacherNum = teacherNum;
+	}
+
     public Long getPeopleNum() {
 		return peopleNum;
 	}

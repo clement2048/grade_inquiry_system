@@ -177,5 +177,15 @@ public class MajorInfoServiceImpl implements IMajorInfoService
     public MajorInfo getPeoNum(){
         return majorInfoMapper.getPeoNum();
     }
+
+
+    /**
+     * 获取专业内老师人数
+     * @return 结果
+     */
+
+    public MajorInfo getTeacherNum(){
+        return majorInfoMapper.getTeacherNum();
+    }
 }
 
