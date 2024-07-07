@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pubChoose"    column="pub_choose"    />
         <result property="graScore"    column="gra_score"    />
         <result property="facId"    column="fac_id"    />
+        <result property="peopleNum" column="peopleNum"/>
     </resultMap>
 
     <sql id="selectMajorInfoVo">
@@ -38,7 +39,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectMajorInfoVo"/>
         where id = #{id}
     </select>
-        
+
+
+    <select id="getMajorPeopleNumById" resultType="com.ruoyi.tm.domain.MajorInfo">
+        SELECT COUNT(*) AS peopleNum
+        FROM stu_info AS STU, major_info AS M
+        WHERE STU.major_id = M.id
+          AND M.id = #{id}
+    </select>
+
     <insert id="insertMajorInfo" parameterType="MajorInfo">
         insert into major_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

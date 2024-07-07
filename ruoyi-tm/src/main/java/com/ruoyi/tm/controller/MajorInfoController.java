@@ -101,4 +101,16 @@ public class MajorInfoController extends BaseController
     {
         return toAjax(majorInfoService.deleteMajorInfoByIds(ids));
     }
+
+    /**
+     * 通过专业id获取专业内人数
+     */
+    @GetMapping(value = "/getMajorPeoNum/{id}")
+    public AjaxResult getMajorPeopleNum(@PathVariable("id") Long id)
+    {
+        return success(majorInfoService.getMajorPeopleNumById(id));
+    }
+
+
+
 }

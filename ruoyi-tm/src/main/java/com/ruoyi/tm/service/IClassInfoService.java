@@ -58,4 +58,12 @@ public interface IClassInfoService
      * @return 结果
      */
     public int deleteClassInfoById(Long id);
+
+    /**
+     * 班主任id查询班级信息
+     *
+     * @param id 班主任id
+     * @return 结果
+     */
+    public ClassInfo selectClassByTeacherId(Long id);
 }

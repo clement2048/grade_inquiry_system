@@ -90,4 +90,14 @@ public class ClassInfoServiceImpl implements IClassInfoService
     {
         return classInfoMapper.deleteClassInfoById(id);
     }
+
+    /**
+     * 班主任id查询班级信息
+     *
+     * @param id 班主任id
+     * @return 结果
+     */
+    public ClassInfo selectClassByTeacherId(Long id){
+        return classInfoMapper.selectClassByTeacherId(id);
+    }
 }

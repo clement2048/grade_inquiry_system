@@ -32,7 +32,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where class_info.id = #{id}
         and class_info.teach_id = tea_info.id
     </select>
-        
+
+    <select id="selectClassByTeacherId" resultType="com.ruoyi.tm.domain.ClassInfo">
+        select grade, class_num
+        from class_info
+        where teach_id = #{id}
+    </select>
+
     <insert id="insertClassInfo" parameterType="ClassInfo" useGeneratedKeys="true" keyProperty="id">
         insert into class_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

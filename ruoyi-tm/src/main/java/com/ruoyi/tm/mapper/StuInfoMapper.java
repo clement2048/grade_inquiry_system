@@ -81,4 +81,11 @@ public interface StuInfoMapper
      */
     public StuInfo selectStuInfoAndCreditById(Long id);
 
+    /**
+     * 通过班级id查询Student
+     *
+     * @param id ClassID
+     * @return Student
+     */
+    public List<StuInfo> getStudentByClassID(Long id);
 }

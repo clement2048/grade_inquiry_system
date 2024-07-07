@@ -90,4 +90,15 @@ public class MajorInfoServiceImpl implements IMajorInfoService
     {
         return majorInfoMapper.deleteMajorInfoById(id);
     }
+
+    /**
+     * 通过专业id获取专业内人数
+     * @param id 专业主键
+     * @return 结果
+     */
+    @Override
+    public MajorInfo getMajorPeopleNumById(Long id){
+        return majorInfoMapper.getMajorPeopleNumById(id);
+    }
 }
+

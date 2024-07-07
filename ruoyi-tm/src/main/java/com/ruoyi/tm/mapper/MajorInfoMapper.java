@@ -58,4 +58,11 @@ public interface MajorInfoMapper
      * @return 结果
      */
     public int deleteMajorInfoByIds(Long[] ids);
+
+    /**
+     * 通过专业id获取专业内人数
+     * @param id 专业主键
+     * @return 结果
+     */
+    public MajorInfo getMajorPeopleNumById(Long id);
 }

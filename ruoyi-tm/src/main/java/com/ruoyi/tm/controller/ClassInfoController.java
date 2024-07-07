@@ -2,6 +2,8 @@ package com.ruoyi.tm.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.tm.service.IStuInfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,9 @@ public class ClassInfoController extends BaseController
 {
     @Autowired
     private IClassInfoService classInfoService;
+
+    @Autowired
+    private IStuInfoService stuInfoService;
 
     /**
      * 查询班级管理列表
@@ -101,4 +106,15 @@ public class ClassInfoController extends BaseController
     {
         return toAjax(classInfoService.deleteClassInfoByIds(ids));
     }
+
+    /**
+     * 通过班级号查询班级学生id
+     */
+    @PreAuthorize("@ss.hasPermi('class:class_info:query')")
+    @GetMapping(value = "/getStudentByClassID/{id}")
+    public AjaxResult getStudentByClassID(@PathVariable("id") Long id)
+    {
+        return success(stuInfoService.getStudentByClassID(id));
+    }
+
 }
