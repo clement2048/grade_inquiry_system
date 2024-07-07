@@ -1,0 +1,104 @@
+package com.ruoyi.tm.controller;
+
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.tm.domain.ClassInfo;
+import com.ruoyi.tm.service.IClassInfoService;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.page.TableDataInfo;
+
+/**
+ * 班级管理Controller
+ * 
+ * @author ruoyi
+ * @date 2024-07-07
+ */
+@RestController
+@RequestMapping("/class/class_info")
+public class ClassInfoController extends BaseController
+{
+    @Autowired
+    private IClassInfoService classInfoService;
+
+    /**
+     * 查询班级管理列表
+     */
+    @PreAuthorize("@ss.hasPermi('class:class_info:list')")
+    @GetMapping("/list")
+    public TableDataInfo list(ClassInfo classInfo)
+    {
+        startPage();
+        List<ClassInfo> list = classInfoService.selectClassInfoList(classInfo);
+        return getDataTable(list);
+    }
+
+    /**
+     * 导出班级管理列表
+     */
+    @PreAuthorize("@ss.hasPermi('class:class_info:export')")
+    @Log(title = "班级管理", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, ClassInfo classInfo)
+    {
+        List<ClassInfo> list = classInfoService.selectClassInfoList(classInfo);
+        ExcelUtil<ClassInfo> util = new ExcelUtil<ClassInfo>(ClassInfo.class);
+        util.exportExcel(response, list, "班级管理数据");
+    }
+
+    /**
+     * 获取班级管理详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('class:class_info:query')")
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id)
+    {
+        return success(classInfoService.selectClassInfoById(id));
+    }
+
+    /**
+     * 新增班级管理
+     */
+    @PreAuthorize("@ss.hasPermi('class:class_info:add')")
+    @Log(title = "班级管理", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody ClassInfo classInfo)
+    {
+        return toAjax(classInfoService.insertClassInfo(classInfo));
+    }
+
+    /**
+     * 修改班级管理
+     */
+    @PreAuthorize("@ss.hasPermi('class:class_info:edit')")
+    @Log(title = "班级管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody ClassInfo classInfo)
+    {
+        return toAjax(classInfoService.updateClassInfo(classInfo));
+    }
+
+    /**
+     * 删除班级管理
+     */
+    @PreAuthorize("@ss.hasPermi('class:class_info:remove')")
+    @Log(title = "班级管理", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids)
+    {
+        return toAjax(classInfoService.deleteClassInfoByIds(ids));
+    }
+}
