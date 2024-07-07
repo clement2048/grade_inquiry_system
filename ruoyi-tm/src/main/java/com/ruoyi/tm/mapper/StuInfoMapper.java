@@ -73,6 +73,12 @@ public interface StuInfoMapper
     public int deleteStuInfoByIds(Long[] ids);
 
 
-
+    /**
+     * 查询Student以及学分记录
+     *
+     * @param id Student主键
+     * @return Student
+     */
+    public StuInfo selectStuInfoAndCreditById(Long id);
 
 }

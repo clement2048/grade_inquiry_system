@@ -183,4 +183,14 @@ public class StuInfoServiceImpl implements IStuInfoService
         }
         return successMsg.toString();
     }
+
+    /**
+     * 查询StudentCredit
+     *
+     * @param id Student主键
+     * @return Student
+     */
+    public StuInfo selectStuInfoAndCreditById(Long id){
+        return stuInfoMapper.selectStuInfoAndCreditById(id);
+    }
 }

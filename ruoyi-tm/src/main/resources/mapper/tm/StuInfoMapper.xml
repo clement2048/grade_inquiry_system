@@ -14,6 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="classId"    column="class_id"    />
         <result property="majorId"    column="major_id"    />
         <result property="user_name"    column="user_name"    />
+        <result property="curCredit" column="curCredit" />
+        <result property="graCredit" column="graCredit"/>
     </resultMap>
 
 <!--    只显示未被删除的学生信息-->
@@ -22,27 +24,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from stu_info, sys_user
     </sql>
 
+    <sql id="selectStuInfoAndCredictVo">
+        select STU.id, STU.`name`, sex, STU.type, adm_method, in_school, stu_status, class_id, major_id, user_name, gra_score AS graCredit, SUM(CS.credit) AS curCredit
+        from stu_info AS STU, sys_user AS SYS, major_info AS M, course_info AS CS, choose_course AS CH
+    </sql>
+
     <select id="selectStuInfoList" parameterType="StuInfo" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
         <where>
-<!--            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>-->
-<!--            <if test="sex != null "> and sex = #{sex}</if>-->
-<!--            <if test="type != null  and type != ''"> and type = #{type}</if>-->
-<!--            <if test="admMethod != null  and admMethod != ''"> and adm_method = #{admMethod}</if>-->
-<!--            <if test="inSchool != null "> and in_school = #{inSchool}</if>-->
-<!--            <if test="stuStatus != null "> and stu_status = #{stuStatus}</if>-->
-<!--            <if test="classId != null "> and class_id = #{classId}</if>-->
-<!--            <if test="majorId != null "> and major_id = #{majorId}</if>-->
-<!--            and -->
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="admMethod != null  and admMethod != ''"> and adm_method = #{admMethod}</if>
+            <if test="inSchool != null "> and in_school = #{inSchool}</if>
+            <if test="classId != null "> and class_id = #{classId}</if>
+            <if test="majorId != null "> and major_id = #{majorId}</if>and
             stu_info.id = sys_user.user_id
-            and sys_user.status = 0 and sys_user.del_flag = '0'
+            and sys_user.status = 0
+            and sys_user.del_flag = '0'
         </where>
     </select>
+
     <select id="selectStuInfoById" parameterType="Long" resultMap="StuInfoResult">
         <include refid="selectStuInfoVo"/>
         where stu_info.id = #{id}
         and stu_info.id = sys_user.user_id
         and sys_user.status = 0
+    </select>
+
+    <select id="selectStuInfoAndCreditById" resultType="com.ruoyi.tm.domain.StuInfo">
+        <include refid="selectStuInfoAndCredictVo"/>
+        WHERE STU.id = SYS.user_id
+        AND SYS.`status` = 0
+        AND SYS.del_flag = '0'
+        AND STU.id = #{id}
+        AND STU.major_id = M.id
+        AND CH.stu_id = STU.id
+        AND CH.pass = 0
+        AND CH.course_id = CS.id
+        GROUP BY STU.id;
     </select>
 
     <insert id="insertStuInfo" parameterType="StuInfo">

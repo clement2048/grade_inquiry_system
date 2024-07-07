@@ -121,4 +121,10 @@ public class StuInfoController extends BaseController
         // sheetName可能有问题
         return util.importTemplateExcel("用户数据");
     }
+
+    @GetMapping(value = "/StuIndex/{id}")
+    public AjaxResult getStuAndCreditInfo(@PathVariable("id") Long id)
+    {
+        return success(stuInfoService.selectStuInfoAndCreditById(id));
+    }
 }

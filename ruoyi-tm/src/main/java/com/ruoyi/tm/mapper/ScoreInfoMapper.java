@@ -112,4 +112,7 @@ public interface ScoreInfoMapper
      * @return 结果
      */
     public List<ScoreInfo> selectScoreByClassId(Long id);
+
+
+
 }

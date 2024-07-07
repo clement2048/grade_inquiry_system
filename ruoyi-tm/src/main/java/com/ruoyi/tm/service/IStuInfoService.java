@@ -73,4 +73,13 @@ public interface IStuInfoService
      * @return 结果
      */
     public String importUser(List<StuInfo> userList, boolean updateSupport, String operName);
+
+
+    /**
+     * 查询StudentCredit
+     *
+     * @param id Student主键
+     * @return Student
+     */
+    public StuInfo selectStuInfoAndCreditById(Long id);
 }

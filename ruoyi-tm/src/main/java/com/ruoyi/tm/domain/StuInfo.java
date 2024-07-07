@@ -57,6 +57,12 @@ public class StuInfo extends BaseEntity
     @Excel(name = "专业id")
     private Long majorId;
 
+    /** 当前所修学分 */
+    private Long curCredit;
+
+    /** 毕业所需学分 */
+    private Long graCredit;
+
     public void setId(Long id) 
     {
         this.id = id;
