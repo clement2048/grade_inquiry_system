@@ -2,6 +2,7 @@ package com.ruoyi.tm.mapper;
 
 import java.util.List;
 import com.ruoyi.tm.domain.ChooseCourse;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 选课Mapper接口
@@ -9,6 +10,7 @@ import com.ruoyi.tm.domain.ChooseCourse;
  * @author clement
  * @date 2024-07-06
  */
+@Mapper
 public interface ChooseCourseMapper 
 {
     /**

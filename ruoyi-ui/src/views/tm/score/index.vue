@@ -77,7 +77,7 @@
       <el-table-column label="课程名" align="center" prop="courseName" />
       <el-table-column label="学年" align="center" prop="year" />
       <el-table-column label="学期" align="center" prop="term" />
-      <el-table-column label="总成绩" align="center" prop="totalSco" />
+      <el-table-column label="总成绩" align="center" prop="average" />
       <el-table-column label="是否通过" align="center" prop="pass" />
       <el-table-column label="排名" align="center" prop="rank" />
 
@@ -152,7 +152,6 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-
     <!-- 用户导入对话框 -->
     <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px">
       <el-upload
@@ -174,6 +173,7 @@
         </div>
         <div class="el-upload__tip" slot="tip">
           <el-checkbox v-model="upload.updateSupport" />是否更新已经存在的用户数据
+          <el-link type="info" style="font-size:12px" @click="importTemplate">下载模板</el-link>
         </div>
         <div class="el-upload__tip" style="color:red" slot="tip">提示：仅允许导入“xls”或“xlsx”格式文件！</div>
       </el-upload>
@@ -182,7 +182,6 @@
         <el-button @click="upload.open = false">取 消</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -265,7 +264,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/tm/score/importData"
+        url: process.env.VUE_APP_BASE_API + "/tm/score/importScore"
       }
     };
   },
@@ -279,7 +278,6 @@ export default {
       listScore(this.queryParams).then(response => {
         this.scoreList = response.rows;
         console.log(response.rows);
-        this.handleScore();
         this.total = response.total;
         this.loading = false;
       });
@@ -377,19 +375,6 @@ export default {
         ...this.queryParams
       }, `score_${new Date().getTime()}.xlsx`)
     },
-    handleScore(){
-      for(let i=0;i<this.scoreList.length;i++){
-        let totalSco = 0;
-        let usual_sco = this.scoreList[i].usualSco;
-        let mid_sco = this.scoreList[i].midSco;
-        let final_sco = this.scoreList[i].finalSco;
-        let usual_por = this.scoreList[i].usualPor / 100;
-        let mid_por = this.scoreList[i].midPor /100;
-        let final_por = this.scoreList[i].finalPor /100;
-        totalSco = usual_por*usual_sco + mid_por*mid_sco + final_por*final_sco;
-        this.scoreList[i].totalSco=totalSco;
-      }
-    },
     /** 详情按钮操作 */
     handleDetails(row) {
       this.reset();
@@ -408,7 +393,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('/system/info/importTemplate', {
+      this.download('/tm/score/importTemplate', {
       }, `user_template_${new Date().getTime()}.xlsx`)
     },
     /** 文件上传中处理 */

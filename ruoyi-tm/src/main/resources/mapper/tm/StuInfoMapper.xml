@@ -63,6 +63,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY STU.id;
     </select>
 
+    <select id="getStudentByClassID" resultType="com.ruoyi.tm.domain.StuInfo">
+        select stu_info.id from stu_info where class_id = #{id};
+    </select>
+
     <insert id="insertStuInfo" parameterType="StuInfo">
         INSERT INTO stu_info(id, name, type, adm_method,in_school, stu_status, class_id, major_id)
         VALUES (#{id}, #{name}, #{type},#{admMethod}, #{inSchool}, #{stuStatus}, #{classId}, #{majorId});

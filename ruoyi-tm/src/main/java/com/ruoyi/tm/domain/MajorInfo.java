@@ -50,6 +50,17 @@ public class MajorInfo extends BaseEntity
     @Excel(name = "所属学院id")
     private Long facId;
 
+    /** 专业内人数 */
+    private Long peopleNum;
+
+    public Long getPeopleNum() {
+		return peopleNum;
+	}
+
+    public void setPeopleNum(Long peopleNum) {
+		this.peopleNum = peopleNum;
+	}
+
     public void setId(Long id) 
     {
         this.id = id;

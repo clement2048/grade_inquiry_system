@@ -2,16 +2,13 @@ package com.ruoyi.tm.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.tm.domain.MajorInfo;
+import com.ruoyi.tm.service.IScoreInfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -20,6 +17,7 @@ import com.ruoyi.tm.domain.CourseInfo;
 import com.ruoyi.tm.service.ICourseInfoService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 课程信息Controller
@@ -33,6 +31,9 @@ public class CourseInfoController extends BaseController
 {
     @Autowired
     private ICourseInfoService courseInfoService;
+
+    @Autowired
+    private IScoreInfoService scoreInfoService;
 
     /**
      * 查询课程信息列表
@@ -100,6 +101,32 @@ public class CourseInfoController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(courseInfoService.deleteCourseInfoByIds(ids));
+    }
+
+
+    /**
+     * 获取参与课程的学生的成绩信息详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('tm:Course:query')")
+    @GetMapping(value = "/StudentScore/{id}")
+    public AjaxResult getScoreInfoByCourseId(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getScoreInfoByCourseId(id));
+    }
+
+    /**
+     * 导入Course
+     */
+    @PostMapping("/importData")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<CourseInfo> util = new ExcelUtil<CourseInfo>(CourseInfo.class);
+        List<CourseInfo> courseList = util.importExcel(file.getInputStream());
+        LoginUser loginUser = getLoginUser();
+        String operName = loginUser.getUsername();
+        String message = courseInfoService.importCourse(courseList, updateSupport, operName);
+        return AjaxResult.success(message);
     }
 
 }

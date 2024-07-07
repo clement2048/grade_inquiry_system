@@ -2,6 +2,7 @@ package com.ruoyi.tm.service;
 
 import java.util.List;
 import com.ruoyi.tm.domain.ChooseCourse;
+import com.ruoyi.tm.domain.ClassInfo;
 
 /**
  * 选课Service接口
@@ -58,4 +59,13 @@ public interface IChooseCourseService
      * @return 结果
      */
     public int deleteChooseCourseById(Long id);
+
+    /**
+     * 批量导入选课信息
+     *
+     * @param chooseList 选课信息集合
+     * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
+     * @return 结果
+     */
+    public String importChoose(List<ChooseCourse> chooseList, boolean updateSupport, String operName);
 }

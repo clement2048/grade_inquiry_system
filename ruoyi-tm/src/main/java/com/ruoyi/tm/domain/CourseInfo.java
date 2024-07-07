@@ -58,6 +58,17 @@ public class CourseInfo extends BaseEntity
     @Excel(name = "授课老师id")
     private Long teachId;
 
+    /** 当前选课人数*/
+    private Long peopleNum;
+
+    public Long getPeopleNum() {
+		return peopleNum;
+	}
+
+    public void setPeopleNum(Long peopleNum) {
+		this.peopleNum = peopleNum;
+	}
+
     public void setId(Long id) 
     {
         this.id = id;

@@ -2,16 +2,12 @@ package com.ruoyi.tm.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.tm.domain.StuInfo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -20,6 +16,7 @@ import com.ruoyi.tm.domain.MajorInfo;
 import com.ruoyi.tm.service.IMajorInfoService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 专业Controller
@@ -100,5 +97,38 @@ public class MajorInfoController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(majorInfoService.deleteMajorInfoByIds(ids));
+    }
+
+    /**
+     * 通过专业id获取专业内人数
+     */
+    @GetMapping(value = "/getMajorPeoNum/{id}")
+    public AjaxResult getMajorPeopleNum(@PathVariable("id") Long id)
+    {
+        return success(majorInfoService.getMajorPeopleNumById(id));
+    }
+
+    /**
+     * 通过学生id获取专业内人数
+     */
+    @GetMapping(value = "/getMajorPeoNumByStuId/{id}")
+    public AjaxResult getMajorPeoNumByStuId(@PathVariable("id") Long id)
+    {
+        return success(majorInfoService.getMajorPeoNumByStuId(id));
+    }
+
+    /**
+     * 导入Major
+     */
+    @PostMapping("/importData")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<MajorInfo> util = new ExcelUtil<MajorInfo>(MajorInfo.class);
+        List<MajorInfo> majorList = util.importExcel(file.getInputStream());
+        LoginUser loginUser = getLoginUser();
+        String operName = loginUser.getUsername();
+        String message = majorInfoService.importMajor(majorList, updateSupport, operName);
+        return AjaxResult.success(message);
     }
 }

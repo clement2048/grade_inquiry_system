@@ -42,3 +42,38 @@ export function delInfo(id) {
     method: 'delete'
   })
 }
+// 获取学生学分
+export function getCreditInfo(id) {
+  return request({
+    url: '/system/info/StuIndex/' + id,
+    method: 'get'
+  })
+}
+// 获取总绩点
+// export function getGPA(id) {
+//   return request({
+//     url: '/system/info/StuScore/' + id,
+//     method: 'get'
+//   })
+// }
+// 根据学生id获取平均分
+export function getAvgScore(id) {
+  return request({
+    url: '/system/info/StuAvgScore/' + id,
+    method: 'get'
+  })
+}
+// 根据学生id获取成绩详情
+export function getScoreInfo(id) {
+  return request({
+    url: '/system/info/StuScoreInfo/' + id,
+    method: 'get'
+  })
+}
+// 根据学生id以及总绩点计算专业内排名
+export function getScoreRank(id) {
+  return request({
+    url: '/system/info/StuScoreANDMRank/' + id,
+    method: 'get'
+  })
+}

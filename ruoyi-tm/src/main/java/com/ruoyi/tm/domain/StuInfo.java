@@ -63,6 +63,17 @@ public class StuInfo extends BaseEntity
     /** 毕业所需学分 */
     private Long graCredit;
 
+    /** 当前专业内排名 */
+    private Long rank;
+
+    public Long getRank() {
+        return rank;
+    }
+
+    public void setRank(Long rank) {
+        this.rank = rank;
+    }
+
     public Long getCurCredit() {
         return curCredit;
     }

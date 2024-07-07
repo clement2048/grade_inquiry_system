@@ -77,6 +77,17 @@ public class ScoreInfo extends BaseEntity
     /** 平均分 */
     private Long average;
 
+    /** 学生id */
+    private Long studentId;
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
     public void setAverage(Long average) {
         this.average = average;
     }

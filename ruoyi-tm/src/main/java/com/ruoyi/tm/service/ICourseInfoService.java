@@ -2,6 +2,7 @@ package com.ruoyi.tm.service;
 
 import java.util.List;
 import com.ruoyi.tm.domain.CourseInfo;
+import com.ruoyi.tm.domain.MajorInfo;
 
 /**
  * 课程信息Service接口
@@ -66,4 +67,13 @@ public interface ICourseInfoService
      * @return 课程信息
      */
     public CourseInfo selectCourseInfoByTeacherId(Long id);
+
+    /**
+     * 批量导入信息
+     *
+     * @param courseList 课程信息集合
+     * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
+     * @return 结果
+     */
+    public String importCourse(List<CourseInfo> courseList, boolean updateSupport, String operName);
 }

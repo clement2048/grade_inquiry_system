@@ -131,12 +131,12 @@ public interface IScoreInfoService
     public List<ScoreInfo> selectScoreByClassId(Long id);
 
     /**
-     * 根据学生id获取绩点
+     * 根据学生id获取总绩点
      *
      * @param id 班级id
      * @return 结果
-     */
     public ScoreInfo getStuScoreByStuId(Long id);
+     */
 
     /**
      * 根据学生id获取平均分
@@ -152,5 +152,21 @@ public interface IScoreInfoService
      * @param id 班级id
      * @return 结果
      */
-    public ScoreInfo getStuScoreInfoByStuId(Long id);
+    public List<ScoreInfo> getStuScoreInfoByStuId(Long id);
+
+    /**
+     * 根据课程ID获取参加课程的学生成绩信息
+     *
+     * @param id 班级id
+     * @return 结果
+     */
+    public List<ScoreInfo> getScoreInfoByCourseId(Long id);
+
+    /**
+     * 通过id获取总绩点并且根据总绩点计算专业内排名
+     *
+     * @param id 学生id
+     * @return 结果
+     */
+    public ScoreInfo getStuScoreAndMRankByStuId(Long id);
 }
