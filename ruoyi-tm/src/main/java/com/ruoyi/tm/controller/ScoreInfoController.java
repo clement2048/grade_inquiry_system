@@ -112,7 +112,7 @@ public class ScoreInfoController extends BaseController
     /**
      * 导入Score数据
      */
-    @PostMapping("/importScore")
+    @PostMapping("/importDate")
     @ResponseBody
     public AjaxResult importScore(MultipartFile file, boolean updateSupport) throws Exception
     {
