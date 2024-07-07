@@ -108,7 +108,7 @@ public class ClassInfoController extends BaseController
     }
 
     /**
-     * 通过班级号查询班级学生id
+     * 通过班级id查询班级学生id
      */
     @PreAuthorize("@ss.hasPermi('class:class_info:query')")
     @GetMapping(value = "/getStudentByClassID/{id}")

@@ -118,8 +118,9 @@ public interface ScoreInfoMapper
      *
      * @param id 班级id
      * @return 结果
-     */
+
     public ScoreInfo getStuScoreByStuId(Long id);
+     */
 
     /**
      * 根据学生id获取平均分
@@ -144,4 +145,12 @@ public interface ScoreInfoMapper
      * @return 结果
      */
     public List<ScoreInfo> getScoreInfoByCourseId(Long id);
+
+    /**
+     * 通过id获取总绩点并且根据总绩点计算专业内排名
+     *
+     * @param id 学生id
+     * @return 结果
+     */
+    public ScoreInfo getStuScoreAndMRankByStuId(Long id);
 }

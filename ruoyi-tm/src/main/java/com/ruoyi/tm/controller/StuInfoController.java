@@ -135,14 +135,14 @@ public class StuInfoController extends BaseController
         return success(stuInfoService.selectStuInfoAndCreditById(id));
     }
 
-    /**
-     * 获取总绩点
-     */
-    @GetMapping(value = "/StuScore/{id}")
-    public AjaxResult getStuScoreByStuId(@PathVariable("id") Long id)
-    {
-        return success(scoreInfoService.getStuScoreByStuId(id));
-    }
+//    /**
+//     * 获取总绩点
+//     */
+//    @GetMapping(value = "/StuScore/{id}")
+//    public AjaxResult getStuScoreByStuId(@PathVariable("id") Long id)
+//    {
+//        return success(scoreInfoService.getStuScoreByStuId(id));
+//    }
 
     /**
      * 根据学生id获取平均分
@@ -160,5 +160,14 @@ public class StuInfoController extends BaseController
     public AjaxResult getStuScoreInfoByStuId(@PathVariable("id") Long id)
     {
         return success(scoreInfoService.getStuScoreInfoByStuId(id));
+    }
+
+    /**
+     * 根据学生id以及总绩点计算专业内排名
+     */
+    @GetMapping(value = "/StuScoreANDMRank/{id}")
+    public AjaxResult getStuMRankByStuId(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getStuScoreAndMRankByStuId(id));
     }
 }
