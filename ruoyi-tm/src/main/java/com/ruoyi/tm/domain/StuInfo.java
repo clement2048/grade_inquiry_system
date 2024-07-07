@@ -63,6 +63,22 @@ public class StuInfo extends BaseEntity
     /** 毕业所需学分 */
     private Long graCredit;
 
+    public Long getCurCredit() {
+        return curCredit;
+    }
+
+    public void setCurCredit(Long curCredit) {
+        this.curCredit = curCredit;
+    }
+
+    public Long getGraCredit() {
+        return graCredit;
+    }
+
+    public void setGraCredit(Long graCredit) {
+        this.graCredit = graCredit;
+    }
+
     public void setId(Long id) 
     {
         this.id = id;
