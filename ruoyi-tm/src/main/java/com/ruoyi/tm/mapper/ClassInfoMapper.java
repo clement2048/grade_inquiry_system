@@ -2,6 +2,7 @@ package com.ruoyi.tm.mapper;
 
 import java.util.List;
 import com.ruoyi.tm.domain.ClassInfo;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 班级管理Mapper接口
@@ -9,6 +10,7 @@ import com.ruoyi.tm.domain.ClassInfo;
  * @author ruoyi
  * @date 2024-07-07
  */
+@Mapper
 public interface ClassInfoMapper 
 {
     /**
