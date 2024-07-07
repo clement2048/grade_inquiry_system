@@ -2,6 +2,8 @@ package com.ruoyi.tm.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.tm.service.IScoreInfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,9 @@ public class CourseInfoController extends BaseController
 {
     @Autowired
     private ICourseInfoService courseInfoService;
+
+    @Autowired
+    private IScoreInfoService scoreInfoService;
 
     /**
      * 查询课程信息列表
@@ -102,4 +107,14 @@ public class CourseInfoController extends BaseController
         return toAjax(courseInfoService.deleteCourseInfoByIds(ids));
     }
 
+
+    /**
+     * 获取参与课程的学生的成绩信息详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('tm:Course:query')")
+    @GetMapping(value = "/StudentScore/{id}")
+    public AjaxResult getScoreInfoByCourseId(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getScoreInfoByCourseId(id));
+    }
 }

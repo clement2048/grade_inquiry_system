@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pass" column="pass"/>
         <result property="rank" column="rank"/>
         <result property="average" column="average"/>
+        <result property="studentId" column="stu_id"/>
     </resultMap>
 
     <sql id="selectScoreInfoVo">
@@ -35,11 +36,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY S.id
     </sql>
 
+    <sql id = "selectCourseStuInfoVo">
+        SELECT S.id, CH.stu_id ,usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
+        FROM score_info AS S, choose_course AS CH, course_info AS C
+    </sql>
+
     <select id="selectRankInfoList" parameterType="ScoreInfo" resultMap="ScoreInfoResult">
         <include refid="selectRankInfoVo"/>
         WHERE S.choose_id = C.id AND course_id = #{courseId}
         GROUP BY id
     </select>
+
 
 
     <select id="selectScoreInfoList" parameterType="ScoreInfo" resultMap="ScoreInfoResult">
@@ -71,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
         FROM score_info AS S, choose_course AS CH, course_info AS C
         where C.id = #{courseId} and
-        S.id = CH.id and
+        S.choose_id = CH.id and
         C.id = CH.course_id
     </select>
 
@@ -136,6 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM score_info AS S, choose_course AS CH, course_info AS C, class_info AS CS, stu_info AS STU
     </sql>
 
+<!--    根据班级id查询学生成绩信息-->
     <select id="selectScoreByClassId" resultType="com.ruoyi.tm.domain.ScoreInfo">
         <include refid="selectScoreByClassId"/>
         WHERE S.choose_id = CH.id
@@ -145,8 +153,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND CS.id = #{id}
     </select>
 
+<!--    根据学生id查询学生所有成绩的绩点-->
     <select id="getStuScoreByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
-        -- 计算绩点
         SELECT AVG((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit)/100 as average
         FROM score_info AS S, choose_course AS CH, course_info AS C
         WHERE S.choose_id = CH.id
@@ -156,8 +164,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY CH.stu_id
     </select>
 
+<!--    根据学生id计算平均分-->
     <select id="getStuAvgScoreByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
-        -- 计算平均分
         SELECT AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) as average
         FROM score_info AS S, choose_course AS CH, course_info AS C
         WHERE S.choose_id = CH.id
@@ -174,6 +182,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND CH.course_id = C.id
         AND CH.stu_id = #{id}
         GROUP BY S.id
+    </select>
+
+    <select id="getScoreInfoByCourseId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
+        FROM score_info AS S, choose_course AS CH, course_info AS C
+        where C.id = #{courseId} and
+            S.choose_id = CH.id and
+            C.id = CH.course_id
     </select>
 
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
