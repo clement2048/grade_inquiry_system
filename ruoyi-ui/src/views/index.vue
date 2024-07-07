@@ -78,7 +78,9 @@ import PieChart2 from "@/views/dashboard/PieChart2.vue";
 import LineChart from "@/views/dashboard/LineChart.vue";
 import {data} from "@/api/tm/user";
 import StuIndexScore from "@/views/tm/score/StuIndexScore.vue";
-import {getScoreInfo,getGPA,getCreditInfo,getAvgScore} from "@/api/tm/info";
+import {getScoreInfo,getGPA,getCreditInfo,getAvgScore, getScoreRank} from "@/api/tm/info";
+import store from '@/store'
+import {getNumPeopleS} from "@/api/tm/major";
 
 export default {
   name: 'Index',
@@ -93,7 +95,7 @@ export default {
         cType:[],
         score:[],
       },
-      id: 1,
+      id: store.getters.userId,
       options: [{
         value: 0,
         label: '饼状图'
@@ -104,14 +106,14 @@ export default {
       value: '',
       activePieChart: true,
       activeLineChart: false,
-      noPass: 1,
-      rank: 50,
-      rankTotal: 150,
-      average: 0,
-      creditCurrent: 0,
-      creditTotal: 0,
+      noPass: '',
+      rank: '',
+      rankTotal: '',
+      average: '',
+      creditCurrent: '',
+      creditTotal: '',
       infoList: [],
-      scoreList:[]
+      scoreList:[],
     }
   },
   mounted(){
@@ -165,6 +167,12 @@ export default {
         // console.log(response.data)
         this.scoreList = response.data;
         this.handleNoPass();
+      })
+      getScoreRank(this.id).then(response=>{
+        this.rank = response.data.rank;
+      })
+      getNumPeopleS(this.id).then(response=>{
+        this.rankTotal = response.data.peopleNum
       })
     }
   }
