@@ -77,24 +77,26 @@ public class TeaInfoServiceImpl implements ITeaInfoService
         sysUser.setPassword("123456");  // 默认密码为123456
         sysUser.setPassword(SecurityUtils.encryptPassword(sysUser.getPassword()));
         sysUserMapper.insertTeacherUser(sysUser);
-        if(teaInfo.getType().equals("老师")){
-
+        if(teaInfo.getType().equals("教师")){
             // 插入用户的对应角色，便于进行权限控制
             Long sid = (long)101;   // 101为教师权限编号
             Long[] roleIds = {sid};
             sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+            teaInfo.setType("教师");
         }
         else if(teaInfo.getType().equals("教务老师")){
             // 插入用户的对应角色，便于进行权限控制
             Long sid = (long)102;   // 102为教务老师权限编号
             Long[] roleIds = {sid};
             sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+            teaInfo.setType("教务老师");
         }
         else{
             // 插入用户的对应角色，便于进行权限控制
             Long sid = (long)103;   // 103为班主任权限编号
             Long[] roleIds = {sid};
             sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+            teaInfo.setType("班主任");
         }
 
         teaInfo.setId(sysUser.getUserId());
@@ -134,6 +136,7 @@ public class TeaInfoServiceImpl implements ITeaInfoService
     @Override
     public int deleteTeaInfoById(Long id)
     {
-        return teaInfoMapper.deleteTeaInfoById(id);
+        // 保留原来的信息，只修改对应的del_flag
+        return sysUserMapper.deleteUserById(id);
     }
 }

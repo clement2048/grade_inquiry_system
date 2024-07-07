@@ -100,5 +100,14 @@ public class MajorInfoServiceImpl implements IMajorInfoService
     public MajorInfo getMajorPeopleNumById(Long id){
         return majorInfoMapper.getMajorPeopleNumById(id);
     }
+
+    /**
+     * 通过学生id获取专业内人数
+     * @param id 学生主键
+     * @return 结果
+     */
+    public MajorInfo getMajorPeoNumByStuId(Long id){
+        return majorInfoMapper.getMajorPeoNumByStuId(id);
+    }
 }
 

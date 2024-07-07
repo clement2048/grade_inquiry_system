@@ -40,12 +40,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-
-    <select id="getMajorPeopleNumById" resultType="com.ruoyi.tm.domain.MajorInfo">
+    <sql id="getMajorPeopleNumVo">
         SELECT COUNT(*) AS peopleNum
         FROM stu_info AS STU, major_info AS M
+    </sql>
+
+
+    <select id="getMajorPeopleNumById" resultType="com.ruoyi.tm.domain.MajorInfo">
+        <include refid="getMajorPeopleNumVo"/>
         WHERE STU.major_id = M.id
           AND M.id = #{id}
+    </select>
+
+
+    <select id="getMajorPeoNumByStuId" resultType="com.ruoyi.tm.domain.MajorInfo">
+        <include refid="getMajorPeopleNumVo"/>
+        WHERE STU.major_id = (SELECT id FROM stu_info WHERE id = #{id})
     </select>
 
     <insert id="insertMajorInfo" parameterType="MajorInfo">

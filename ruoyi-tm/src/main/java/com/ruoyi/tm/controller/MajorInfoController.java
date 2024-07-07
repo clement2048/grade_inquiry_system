@@ -111,6 +111,12 @@ public class MajorInfoController extends BaseController
         return success(majorInfoService.getMajorPeopleNumById(id));
     }
 
-
-
+    /**
+     * 通过学生id获取专业内人数
+     */
+    @GetMapping(value = "/getMajorPeoNumByStuId/{id}")
+    public AjaxResult getMajorPeoNumByStuId(@PathVariable("id") Long id)
+    {
+        return success(majorInfoService.getMajorPeoNumByStuId(id));
+    }
 }

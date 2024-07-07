@@ -67,4 +67,11 @@ public interface MajorInfoMapper
      * @return 结果
      */
     public MajorInfo getMajorPeopleNumById(Long id);
+
+    /**
+     * 通过学生id获取专业内人数
+     * @param id 学生主键
+     * @return 结果
+     */
+    public MajorInfo getMajorPeoNumByStuId(Long id);
 }

@@ -64,14 +64,14 @@ public class StuInfo extends BaseEntity
     private Long graCredit;
 
     /** 当前专业内排名 */
-    private Long Mrank;
+    private Long rank;
 
     public Long getRank() {
-        return Mrank;
+        return rank;
     }
 
     public void setRank(Long rank) {
-        this.Mrank = rank;
+        this.rank = rank;
     }
 
     public Long getCurCredit() {
