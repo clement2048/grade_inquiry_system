@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.tm.service.IScoreInfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,9 @@ public class StuInfoController extends BaseController
 {
     @Autowired
     private IStuInfoService stuInfoService;
+
+    @Autowired
+    private IScoreInfoService scoreInfoService;
 
     /**
      * 查询Student列表
@@ -122,9 +126,22 @@ public class StuInfoController extends BaseController
         return util.importTemplateExcel("用户数据");
     }
 
+    /**
+     * 获取学生学分
+     */
     @GetMapping(value = "/StuIndex/{id}")
     public AjaxResult getStuAndCreditInfo(@PathVariable("id") Long id)
     {
         return success(stuInfoService.selectStuInfoAndCreditById(id));
     }
+
+    /**
+     * 获取总绩点
+     */
+    @GetMapping(value = "/StuScore/{id}")
+    public AjaxResult getStuScoreByStuId(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getStuScoreByStuId(id));
+    }
+
 }

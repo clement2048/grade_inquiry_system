@@ -113,6 +113,12 @@ public interface ScoreInfoMapper
      */
     public List<ScoreInfo> selectScoreByClassId(Long id);
 
-
+    /**
+     * 根据学生id获取绩点
+     *
+     * @param id 班级id
+     * @return 结果
+     */
+    public ScoreInfo getStuScoreByStuId(Long id);
 
 }

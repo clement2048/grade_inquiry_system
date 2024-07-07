@@ -214,4 +214,14 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
     public List<ScoreInfo> selectScoreByClassId(Long id){
         return scoreInfoMapper.selectScoreByClassId(id);
     }
+
+    /**
+     * 根据学生id获取绩点
+     *
+     * @param id 班级id
+     * @return 结果
+     */
+    public ScoreInfo getStuScoreByStuId(Long id){
+        return scoreInfoMapper.getStuScoreByStuId(id);
+    }
 }

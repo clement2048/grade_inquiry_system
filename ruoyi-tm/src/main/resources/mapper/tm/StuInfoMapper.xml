@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="selectStuInfoAndCredictVo">
-        select STU.id, STU.`name`, sex, STU.type, adm_method, in_school, stu_status, class_id, major_id, user_name, gra_score AS graCredit, SUM(CS.credit) AS curCredit
+        select STU.id, STU.`name`, class_id, major_id, gra_score AS graCredit, SUM(CS.credit) AS curCredit
         from stu_info AS STU, sys_user AS SYS, major_info AS M, course_info AS CS, choose_course AS CH
     </sql>
 

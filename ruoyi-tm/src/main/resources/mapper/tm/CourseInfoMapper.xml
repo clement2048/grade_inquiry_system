@@ -42,7 +42,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCourseInfoVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectCourseInfoByTeacherId" resultType="com.ruoyi.tm.domain.CourseInfo">
+        SELECT *
+        FROM course_info AS CS
+        WHERE CS.teach_id
+        IN(SELECT T.id FROM tea_info AS T, sys_user AS SYS WHERE T.id = SYS.user_id AND T.id = #{id})
+    </select>
+
     <insert id="insertCourseInfo" parameterType="CourseInfo">
         insert into course_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

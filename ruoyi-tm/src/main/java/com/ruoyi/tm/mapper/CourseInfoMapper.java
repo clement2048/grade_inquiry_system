@@ -58,4 +58,13 @@ public interface CourseInfoMapper
      * @return 结果
      */
     public int deleteCourseInfoByIds(Long[] ids);
+
+
+    /**
+     * 查询课程信息
+     *
+     * @param id 教师id
+     * @return 课程信息
+     */
+    public CourseInfo selectCourseInfoByTeacherId(Long id);
 }

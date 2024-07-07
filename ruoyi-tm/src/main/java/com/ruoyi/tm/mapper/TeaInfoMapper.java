@@ -1,6 +1,8 @@
 package com.ruoyi.tm.mapper;
 
 import java.util.List;
+
+import com.ruoyi.tm.domain.CourseInfo;
 import com.ruoyi.tm.domain.TeaInfo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -60,4 +62,5 @@ public interface TeaInfoMapper
      * @return 结果
      */
     public int deleteTeaInfoByIds(Long[] ids);
+
 }

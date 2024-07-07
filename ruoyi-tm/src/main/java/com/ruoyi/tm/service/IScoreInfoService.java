@@ -1,6 +1,8 @@
 package com.ruoyi.tm.service;
 
 import java.util.List;
+
+import com.ruoyi.tm.domain.Score;
 import com.ruoyi.tm.domain.ScoreInfo;
 
 /**
@@ -127,4 +129,13 @@ public interface IScoreInfoService
      * @return 结果
      */
     public List<ScoreInfo> selectScoreByClassId(Long id);
+
+    /**
+     * 根据学生id获取绩点
+     *
+     * @param id 班级id
+     * @return 结果
+     */
+    public ScoreInfo getStuScoreByStuId(Long id);
+
 }

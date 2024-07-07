@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTeaInfoVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertTeaInfo" parameterType="TeaInfo">
         insert into tea_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

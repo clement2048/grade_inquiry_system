@@ -2,6 +2,8 @@ package com.ruoyi.tm.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.tm.service.ICourseInfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,9 @@ public class TeaInfoController extends BaseController
 {
     @Autowired
     private ITeaInfoService teaInfoService;
+
+    @Autowired
+    private ICourseInfoService courseInfoService;
 
     /**
      * 查询教师信息列表
@@ -101,4 +106,16 @@ public class TeaInfoController extends BaseController
     {
         return toAjax(teaInfoService.deleteTeaInfoByIds(ids));
     }
+
+
+    /**
+     * 根据教师id获取课程信息
+     */
+    @PreAuthorize("@ss.hasPermi('tm:teacher:query')")
+    @GetMapping(value = "/getCourse/{id}")
+    public AjaxResult getCourseInfo(@PathVariable("id") Long id)
+    {
+        return success(courseInfoService.selectCourseInfoByTeacherId(id));
+    }
+
 }
