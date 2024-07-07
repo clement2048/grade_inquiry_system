@@ -42,3 +42,17 @@ export function delMajor(id) {
     method: 'delete'
   })
 }
+// 通过专业id获取专业内人数
+export function getNumPeopleM(id) {
+  return request({
+    url: '/tm/major/getMajorPeoNum/' + id,
+    method: 'get'
+  })
+}
+// 通过学生id获取专业内人数
+export function getNumPeopleS(id) {
+  return request({
+    url: '/tm/major/getMajorPeoNumByStuId/' + id,
+    method: 'get'
+  })
+}

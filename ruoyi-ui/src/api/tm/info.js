@@ -50,12 +50,12 @@ export function getCreditInfo(id) {
   })
 }
 // 获取总绩点
-export function getGPA(id) {
-  return request({
-    url: '/system/info/StuScore/' + id,
-    method: 'get'
-  })
-}
+// export function getGPA(id) {
+//   return request({
+//     url: '/system/info/StuScore/' + id,
+//     method: 'get'
+//   })
+// }
 // 根据学生id获取平均分
 export function getAvgScore(id) {
   return request({
@@ -67,6 +67,13 @@ export function getAvgScore(id) {
 export function getScoreInfo(id) {
   return request({
     url: '/system/info/StuScoreInfo/' + id,
+    method: 'get'
+  })
+}
+// 根据学生id以及总绩点计算专业内排名
+export function getScoreRank(id) {
+  return request({
+    url: '/system/info/StuScoreANDMRank/' + id,
     method: 'get'
   })
 }
