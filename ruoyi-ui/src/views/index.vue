@@ -28,7 +28,7 @@
                 <i class="el-icon-warning-outline"></i>
                 <div class="text-container">
                   <span class="text-top">挂科提醒</span>
-                  <span class="text-bottom">{{ passNum }}</span>
+                  <span class="text-bottom">{{ noPass }}</span>
                 </div>
               </div>
             </el-col>
@@ -37,7 +37,7 @@
                 <i class="el-icon-coffee-cup"></i>
                 <div class="text-container">
                   <span class="text-top">学分</span>
-                  <span class="text-bottom">{{ scoreCurrent  }}/{{scoreTotal}}</span>
+                  <span class="text-bottom">{{ creditCurrent }}/{{creditTotal}}</span>
                 </div>
               </div>
             </el-col>
@@ -48,7 +48,7 @@
     <el-row :gutter="32">
       <el-col :span="12">
         <div class="chart-wrapper">
-          <StuIndexScore/>
+          <StuIndexScore :score-list="scoreList"/>
         </div>
       </el-col>
       <el-col :span="12">
@@ -64,7 +64,7 @@
               :value="item.value">
             </el-option>
           </el-select>
-          <div v-if="activePieChart" class="pieChart"><pie-chart2 /></div>
+          <div v-if="activePieChart" class="pieChart"><pie-chart2 ref="pie" :chart-data="chartData"/></div>
           <div v-if="activeLineChart"><line-chart ref="child" :chart-data="chartData" /></div>
         </div>
       </el-col>
@@ -77,8 +77,8 @@
 import PieChart2 from "@/views/dashboard/PieChart2.vue";
 import LineChart from "@/views/dashboard/LineChart.vue";
 import {data} from "@/api/tm/user";
-import {analysisScore} from "@/api/tm/score";
 import StuIndexScore from "@/views/tm/score/StuIndexScore.vue";
+import {getScoreInfo,getGPA,getCreditInfo,getAvgScore} from "@/api/tm/info";
 
 export default {
   name: 'Index',
@@ -104,12 +104,14 @@ export default {
       value: '',
       activePieChart: true,
       activeLineChart: false,
-      passNum: 1,
+      noPass: 1,
       rank: 50,
       rankTotal: 150,
-      average: 90,
-      scoreCurrent: 60,
-      scoreTotal: 160
+      average: 0,
+      creditCurrent: 0,
+      creditTotal: 0,
+      infoList: [],
+      scoreList:[]
     }
   },
   mounted(){
@@ -125,12 +127,8 @@ export default {
           this.chartData.score.push(this.listdata[i].score);
         }
       })
-      // 重新渲染，否则数据不会生效
-      this.$refs.child.initChart();
     },
-    changeSelect(val) {
-      // console.log(val)
-      // console.log(this.value)
+    changeSelect() {
       if(this.value === 0){
         this.activePieChart = true;
         this.activeLineChart = false;
@@ -139,9 +137,34 @@ export default {
         this.activeLineChart = true;
       }
     },
+    handleNoPass(){
+      let len =this.scoreList.length;
+      let count = 0;
+      for(let i=0; i<len; i++){
+        if(this.scoreList[i].pass === "0"){
+          count++;
+        }
+      }
+      this.noPass = count;
+    },
     doTest(){
-      analysisScore(2).then(response=> {
-        console.log(response);
+      // 学分获取
+      getCreditInfo(this.id).then(response=> {
+        // console.log(response);
+        this.infoList = response.data;
+        this.creditTotal = this.infoList.graCredit;
+        this.creditCurrent = this.infoList.curCredit ;
+      })
+      // 平均分获取
+      getAvgScore(this.id).then(response=>{
+        // console.log(response)
+        this.average = response.data.average;
+      })
+      // 获取课程名与课程成绩
+      getScoreInfo(this.id).then(response=>{
+        // console.log(response.data)
+        this.scoreList = response.data;
+        this.handleNoPass();
       })
     }
   }
