@@ -62,8 +62,6 @@ export default {
       this.setOptions(this.chartData)
     },
     setOptions(data) {
-      // console.log(cType);
-      // console.log(score);
       this.chart.setOption({
         title: {
           text: '学分分布',
