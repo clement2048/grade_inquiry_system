@@ -58,6 +58,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE STU.major_id = (SELECT id FROM stu_info WHERE id = #{id})
     </select>
 
+    <select id="getPeoNum" resultType="com.ruoyi.tm.domain.MajorInfo">
+        SELECT COUNT(*) AS peopleNum
+        FROM stu_info AS STU, sys_user AS SYS
+        WHERE STU.id = SYS.user_id
+          AND SYS.del_flag = 0
+    </select>
+
     <insert id="insertMajorInfo" parameterType="MajorInfo">
         insert into major_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

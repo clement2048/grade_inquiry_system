@@ -61,12 +61,12 @@ public interface ICourseInfoService
     public int deleteCourseInfoById(Long id);
 
     /**
-     * 查询课程信息
+     * 根据教师id查询课程信息
      *
      * @param id 教师id
      * @return 课程信息
      */
-    public CourseInfo selectCourseInfoByTeacherId(Long id);
+    public List<CourseInfo> selectCourseInfoByTeacherId(Long id);
 
     /**
      * 批量导入信息

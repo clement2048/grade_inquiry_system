@@ -169,5 +169,13 @@ public class MajorInfoServiceImpl implements IMajorInfoService
         }
         return successMsg.toString();
     }
+
+    /**
+     * 获取专业内学生人数
+     * @return 结果
+     */
+    public MajorInfo getPeoNum(){
+        return majorInfoMapper.getPeoNum();
+    }
 }
 

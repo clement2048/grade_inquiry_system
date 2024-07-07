@@ -106,7 +106,7 @@ public class CourseInfoServiceImpl implements ICourseInfoService
      * @param id 教师id
      * @return 课程信息
      */
-    public CourseInfo selectCourseInfoByTeacherId(Long id){
+    public List<CourseInfo> selectCourseInfoByTeacherId(Long id){
         return courseInfoMapper.selectCourseInfoByTeacherId(id);
     }
 

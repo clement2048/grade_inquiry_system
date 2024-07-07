@@ -74,4 +74,10 @@ public interface MajorInfoMapper
      * @return 结果
      */
     public MajorInfo getMajorPeoNumByStuId(Long id);
+
+    /**
+     * 获取专业内学生人数
+     * @return 结果
+     */
+    public MajorInfo getPeoNum();
 }

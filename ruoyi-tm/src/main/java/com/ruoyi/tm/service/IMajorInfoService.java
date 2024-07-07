@@ -82,4 +82,10 @@ public interface IMajorInfoService
      * @return 结果
      */
     public String importMajor(List<MajorInfo> majorList, boolean updateSupport, String operName);
+
+    /**
+     * 获取专业内学生人数
+     * @return 结果
+     */
+    public MajorInfo getPeoNum();
 }

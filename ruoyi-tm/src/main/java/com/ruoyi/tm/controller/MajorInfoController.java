@@ -131,4 +131,13 @@ public class MajorInfoController extends BaseController
         String message = majorInfoService.importMajor(majorList, updateSupport, operName);
         return AjaxResult.success(message);
     }
+
+    /**
+     * 通过获取专业内人数
+     */
+    @GetMapping(value = "/getPeoNum")
+    public AjaxResult getPeoNum()
+    {
+        return success(majorInfoService.getPeoNum());
+    }
 }
