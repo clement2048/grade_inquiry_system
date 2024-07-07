@@ -4,7 +4,6 @@
 
 <script>
 import * as echarts from 'echarts'
-
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 import {data} from '@/api/tm/user'
@@ -24,17 +23,26 @@ export default {
       type: String,
       default: '300px'
     },
+    chartData:{
+      type: Object,
+      require: true,
+    }
   },
   data() {
     return {
       chart: null,
-      dataset:[],
-      name:[]
+    }
+  },
+  watch: {
+    chartData: {
+      deep: true,
+      handler(val) {
+        this.setOptions(val)
+      }
     }
   },
   mounted() {
     this.$nextTick(() => {
-
       this.initChart()
     })
   },
@@ -48,69 +56,67 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      const id = 1;
-      data(id) .then(response => {
-        // console.log(response);
-        this.listdata = response.data;
-        // console.log(response.data);
-        for(let i=0;i<this.listdata.length;i++){
-          let info = {
-            name: this.listdata[i].ctype,
-            value: this.listdata[i].score
-          };
-          this.name.push(this.listdata[i].ctype)
-          this.dataset.push(info);
-      }
-        // console.log(this.dataset)
-        this.chart.setOption({
+      this.setOptions(this.chartData)
 
-          title: {
-            text: '学分分布',
-            left: 'center'
-          },
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
-          },
-          legend: {
-            left: 'center',
-            bottom: '10',
-            // data: ['一级预警', '二级预警', '三级预警']
-            data: this.name
-          },
+    },
+    setOptions(credit) {
+      this.chart.setOption({
+        title: {
+          text: '学分分布',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          left: 'center',
+          bottom: '10',
+          data: credit.cType
+        },
 
-          color: [
-            '#c23531',
-            '#f4cd49',
-            '#7313c6',
-            '#d48265',
-            '#91c7ae',
-            '#749f83',
-            '#ca8622',
-            '#bda29a',
-            '#6e7074',
-            '#546570',
-            '#c4ccd3'
-          ],
-          series: [
-            {
-              name: '学分',
-              type: 'pie',
-              center: ['50%', '45%'],
-              radius: ['20%', '60%'],
-              itemStyle: {
-                borderRadius: 10,
-                borderColor: '#fff',
-                borderWidth: 2
-              },
-              data: this.dataset,
-              animationEasing: 'cubicInOut',
-              animationDuration: 2600
-            }
-          ]
-        })
+        color: [
+          '#c23531',
+          '#f4cd49',
+          '#7313c6',
+          '#d48265',
+          '#91c7ae',
+          '#749f83',
+          '#ca8622',
+          '#bda29a',
+          '#6e7074',
+          '#546570',
+          '#c4ccd3'
+        ],
+        series: [
+          {
+            name: '学分',
+            type: 'pie',
+            center: ['50%', '45%'],
+            radius: ['20%', '60%'],
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            data: (function(){
+              let res = [];
+              let len = credit.cType.length;
+              for(let i=0;i<len;i++) {
+                res.push({
+                  //通过把credit进行遍历循环来获取数据并放入Echarts中
+                  name: credit.cType[i],
+                  value: credit.score[i]
+                });
+              }
+              return res;
+            })(),
+            animationEasing: 'cubicInOut',
+            animationDuration: 2600
+          }
+        ]
       })
     }
-  }
+    }
 }
 </script>
