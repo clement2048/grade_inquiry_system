@@ -265,4 +265,14 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
     public ScoreInfo getStuScoreAndMRankByStuId(Long id){
         return scoreInfoMapper.getStuScoreAndMRankByStuId(id);
     }
+
+    /**
+     * 根据教师id获取学生成绩信息
+     *
+     * @param id 教师id
+     * @return 结果
+     */
+    public List<ScoreInfo> getStuScoreInfo(Long id){
+        return scoreInfoMapper.getStuScoreInfo(id);
+    }
 }

@@ -5,8 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.tm.domain.CourseInfo;
-import com.ruoyi.tm.service.IClassInfoService;
-import com.ruoyi.tm.service.ICourseInfoService;
+import com.ruoyi.tm.service.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.tm.domain.TeaInfo;
-import com.ruoyi.tm.service.ITeaInfoService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +37,8 @@ public class TeaInfoController extends BaseController
     @Autowired
     private IClassInfoService classInfoService;
 
+    @Autowired
+    private IScoreInfoService scoreInfoService;
 
 
     /**
@@ -153,5 +153,15 @@ public class TeaInfoController extends BaseController
     public AjaxResult getStuInfo(@PathVariable("id") Long id)
     {
         return success(teaInfoService.getStuInfo(id));
+    }
+
+    /**
+     * 根据教师id获取学生成绩信息
+     */
+    @PreAuthorize("@ss.hasPermi('tm:teacher:query')")
+    @GetMapping(value = "/getStuScoreInfo/{id}")
+    public AjaxResult getStuScoreInfo(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getStuScoreInfo(id));
     }
 }
