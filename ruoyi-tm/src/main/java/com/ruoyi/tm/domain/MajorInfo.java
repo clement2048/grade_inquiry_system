@@ -16,6 +16,7 @@ public class MajorInfo extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 专业id */
+    @Excel(name = "专业id")
     private Long id;
 
     /** 专业名字 */

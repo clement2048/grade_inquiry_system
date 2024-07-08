@@ -56,7 +56,7 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
     /**
      * 查询成绩管理列表
      *
-     * @param id 学生id
+     * @param scoreInfo 学生id
      * @return 成绩管理集合
      */
     @Override

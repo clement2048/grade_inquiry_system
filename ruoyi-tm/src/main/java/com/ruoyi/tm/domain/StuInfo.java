@@ -16,6 +16,7 @@ public class StuInfo extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 用户id */
+    @Excel(name = "用户id")
     private Long id;
 
     /** 学生id(学号)*/
