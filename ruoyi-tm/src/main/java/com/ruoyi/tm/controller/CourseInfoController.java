@@ -105,7 +105,7 @@ public class CourseInfoController extends BaseController
 
 
     /**
-     * 获取参与课程的学生的成绩信息详细信息
+     * 通过课程id获取选了该课学生的成绩
      */
     @PreAuthorize("@ss.hasPermi('tm:Course:query')")
     @GetMapping(value = "/StudentScore/{id}")
