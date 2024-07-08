@@ -1,7 +1,7 @@
 {
   "name": "mtsys",
   "version": "3.8.7",
-  "description": "j教学管理系统",
+  "description": "教学管理系统",
   "author": "se",
   "license": "MIT",
   "scripts": {
@@ -70,7 +70,7 @@
     "chalk": "4.1.0",
     "compression-webpack-plugin": "6.1.2",
     "connect": "3.6.6",
-    "eslint": "^6.8.0",
+    "eslint": "7.15.0",
     "eslint-plugin-vue": "7.2.0",
     "lint-staged": "10.5.3",
     "runjs": "4.4.2",
