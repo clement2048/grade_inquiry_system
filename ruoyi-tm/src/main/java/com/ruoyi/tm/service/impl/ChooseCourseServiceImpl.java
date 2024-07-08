@@ -152,7 +152,7 @@ public class ChooseCourseServiceImpl implements IChooseCourseService
     /**
      * 获取挂科数量
      */
-    public ChooseCourse getPassNum(){
-        return chooseCourseMapper.getPassNum();
+    public ChooseCourse getNotPassNum(){
+        return chooseCourseMapper.getNotPassNum();
     }
 }

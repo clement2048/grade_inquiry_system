@@ -117,9 +117,9 @@ public class ChooseCourseController extends BaseController
     /**
      * 获取挂科数量
      */
-    @GetMapping(value = "/getPassNum")
-    public AjaxResult getPassNum()
+    @GetMapping(value = "/getNotPassNum")
+    public AjaxResult getNotPassNum()
     {
-        return success(chooseCourseService.getPassNum());
+        return success(chooseCourseService.getNotPassNum());
     }
 }

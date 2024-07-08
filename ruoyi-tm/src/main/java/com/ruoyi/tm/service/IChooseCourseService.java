@@ -75,5 +75,5 @@ public interface IChooseCourseService
     /**
      * 获取挂科数量
      */
-    public ChooseCourse getPassNum();
+    public ChooseCourse getNotPassNum();
 }

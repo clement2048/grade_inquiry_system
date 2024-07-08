@@ -43,14 +43,14 @@ public class ChooseCourse extends BaseEntity
     private Long courseId;
 
     /** 通过人数 */
-    private Long passNum;
+    private Long notPassNum;
 
     public Long getPassNum() {
-		return passNum;
+		return notPassNum;
 	}
 
-    public void setPassNum(Long passNum) {
-		this.passNum = passNum;
+    public void setPassNum(Long notPassNum) {
+		this.notPassNum = notPassNum;
 	}
 
 

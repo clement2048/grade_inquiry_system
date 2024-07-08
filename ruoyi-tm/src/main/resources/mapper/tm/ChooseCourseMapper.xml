@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pass"    column="pass"    />
         <result property="stuId"    column="stu_id"    />
         <result property="courseId"    column="course_id"    />
-        <result property="passNum" column="passNum"/>
+        <result property="notPassNum" column="notPassNum"/>
     </resultMap>
 
     <sql id="selectChooseCourseVo">
@@ -36,10 +36,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <select id="getPassNum" resultType="com.ruoyi.tm.domain.ChooseCourse">
-        SELECT COUNT(*) AS passNum
-        FROM choose_course
+    <select id="getNotPassNum" resultType="com.ruoyi.tm.domain.ChooseCourse">
+        SELECT COUNT(*) AS notPassNum
+        FROM choose_course AS CH, stu_info AS STU, sys_user AS SYS
         WHERE pass = 0
+          AND CH.stu_id = STU.id
+          AND STU.id = SYS.user_id
+          AND SYS.del_flag = 0
     </select>
 
     <insert id="insertChooseCourse" parameterType="ChooseCourse">
