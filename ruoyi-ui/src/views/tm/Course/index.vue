@@ -149,7 +149,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -164,6 +164,14 @@
         <el-form-item label="课程名字" prop="name">
           <el-input v-model="form.name" placeholder="请输入课程名字" />
         </el-form-item>
+        <el-form-item label="课程类型" prop="type">
+          <el-radio-group v-model="form.type">
+            <el-radio :label="'专必'">专必</el-radio>
+            <el-radio :label="'专选'">专选</el-radio>
+            <el-radio :label="'公必'">公必</el-radio>
+            <el-radio :label="'公选'">公选</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="人数限制" prop="peoLimit">
           <el-input v-model="form.peoLimit" placeholder="请输入人数限制" />
         </el-form-item>
@@ -172,6 +180,12 @@
         </el-form-item>
         <el-form-item label="总学时" prop="totTime">
           <el-input v-model="form.totTime" placeholder="请输入总学时" />
+        </el-form-item>
+        <el-form-item label="期末考试方法" prop="totTime">
+          <el-radio-group v-model="form.finalMethod">
+            <el-radio :label="'考试'">考试</el-radio>
+            <el-radio :label="'考察'">考察</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="开办学年" prop="startYear">
           <el-input v-model="form.startYear" placeholder="请输入开办学年" />
@@ -280,6 +294,7 @@ export default {
       this.loading = true;
       listCourse(this.queryParams).then(response => {
         this.CourseList = response.rows;
+        // console.log(this.CourseList)
         this.total = response.total;
         this.loading = false;
       });
@@ -294,7 +309,7 @@ export default {
       this.form = {
         id: null,
         name: null,
-        type: null,
+        type: "",
         peoLimit: null,
         credit: null,
         totTime: null,
@@ -302,7 +317,8 @@ export default {
         startYear: null,
         startSem: null,
         facId: null,
-        teachId: null
+        teachId: null,
+
       };
       this.resetForm("form");
     },

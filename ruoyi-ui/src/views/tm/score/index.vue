@@ -73,7 +73,7 @@
 
     <el-table v-loading="loading" :data="scoreList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="课程ID" align="center" prop="chooseId" />
+      <el-table-column label="选课ID" align="center" prop="chooseId" />
       <el-table-column label="课程名" align="center" prop="courseName" />
       <el-table-column label="学年" align="center" prop="year" />
       <el-table-column label="学期" align="center" prop="term" />
@@ -119,7 +119,7 @@
     <!-- 添加或修改课程成绩对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="isDisabled">
-        <el-form-item label="课程ID" prop="chooseId">
+        <el-form-item label="选课ID" prop="chooseId">
         <el-input v-model="form.chooseId" placeholder="请输入课程ID" />
         </el-form-item>
         <el-form-item label="学期" prop="term">
@@ -242,7 +242,7 @@ export default {
           { required: true, message: "期末成绩占比不能为空", trigger: "blur" }
         ],
         chooseId: [
-          { required: true, message: "课程ID不能为空", trigger: "blur" }
+          { required: true, message: "选课ID不能为空", trigger: "blur" }
         ],
         year: [
           { required: true, message: "学年不能为空", trigger: "blur" }
