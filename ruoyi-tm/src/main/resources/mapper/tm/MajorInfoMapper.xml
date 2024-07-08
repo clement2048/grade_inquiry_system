@@ -49,11 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getMajorPeopleNumById" parameterType="Long" resultMap="MajorInfoResult">
         SELECT COUNT(*) AS peopleNum
-        FROM (SELECT major_id
-              FROM stu_info AS STU
-                       JOIN major_info AS M ON STU.major_id = M.id
-              WHERE STU.id = #{id}) AS MJ, stu_info
-        WHERE MJ.major_id = stu_info.major_id;
+        FROM major_info AS M, stu_info AS STU
+        WHERE M.id = #{id}
+          AND M.id = STU.major_id
     </select>
 
 
