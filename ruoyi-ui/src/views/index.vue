@@ -164,7 +164,7 @@ export default {
       })
       // 获取课程名与课程成绩
       getScoreInfo(this.id).then(response=>{
-        console.log(response.data)
+        // console.log(response.data)
         this.scoreList = response.data;
         this.handleNoPass();
       })
@@ -172,6 +172,7 @@ export default {
         this.rank = response.data.rank;
       })
       getNumPeopleS(this.id).then(response=>{
+        // console.log(response)
         this.rankTotal = response.data.peopleNum
       })
     }
