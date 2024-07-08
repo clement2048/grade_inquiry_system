@@ -105,7 +105,7 @@ public class ClassInfoController extends BaseController
     /**
      * 通过班级id查询班级学生id
      */
-    @PreAuthorize("@ss.hasPermi('class:class_info:query')")
+    @PreAuthorize("@ss.hasPermi('tm:Class:query')")
     @GetMapping(value = "/getStudentByClassID/{id}")
     public AjaxResult getStudentByClassID(@PathVariable("id") Long id)
     {
@@ -115,6 +115,7 @@ public class ClassInfoController extends BaseController
     /**
      * 导入班级数据
      */
+    @PreAuthorize("@ss.hasPermi('tm:Class:import')")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importClass(MultipartFile file, boolean updateSupport) throws Exception

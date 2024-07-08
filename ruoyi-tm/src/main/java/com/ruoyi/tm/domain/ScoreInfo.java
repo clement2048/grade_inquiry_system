@@ -69,7 +69,7 @@ public class ScoreInfo extends BaseEntity
 
     /** 是否挂科 */
 //    @Excel(name = "是否挂科")
-    private String pass;
+    private Long pass;
 
     /** 成绩排名 */
     private Long rank;
@@ -116,11 +116,11 @@ public class ScoreInfo extends BaseEntity
         return rank;
     }
 
-    public void setPass(String pass) {
+    public void setPass(Long pass) {
         this.pass = pass;
     }
 
-    public String getPass() {
+    public Long getPass() {
         return pass;
     }
 

@@ -132,6 +132,7 @@ public class TeaInfoController extends BaseController
     /**
      * 导入Teacher
      */
+    @PreAuthorize("@ss.hasPermi('tm:teacher:import')")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception

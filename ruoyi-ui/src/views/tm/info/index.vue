@@ -110,8 +110,16 @@
       <el-table-column label="学生姓名" align="center" prop="name" />
       <el-table-column label="学生类型" align="center" prop="type" />
       <el-table-column label="入学方法" align="center" prop="admMethod" />
-      <el-table-column label="是否在校" align="center" prop="inSchool" />
-      <el-table-column label="学生状态" align="center" prop="stuStatus" />
+      <el-table-column label="是否在校" align="center" prop="inSchool">
+        <template slot-scope="scope">
+          {{ scope.row.inSchool === 0 ? '是' : '否' }}
+        </template>
+      </el-table-column>
+      <el-table-column label="学生状态" align="center" prop="stuStatus">
+        <template slot-scope="scope">
+          {{ scope.row.stuStatus === 0 ? '正常' : '异常' }}
+        </template>
+      </el-table-column>
       <el-table-column label="班级id" align="center" prop="classId" />
       <el-table-column label="专业id" align="center" prop="majorId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -241,7 +249,7 @@ export default {
         name: null,
         type: null,
         admMethod: null,
-        inSchool: 0,
+        inSchool: null,
         stuStatus: 0,
         classId: null,
         majorId: null
@@ -290,6 +298,12 @@ export default {
       listInfo(this.queryParams).then(response => {
         this.infoList = response.rows;
         this.total = response.total;
+        // for(let i = 0; i < this.total; i++) {  // 将 在校状态、学生状态 转换为中文
+        //   if(this.infoList[i]) {
+        //     this.infoList[i].inSchool = (this.infoList[i].inSchool === 0 ? "是" : "否");
+        //     this.infoList[i].stuStatus = (this.infoList[i].stuStatus === 0 ? "正常" : "异常");
+        //   }
+        // }
         this.loading = false;
         console.log(response);
       });
@@ -342,6 +356,9 @@ export default {
       const id = row.id || this.ids
       getInfo(id).then(response => {
         this.form = response.data;
+        // 将 在校状态、学生状态 转换为中文
+        //this.form.inSchool = (this.form.inSchool === 0 ? "是" : "否");
+        //this.form.stuStatus = (this.form.stuStatus === 0 ? "正常" : "异常");
         console.log(response);
         this.open = true;
         this.title = "修改学生信息";

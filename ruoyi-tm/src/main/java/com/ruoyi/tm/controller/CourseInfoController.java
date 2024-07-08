@@ -117,6 +117,7 @@ public class CourseInfoController extends BaseController
     /**
      * 导入Course
      */
+    @PreAuthorize("@ss.hasPermi('tm:Course:import')")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception

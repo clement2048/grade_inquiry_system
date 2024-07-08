@@ -102,6 +102,7 @@ public class ChooseCourseController extends BaseController
     /**
      * 导入选课数据
      */
+    @PreAuthorize("@ss.hasPermi('tm:choose:import')")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importChoose(MultipartFile file, boolean updateSupport) throws Exception

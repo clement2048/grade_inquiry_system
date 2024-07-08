@@ -106,7 +106,7 @@ export default {
           left: 10,
           right: 10,
           bottom: 20,
-          top: 30,
+          top: 60,
           containLabel: true
         },
         tooltip: {
@@ -124,7 +124,8 @@ export default {
           scale: true
         },
         legend: {
-          data: this.yearLabel
+          data: this.yearLabel,
+          top: '25px'
         },
         series: seriesData
       });

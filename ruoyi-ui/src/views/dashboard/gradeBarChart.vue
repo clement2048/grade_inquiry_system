@@ -89,8 +89,8 @@ export default {
           selectedMode: false
         },
         grid: {
-          left: 100,
-          right: 100,
+          left: 50,
+          right: 50,
           top: 50,
           bottom: 50
         },
@@ -108,7 +108,7 @@ export default {
             stack: 'total',
             barWidth: '60%',
             label: {
-              show: true,
+              show: false,
               formatter: (params) => Math.round(params.value * 1000) / 10 + '%'
             },
             data: this.rawData[sid].map((d, did) =>

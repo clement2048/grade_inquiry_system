@@ -123,6 +123,7 @@ public class ScoreInfoController extends BaseController
     /**
      * 导入Score数据
      */
+    @PreAuthorize("@ss.hasPermi('tm:score:import')")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception

@@ -119,7 +119,7 @@
       <el-table-column label="缓考标志" align="center" prop="deferSign" />
       <el-table-column label="通过标志" align="center" prop="pass">
         <template slot-scope="scope">
-          {{ scope.row.pass === 1 ? '通过' : '不通过' }}
+          {{ scope.row.pass === 1 ? '通过' : '未通过' }}
         </template>
       </el-table-column>
       <el-table-column label="学生id" align="center" prop="stuId" />

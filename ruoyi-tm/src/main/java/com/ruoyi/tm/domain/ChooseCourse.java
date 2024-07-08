@@ -31,7 +31,7 @@ public class ChooseCourse extends BaseEntity
     @Excel(name = "缓考标志")
     private Long deferSign;
 
-    /** 通过标志(0为通过，1为不通过) */
+    /** 通过标志(1为通过，0为不通过) */
     @Excel(name = "通过标志")
     private Long pass;
 

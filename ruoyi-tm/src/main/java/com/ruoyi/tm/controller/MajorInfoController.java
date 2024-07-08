@@ -120,6 +120,7 @@ public class MajorInfoController extends BaseController
     /**
      * 导入Major
      */
+    @PreAuthorize("@ss.hasPermi('tm:major:import')")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception

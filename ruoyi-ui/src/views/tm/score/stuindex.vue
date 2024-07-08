@@ -46,7 +46,11 @@
       <el-table-column label="学年" align="center" prop="year" />
       <el-table-column label="学期" align="center" prop="term" />
       <el-table-column label="总成绩" align="center" prop="average" />
-      <el-table-column label="是否通过" align="center" prop="pass" />
+      <el-table-column label="是否通过" align="center" prop="pass">
+        <template slot-scope="scope">
+          {{ scope.row.pass === 1 ? '通过' : '未通过' }}
+        </template>
+      </el-table-column>
       <el-table-column label="排名" align="center" prop="rank" />
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -236,8 +240,13 @@ export default {
       this.loading = true;
       listStuScore(this.queryParams).then(response => {
         this.scoreList = response.rows;
-        console.log(response.rows);
         this.total = response.total;
+        for(let i = 0; i < this.total; i++) {  // 将 是否通过 转换为中文
+          if(this.scoreList[i]) {
+            this.scoreList[i].pass = (this.scoreList[i].pass === 1 ? "通过" : "未通过");
+          }
+        }
+        console.log(response.rows);
         this.loading = false;
       });
     },
