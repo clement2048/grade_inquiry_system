@@ -110,6 +110,13 @@
         <el-form-item label="教师姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入教师姓名" />
         </el-form-item>
+        <el-form-item label="教师类型" prop="name">
+          <el-radio-group v-model="form.type">
+            <el-radio :label="'教务老师'">教务老师</el-radio>
+            <el-radio :label="'班主任'">班主任</el-radio>
+            <el-radio :label="'教师'">教师</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
