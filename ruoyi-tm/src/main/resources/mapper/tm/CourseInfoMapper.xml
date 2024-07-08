@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         IN(SELECT T.id FROM tea_info AS T, sys_user AS SYS WHERE T.id = SYS.user_id AND T.id = #{id})
     </select>
 
-    <insert id="insertCourseInfo" parameterType="CourseInfo">
+    <insert id="insertCourseInfo" parameterType="CourseInfo" useGeneratedKeys="true" keyProperty="id">
         insert into course_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>

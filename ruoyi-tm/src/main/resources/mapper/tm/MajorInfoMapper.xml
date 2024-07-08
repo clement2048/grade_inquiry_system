@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           AND SYS.del_flag = 0
     </select>
 
-    <insert id="insertMajorInfo" parameterType="MajorInfo" useGeneratedKeys="true" keyColumn="id">
+    <insert id="insertMajorInfo" parameterType="MajorInfo" useGeneratedKeys="true" keyProperty="id">
         insert into major_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
