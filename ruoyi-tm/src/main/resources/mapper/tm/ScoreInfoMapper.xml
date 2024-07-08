@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pass" column="pass"/>
         <result property="rank" column="rank"/>
         <result property="average" column="average"/>
-        <result property="studentId" column="stu_id"/>
+        <result property="studentId" column="studentId"/>
         <result property="studentName" column="studentName"/>
     </resultMap>
 
@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id = "selectCourseStuInfoVo">
-        SELECT S.id, CH.stu_id ,usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
+        SELECT S.id, CH.stu_id AS studentId ,usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
         FROM score_info AS S, choose_course AS CH, course_info AS C
     </sql>
 
@@ -207,7 +207,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getStuScoreInfo" resultType="com.ruoyi.tm.domain.ScoreInfo">
-        SELECT COALESCE(SUM((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit) / NULLIF(SUM(C.credit), 0), 0) as average, STU.`name` AS studentName
+        SELECT COALESCE(SUM((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit) / NULLIF(SUM(C.credit), 0), 0) as average, STU.`name` AS studentName, STU.id AS studentId
         FROM stu_info AS STU
                  LEFT JOIN choose_course AS CH ON STU.id = CH.stu_id
                  LEFT JOIN score_info AS S ON S.choose_id = CH.id AND CH.pass = 1

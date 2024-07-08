@@ -18,16 +18,16 @@ public class MajorInfo extends BaseEntity
     /** 专业id */
     private Long id;
 
-    /** 专业姓名 */
-    @Excel(name = "专业姓名")
+    /** 专业名字 */
+    @Excel(name = "专业名字")
     private String name;
 
     /** 专业开设时间 */
     @Excel(name = "专业开设时间")
     private Long dura;
 
-    /** 毕业所需专必学分 */
-    @Excel(name = "毕业所需专必学分")
+    /** 所需专必学分 */
+    @Excel(name = "所需专必学分")
     private Long majMust;
 
     /** 所需专选学分 */
