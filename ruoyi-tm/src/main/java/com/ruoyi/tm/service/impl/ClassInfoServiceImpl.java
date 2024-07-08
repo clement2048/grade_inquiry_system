@@ -112,7 +112,7 @@ public class ClassInfoServiceImpl implements IClassInfoService
 
 
     /**
-     * 批量导入教师信息
+     * 批量导入班级信息
      *
      * @param ClassList      课程信息集合
      * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
@@ -122,7 +122,7 @@ public class ClassInfoServiceImpl implements IClassInfoService
     public String importClass(List<ClassInfo> ClassList, boolean updateSupport, String operName) {
         if (StringUtils.isNull(ClassList) || ClassList.size() == 0)
         {
-            throw new ServiceException("导入教师数据不能为空！");
+            throw new ServiceException("导入班级数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;

@@ -164,4 +164,15 @@ public class TeaInfoController extends BaseController
     {
         return success(scoreInfoService.getStuScoreInfo(id));
     }
+
+
+    /**
+     * 根据教师id获取课程成绩信息
+     */
+    @PreAuthorize("@ss.hasPermi('tm:teacher:query')")
+    @GetMapping(value = "/getCourseScoreInfo/{id}")
+    public AjaxResult getCourseScoreInfo(@PathVariable("id") Long id)
+    {
+        return success(scoreInfoService.getCourseScoreInfo(id));
+    }
 }

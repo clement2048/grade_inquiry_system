@@ -178,4 +178,13 @@ public interface IScoreInfoService
      * @return 结果
      */
     public List<ScoreInfo> getStuScoreInfo(Long id);
+
+
+    /**
+     * 根据教师id获取课程成绩信息
+     *
+     * @param id 教师id
+     * @return 结果
+     */
+    public List<ScoreInfo> getCourseScoreInfo(Long id);
 }

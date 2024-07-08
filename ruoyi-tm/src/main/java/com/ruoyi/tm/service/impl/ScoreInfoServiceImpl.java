@@ -185,7 +185,7 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
     }
 
     /**
-     * 教务老师获取学院平均分信息
+     * 教务老师获取学院信息
      *
      * @param id 老师id
      * @return 结果
@@ -274,5 +274,15 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
      */
     public List<ScoreInfo> getStuScoreInfo(Long id){
         return scoreInfoMapper.getStuScoreInfo(id);
+    }
+
+    /**
+     * 根据教师id获取课程成绩信息
+     *
+     * @param id 教师id
+     * @return 结果
+     */
+    public List<ScoreInfo> getCourseScoreInfo(Long id){
+        return scoreInfoMapper.getCourseScoreInfo(id);
     }
 }

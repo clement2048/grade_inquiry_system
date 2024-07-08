@@ -217,6 +217,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY STU.id, STU.`name`
     </select>
 
+    <select id="getCourseScoreInfo" resultType="com.ruoyi.tm.domain.ScoreInfo">
+        SELECT course_id, courseName, start_year, start_sem, AVG(average) AS average
+        FROM (
+                 SELECT pass, choose_id, C.id AS course_id, C.name AS courseName, start_year, start_sem,
+                        AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) AS average
+                 FROM score_info AS S
+                          JOIN choose_course AS CH ON S.choose_id = CH.id
+                          JOIN course_info AS C ON C.id = CH.course_id
+                 WHERE C.teach_id = #{id}
+                 GROUP BY S.id
+             ) AS subquery
+        GROUP BY course_id, courseName, start_year, start_sem;
+
+    </select>
+
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
