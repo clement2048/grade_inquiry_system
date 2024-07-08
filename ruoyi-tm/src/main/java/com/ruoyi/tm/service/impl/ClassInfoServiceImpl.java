@@ -158,4 +158,13 @@ public class ClassInfoServiceImpl implements IClassInfoService
         }
         return successMsg.toString();
     }
+
+    /**
+     * 获取班级信息详细信息
+     *
+     * @return 结果
+     */
+    public List<ClassInfo> getClassScore(){
+        return classInfoMapper.getClassScore();
+    }
 }
