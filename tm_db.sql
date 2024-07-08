@@ -11,7 +11,7 @@
  Target Server Version : 80037 (8.0.37)
  File Encoding         : 65001
 
- Date: 08/07/2024 23:19:43
+ Date: 08/07/2024 23:44:38
 */
 
 SET NAMES utf8mb4;
@@ -763,7 +763,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 204 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 205 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -872,6 +872,7 @@ INSERT INTO `sys_logininfor` VALUES (200, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (201, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-07-08 18:24:08');
 INSERT INTO `sys_logininfor` VALUES (202, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-07-08 21:01:32');
 INSERT INTO `sys_logininfor` VALUES (203, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-07-08 22:23:41');
+INSERT INTO `sys_logininfor` VALUES (204, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-07-08 23:34:48');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1582,7 +1583,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-07-08 22:23:41', 'admin', '2024-05-31 23:32:47', '', '2024-07-08 22:23:41', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-07-08 23:34:48', 'admin', '2024-05-31 23:32:47', '', '2024-07-08 23:34:48', '管理员');
 INSERT INTO `sys_user` VALUES (2, 103, 'lan', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-07-08 14:30:32', 'admin', '2024-05-31 23:32:47', 'admin', '2024-07-08 14:30:32', '测试员');
 INSERT INTO `sys_user` VALUES (3, NULL, 'Anna', 'Anna', '00', '', '', '0', '', '$2a$10$loageCSXcUr8M7LC0sc0m.Lan93ifAKAlwDkVeTnPFgkiML0u2Rvy', '0', '0', '', NULL, NULL, '2024-07-08 22:27:51', '', NULL, '教务老师');
 INSERT INTO `sys_user` VALUES (4, NULL, 'James', 'James', '00', '', '', '0', '', '$2a$10$/sgDCJ.VbCZMs/Vnd2CYUeRYeAL6U4JErnFrw/tIduT3ukar.QS1O', '0', '0', '', NULL, NULL, '2024-07-08 22:27:51', '', NULL, '班主任');
