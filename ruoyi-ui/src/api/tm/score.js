@@ -9,6 +9,15 @@ export function listScore(query) {
   })
 }
 
+// 按照学生id查询成绩管理列表
+export function listStuScore(query) {
+  return request({
+    url: '/tm/score/StuList/list',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询课程成绩详细
 export function getScore(id) {
   return request({
