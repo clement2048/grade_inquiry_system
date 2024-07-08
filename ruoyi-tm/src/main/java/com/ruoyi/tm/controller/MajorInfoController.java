@@ -57,7 +57,7 @@ public class MajorInfoController extends BaseController
     }
 
     /**
-     * 获取专业详细信息
+     * 通过id获取专业详细信息
      */
     @PreAuthorize("@ss.hasPermi('tm:major:query')")
     @GetMapping(value = "/{id}")
@@ -133,7 +133,7 @@ public class MajorInfoController extends BaseController
     }
 
     /**
-     * 通过获取专业内学生人数
+     * 获取专业内学生人数
      */
     @GetMapping(value = "/getPeoNum")
     public AjaxResult getPeoNum()
