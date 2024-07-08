@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
 
-    <select id="getMajorPeopleNumById" resultType="com.ruoyi.tm.domain.MajorInfo">
+    <select id="getMajorPeopleNumById" parameterType="Long" resultMap="MajorInfoResult">
         SELECT COUNT(*) AS peopleNum
         FROM (SELECT major_id
               FROM stu_info AS STU
@@ -57,12 +57,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <select id="getMajorPeoNumByStuId" resultType="com.ruoyi.tm.domain.MajorInfo">
+    <select id="getMajorPeoNumByStuId" parameterType="Long" resultMap="MajorInfoResult">
         <include refid="getMajorPeopleNumVo"/>
         WHERE STU.major_id = (SELECT id FROM stu_info WHERE id = #{id})
     </select>
 
-    <select id="getPeoNum" resultType="com.ruoyi.tm.domain.MajorInfo">
+    <select id="getPeoNum" resultMap="MajorInfoResult">
         SELECT COUNT(*) AS peopleNum
         FROM stu_info AS STU, sys_user AS SYS
         WHERE STU.id = SYS.user_id
