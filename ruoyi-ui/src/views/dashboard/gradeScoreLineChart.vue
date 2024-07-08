@@ -1,11 +1,16 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+    <div >
+      <el-button @click="download" icon="el-icon-download">下载</el-button>
+      <div id="download" :class="className" :style="{height:height,width:width}" ref="chart"/>
+    </div>
+
 </template>
 
 <script>
 import * as echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import html2canvas from 'html2canvas'
 
 export default {
   mixins: [resize],
@@ -58,7 +63,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
+      this.chart = echarts.init(this.$refs.chart, 'macarons')
       this.setOptions(this.chartData)
     },
     setOptions(data) {
@@ -112,7 +117,23 @@ export default {
         }
         ]
       })
-    }
+    },
+  // 将echarts图表转换为canvas,并将canvas下载为图片
+    download() {
+      // 图表转换成canvas
+      html2canvas(document.getElementById("download")).then(function (canvas) {
+        let img = canvas
+          .toDataURL("image/png")
+          .replace("image/png", "image/octet-stream");
+        // 创建a标签，实现下载
+        let creatIMg = document.createElement("a");
+        creatIMg.download = "图表.png"; // 设置下载的文件名，
+        creatIMg.href = img; // 下载url
+        document.body.appendChild(creatIMg);
+        creatIMg.click();
+        creatIMg.remove(); // 下载之后把创建的元素删除
+      });
+    },
   }
 }
 </script>
