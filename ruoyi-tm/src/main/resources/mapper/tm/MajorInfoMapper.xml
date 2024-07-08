@@ -63,14 +63,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT COUNT(*) AS peopleNum
         FROM stu_info AS STU, sys_user AS SYS
         WHERE STU.id = SYS.user_id
-          AND SYS.del_flag = #{id}
+          AND SYS.del_flag = 0
     </select>
 
     <select id="getTeacherNum" resultType="com.ruoyi.tm.domain.MajorInfo">
         SELECT COUNT(*) AS teacherNum
         FROM tea_info AS T, sys_user AS SYS
         WHERE T.id = SYS.user_id
-          AND SYS.del_flag = #{id}
+          AND SYS.del_flag = 0
     </select>
 
     <insert id="insertMajorInfo" parameterType="MajorInfo">
