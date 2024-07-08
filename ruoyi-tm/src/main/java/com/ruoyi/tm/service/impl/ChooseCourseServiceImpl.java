@@ -65,6 +65,17 @@ public class ChooseCourseServiceImpl implements IChooseCourseService
     }
 
     /**
+     * 新增带id的选课
+     *
+     * @param chooseCourse 选课
+     * @return 结果
+     */
+    public int insertChooseCourseWithID(ChooseCourse chooseCourse)
+    {
+        return chooseCourseMapper.insertChooseCourse(chooseCourse);
+    }
+
+    /**
      * 修改选课
      * 
      * @param chooseCourse 选课
@@ -125,7 +136,7 @@ public class ChooseCourseServiceImpl implements IChooseCourseService
                 Validator validator = factory.getValidator();
                 BeanValidators.validateWithException(validator, choose);
                 choose.setCreateBy(operName);
-                this.insertChooseCourse(choose);
+                this.insertChooseCourseWithID(choose);
                 successNum++;
                 successMsg.append("<br/>" + successNum + "、选课 " + choose.getId() + " 导入成功");
 

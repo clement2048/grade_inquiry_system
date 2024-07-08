@@ -92,6 +92,7 @@ public class ClassInfo extends BaseEntity
     {
         return teachId;
     }
+
     public void setClassNum(Long classNum) 
     {
         this.classNum = classNum;
