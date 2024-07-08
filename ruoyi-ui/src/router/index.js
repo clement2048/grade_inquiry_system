@@ -61,43 +61,43 @@ export const constantRoutes = [
     component: () => import('@/views/error/401'),
     hidden: true
   },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/index'),
-        name: 'Index',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/teacher',
-    component: Layout,
-    children: [
-      {
-        path: 'welcome',
-        component: () => import('@/views/teacher_welcome.vue'),
-        name: 'TeacherWelcome',
-        meta: { title: '教师欢迎界面', icon: 'education' }
-      }
-    ]
-  },
-  {
-    path: '/normal_teacher',
-    component: Layout,
-    children: [
-      {
-        path: 'welcome',
-        component: () => import('@/views/normal_teacher.vue'),
-        name: 'NormalTeacherWelcome',
-        meta: { title: '普通教师欢迎界面', icon: 'education' }
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: 'index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/index'),
+  //       name: 'Index',
+  //       meta: { title: '首页', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/teacher',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'welcome',
+  //       component: () => import('@/views/teacher_welcome.vue'),
+  //       name: 'TeacherWelcome',
+  //       meta: { title: '教师欢迎界面', icon: 'education' }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/normal_teacher',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'welcome',
+  //       component: () => import('@/views/normal_teacher.vue'),
+  //       name: 'NormalTeacherWelcome',
+  //       meta: { title: '普通教师欢迎界面', icon: 'education' }
+  //     }
+  //   ]
+  // },
   {
     path: '/user',
     component: Layout,

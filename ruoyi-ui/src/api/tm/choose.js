@@ -42,3 +42,11 @@ export function delChoose(id) {
     method: 'delete'
   })
 }
+
+// 获取挂科数量
+export function getPassNum() {
+  return request({
+    url: '/tm/choose/getNotPassNum',
+    method: 'get'
+  })
+}

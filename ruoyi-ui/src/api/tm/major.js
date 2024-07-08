@@ -56,3 +56,17 @@ export function getNumPeopleS(id) {
     method: 'get'
   })
 }
+// 通过获取专业内学生人数
+export function getPeoNum() {
+  return request({
+    url: '/tm/major/getPeoNum',
+    method: 'get'
+  })
+}
+// 通过获取专业内老师人数
+export function getTeacherNum() {
+  return request({
+    url: '/tm/major/getTeacherNum' ,
+    method: 'get'
+  })
+}
