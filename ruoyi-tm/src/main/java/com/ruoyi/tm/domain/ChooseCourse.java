@@ -16,6 +16,7 @@ public class ChooseCourse extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 选课id */
+    @Excel(name = "选课id")
     private Long id;
 
     /** 重修次数 */
@@ -31,7 +32,7 @@ public class ChooseCourse extends BaseEntity
     private Long deferSign;
 
     /** 通过标志(0为通过，1为不通过) */
-    @Excel(name = "通过标志(0为通过，1为不通过)")
+    @Excel(name = "通过标志")
     private Long pass;
 
     /** 学生id */

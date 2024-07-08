@@ -271,7 +271,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         group by S.id
     </select>
 
-    <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="id">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="usualPor != null">usual_por,</if>
