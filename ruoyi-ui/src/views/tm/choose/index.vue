@@ -28,7 +28,7 @@
       <el-form-item label="通过标志" prop="pass">
         <el-input
           v-model="queryParams.pass"
-          placeholder="请输入通过标志(1为通过，0为不通过)"
+          placeholder="请输入通过标志"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -117,8 +117,7 @@
       <el-table-column label="重修次数" align="center" prop="numRebuild" />
       <el-table-column label="补考次数" align="center" prop="numMakeup" />
       <el-table-column label="缓考标志" align="center" prop="deferSign" />
-<!--      <el-table-column label="通过标志(0为通过，1为不通过)" align="center" prop="pass"/>-->
-      <el-table-column label="通过标志(0为通过，1为不通过)" align="center" prop="pass">
+      <el-table-column label="通过标志" align="center" prop="pass">
         <template slot-scope="scope">
           {{ scope.row.pass === 1 ? '通过' : '不通过' }}
         </template>
@@ -165,8 +164,8 @@
         <el-form-item label="缓考标志" prop="deferSign">
           <el-input v-model="form.deferSign" placeholder="请输入缓考标志" />
         </el-form-item>
-        <el-form-item label="通过标志(1为通过，0为不通过)" prop="pass">
-          <el-input v-model="form.pass" placeholder="请输入通过标志(1为通过，0为不通过)" />
+        <el-form-item label="通过标志" prop="pass">
+          <el-input v-model="form.pass" placeholder="请输入通过标志" />
         </el-form-item>
         <el-form-item label="学生id" prop="stuId">
           <el-input v-model="form.stuId" placeholder="请输入学生id" />
@@ -265,7 +264,7 @@ export default {
           { required: true, message: "缓考标志不能为空", trigger: "blur" }
         ],
         pass: [
-          { required: true, message: "通过标志(1为通过，0为不通过)不能为空", trigger: "blur" }
+          { required: true, message: "通过标志不能为空", trigger: "blur" }
         ],
         stuId: [
           { required: true, message: "学生id不能为空", trigger: "blur" }
