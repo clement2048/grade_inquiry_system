@@ -34,7 +34,7 @@
     </div>
     <el-row>
       <div class="chart-wrapper1">
-        <grade-score-line-chart :chart-data="lineData"/>
+        <grade-score-line-chart/>
       </div>
     </el-row>
     <el-row>
@@ -51,18 +51,11 @@ import gradeBarChart from "@/views/dashboard/gradeBarChart.vue";
 import {getPeoNum, getTeacherNum} from "@/api/tm/major";
 import {getPassNum} from "@/api/tm/choose";
 import {getStuRank} from "@/api/tm/score";
-import {getClass} from "@/api/tm/Class";
 
 export default {
   name: "ScoreIndex",
   data() {
     return {
-      lineData:[],
-      gradeData:{
-        xName:[],
-        yName:[],
-        data: []
-      },
       gradeList:[],
       teaNum:'',
       passNum:'',
@@ -90,9 +83,7 @@ export default {
         // console.log(res)
         this.passNum = res.data.passNum
       })
-      getStuRank().then(res=>{
-        // console.log(res)
-      })
+
     },
   }
 };
