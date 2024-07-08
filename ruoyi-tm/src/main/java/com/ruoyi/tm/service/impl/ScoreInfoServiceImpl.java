@@ -5,6 +5,7 @@ import java.util.List;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanValidators;
+import com.ruoyi.tm.domain.Score;
 import com.ruoyi.tm.domain.StuInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -284,5 +285,12 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
      */
     public List<ScoreInfo> getCourseScoreInfo(Long id){
         return scoreInfoMapper.getCourseScoreInfo(id);
+    }
+
+    /**
+     * 返回不同年级和学期的成绩
+     */
+    public List<Score> getYearAndSemScore(){
+        return scoreInfoMapper.getYearAndSemScore();
     }
 }

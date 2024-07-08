@@ -232,6 +232,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
 
+
+    <select id="getYearAndSemScore" resultType="com.ruoyi.tm.domain.Score">
+        SELECT
+            C.start_year AS start_year,
+            C.start_sem AS start_sem,
+            AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) AS average
+        FROM score_info AS S
+                 JOIN choose_course AS CH ON S.choose_id = CH.id
+                 JOIN course_info AS C ON CH.course_id = C.id
+        GROUP BY C.start_year, C.start_sem;
+    </select>
+
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

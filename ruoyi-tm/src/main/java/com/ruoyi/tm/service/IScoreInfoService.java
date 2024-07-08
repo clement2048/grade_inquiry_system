@@ -187,4 +187,10 @@ public interface IScoreInfoService
      * @return 结果
      */
     public List<ScoreInfo> getCourseScoreInfo(Long id);
+
+    /**
+     * 返回不同年级和学期的成绩
+     */
+    public List<Score> getYearAndSemScore();
+
 }

@@ -170,4 +170,16 @@ public class StuInfoController extends BaseController
     {
         return success(scoreInfoService.getStuScoreAndMRankByStuId(id));
     }
+
+
+    /**
+     * 返回不同年级和学期的成绩
+     */
+    @GetMapping(value = "/getYearAndSemScore")
+    public AjaxResult getStuMRankByStuId()
+    {
+        return success(scoreInfoService.getYearAndSemScore());
+    }
+
+
 }

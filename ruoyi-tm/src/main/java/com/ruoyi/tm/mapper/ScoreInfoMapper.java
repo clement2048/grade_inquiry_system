@@ -1,6 +1,8 @@
 package com.ruoyi.tm.mapper;
 
 import java.util.List;
+
+import com.ruoyi.tm.domain.Score;
 import com.ruoyi.tm.domain.ScoreInfo;
 import org.springframework.stereotype.Service;
 
@@ -169,4 +171,9 @@ public interface ScoreInfoMapper
      * @return 结果
      */
     public List<ScoreInfo> getCourseScoreInfo(Long id);
+
+    /**
+     * 返回不同年级和学期的成绩
+     */
+    public List<Score> getYearAndSemScore();
 }
