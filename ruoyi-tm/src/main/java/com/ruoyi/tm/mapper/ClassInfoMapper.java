@@ -38,6 +38,14 @@ public interface ClassInfoMapper
     public int insertClassInfo(ClassInfo classInfo);
 
     /**
+     * 新增带id的班级信息
+     *
+     * @param classInfo 班级信息
+     * @return 结果
+     */
+    public int insertClassInfoWithId(ClassInfo classInfo);
+
+    /**
      * 修改班级信息
      * 
      * @param classInfo 班级信息

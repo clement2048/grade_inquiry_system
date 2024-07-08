@@ -45,11 +45,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getClassScore" resultType="com.ruoyi.tm.domain.ClassInfo">
         SELECT
             grade_level AS level,
-            COUNT(*) AS levelNum , classId AS id, grade
+            COUNT(*) AS levelNum , classId AS id, grade, class_num
         FROM (
                  SELECT
                      STU.id,
-                     C.id AS classId, C.grade,
+                     C.id AS classId, C.grade,C.class_num,
                      CASE
                          WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 90 THEN '优秀'
                          WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 80 THEN '良好'
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           JOIN class_info AS C ON STU.class_id = C.id
                  GROUP BY STU.id
              ) AS subquery
-        GROUP BY grade_level,classId;
+        GROUP BY grade_level,classId,class_num
     </select>
 
     <insert id="insertClassInfo" parameterType="ClassInfo" useGeneratedKeys="true" keyProperty="id">
@@ -78,6 +78,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teachId != null">#{teachId},</if>
             <if test="classNum != null">#{classNum},</if>
          </trim>
+    </insert>
+
+    <insert id="insertClassInfoWithId">
+        insert into class_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="grade != null">grade,</if>
+            <if test="teachId != null">teach_id,</if>
+            <if test="classNum != null">class_num,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id},
+            <if test="grade != null">#{grade},</if>
+            <if test="teachId != null">#{teachId},</if>
+            <if test="classNum != null">#{classNum},</if>
+        </trim>
     </insert>
 
     <update id="updateClassInfo" parameterType="ClassInfo">

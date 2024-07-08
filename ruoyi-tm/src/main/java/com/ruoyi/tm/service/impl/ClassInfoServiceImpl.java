@@ -65,6 +65,17 @@ public class ClassInfoServiceImpl implements IClassInfoService
     }
 
     /**
+     * 新增带有id的班级信息
+     *
+     * @param classInfo 班级信息
+     * @return 结果
+     */
+    public int insertClassInfoWithId(ClassInfo classInfo)
+    {
+        return classInfoMapper.insertClassInfoWithId(classInfo);
+    }
+
+    /**
      * 修改班级信息
      * 
      * @param classInfo 班级信息
@@ -135,7 +146,7 @@ public class ClassInfoServiceImpl implements IClassInfoService
                 Validator validator = factory.getValidator();
                 BeanValidators.validateWithException(validator,classinfo);
                 classinfo.setCreateBy(operName);
-                this.insertClassInfo(classinfo);
+                this.insertClassInfoWithId(classinfo);
                 successNum++;
                 successMsg.append("<br/>" + successNum + "、班级 " + classinfo.getId() + " 导入成功");
 

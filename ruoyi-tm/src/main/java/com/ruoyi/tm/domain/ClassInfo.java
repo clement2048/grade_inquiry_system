@@ -16,6 +16,7 @@ public class ClassInfo extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 班级id */
+    @Excel(name = "班级id")
     private Long id;
 
     /** 所在年级 */
@@ -27,7 +28,6 @@ public class ClassInfo extends BaseEntity
     private Long teachId;
 
     /** 班主任姓名 */
-    @Excel(name = "班主任姓名")
     private String teacherName;
 
     /** 班号 */
