@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 成绩管理Controller
- * 
+ *
  * @author clement
  * @date 2024-06-21
  */
@@ -104,8 +104,7 @@ public class ScoreInfoController extends BaseController
      * 按照教师按照课程获取成绩
      */
     @GetMapping("/{TeacherId}/{courseId}")
-    public AjaxResult getScoreByCourse(@PathVariable("TeacherId") Long TeacherId, @PathVariable("courseId") Long courseId)
-    {
+    public AjaxResult getScoreByCourse(@PathVariable("TeacherId") Long TeacherId, @PathVariable("courseId") Long courseId) {
         return success(scoreInfoService.selectScoreInfoByCourseId(courseId));
     }
 

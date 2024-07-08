@@ -33,7 +33,7 @@
           <div class="data-container">
             <i class="el-icon-trophy"></i>
             <div class="text-container">
-              <span class="text-top">评教</span>
+              <span class="text-top">课程通过率</span>
               <span class="text-bottom">{{ serveScore }}</span>
             </div>
           </div>
@@ -62,25 +62,64 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
+        <el-col :span="24">
           <el-card>
             <div slot="header">课程成绩分布</div>
             <pie-chart3 :chart-data="courseScoreDistribution" v-if="activePieChart" />
           </el-card>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="6">
           <el-card>
-            <div slot="header">课程平均分</div>
-            <div>{{ courseAverageScore }}</div>
+            <div slot="header">平均分</div>
+            <div>{{ this.average }}</div>
+          </el-card>
+        </el-col><el-col :span="6">
+        <el-card>
+          <div slot="header">优秀率</div>
+          <div>{{ excellentRate  }}%</div>
+        </el-card>
+      </el-col>
+        <el-col :span="6">
+          <el-card>
+            <div slot="header">良好率</div>
+            <div>{{ goodRate }}%</div>
+          </el-card>
+        </el-col>
+        <el-col :span="6">
+          <el-card>
+            <div slot="header">挂科率</div>
+            <div>{{ failingRate }}%</div>
           </el-card>
         </el-col>
       </el-row>
+      <div class="class-scores">
+        <h2>班级成员成绩</h2>
+        <el-input
+          v-model="searchText"
+          placeholder="请输入学生姓名进行搜索"
+          style="width: 300px; margin-bottom: 10px;"
+          clearable
+        ></el-input>
+
+        <!-- 表格展示 -->
+        <el-table :data="courseScores" style="width: 100%" row-key="name">
+          <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+          <el-table-column prop="gpa" label="得分" width="180"></el-table-column>
+          <el-table-column prop="pass" label="是否通过" width="180"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button @click="handleExpand(scope.$index, scope.row)">查看详情</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+      </div>
       <div class="teaching-history">
         <h2>教学历史记录</h2>
         <el-table :data="teachingHistory" style="width: 100%">
-          <el-table-column prop="year" label="年度"></el-table-column>
-          <el-table-column prop="semester" label="学期"></el-table-column>
-          <el-table-column prop="courses" label="任教课程"></el-table-column>
+          <el-table-column prop="name" label="任教课程"></el-table-column>
+          <el-table-column prop="type" label="课程类型"></el-table-column>
+          <el-table-column prop="credit" label="学分"></el-table-column>
         </el-table>
       </div>
 
@@ -91,7 +130,16 @@
 </template>
 
 <script>
+import {
+  getCourseInfo,
+  getScoreInfoBycId,
+  getScoreByCourse,
+  getClassInfo,
+  getStuInfo, getStuScoreInfoByStuId
+} from "@/api/tm/teacher";
+
 import PieChart3 from "@/views/dashboard/PieChart3.vue";
+
 
 export default {
   components: {
@@ -99,42 +147,34 @@ export default {
   },
   data() {
     return {
+      courseList:[],
+      average:0,
+      id:100,
       selectedYear: '',
       selectedSemester: '',
+      courses: [],
+      selectedCourse :'',
+      excellentRate :0,
+      goodRate :0,
+      failingRate:0,
+
       years: [2020, 2021, 2022, 2023, 2024],
       semesters: ['春季', '秋季'],
-      courseCount: 3,
+      courseCount: 0,
       studentTotalCount: 74,
-      totalClassHours: 120,
-      serveScore: 95,
+      totalClassHours: 0,
+      serveScore: '95%',
       courseAverageScore: 78,
       classScores: [],
       expandedScores: [],
-      courses: [
-        { id: '1', name: '高等数学' },
-        { id: '2', name: '大学英语' },
-        { id: '3', name: '计算机基础' },
-        { id: '4', name: '线性代数' },
-        { id: '5', name: '大学物理' },
-      ],
-      teachingHistory: [
-        { year: 2020, semester: '春季', courses: ['高等数学', '大学英语'] },
-        { year: 2020, semester: '秋季', courses: ['线性代数', '计算机基础'] },
-        { year: 2021, semester: '春季', courses: ['高等数学', '大学物理'] },
-        { year: 2021, semester: '秋季', courses: ['线性代数', '计算机基础'] },
-        { year: 2022, semester: '春季', courses: ['高等数学', '大学英语'] },
-        { year: 2022, semester: '秋季', courses: ['线性代数', '计算机基础'] },
-        { year: 2023, semester: '春季', courses: ['高等数学', '大学英语'] },
-        { year: 2023, semester: '秋季', courses: ['线性代数', '计算机基础'] },
-        { year: 2024, semester: '春季', courses: ['高等数学', '大学物理'] },
-        { year: 2024, semester: '秋季', courses: ['线性代数', '计算机基础'] }
-      ],
+      teachingHistory: [],
       searchText: '',
       activePieChart: true,
+      courseScores: [],
       courseScoreDistribution: {
-        labels: ['优秀', '良好', '及格', '不及格'],
+        labels: ['优秀', '良好', '挂科'],
         datasets: [{
-          data: [10, 25, 10, 5],
+          data: [66, 24, 10],
           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF0000'],
           hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF0000']
         }]
@@ -152,38 +192,83 @@ export default {
       }
     }
   },
-  methods: {
-    async fetchData() {
-      if (this.selectedYear && this.selectedSemester) {
-        // 模拟数据
-        this.classScores = [
-          { name: '李明', gpa: 3.5, details: [
-              {subject: '高等数学', score: 85},
-              {subject: '大学英语', score: 78},
-              {subject: '线性代数', score: 92},
-              {subject: '计算机基础', score: 66},
-              {subject: '大学物理', score: 80}
-            ]
-          },
-          {name: '张华', gpa: 3.0, details: []},
-          {name: '王强', gpa: 3.8, details: []},
-          {name: '赵敏', gpa: 2.7, details: []},
-          {name: '陈杰', gpa: 3.2, details: []}
-        ];
-        this.courseCount = 3;
-        this.studentTotalCount = 50;
-        this.totalClassHours = 120;
-        this.averageScore = 75;
-        this.courseAverageScore = 78;
-      }
-    },
-    handleExpand(index, row) {
-      this.expandedScores = row.details;
-    }
-  },
   created() {
     this.fetchData();
+  },
+  mounted(){
+    this.doTest();
+  },
+  methods: {
+    fetchCourseData() {
+      // 根据选择的课程ID获取得分信息
+      getScoreInfoBycId(this.selectedCourse).then(res => {
+        console.log(res);
+        this.courseScores = res.data.map(course => ({
+          name: course.studentName,
+          gpa: course.average,
+          pass: course.pass,
+        }));
+        let excellentCount = 0;
+        let goodCount = 0;
+        let failingCount = 0;
+        const totalCount = this.courseScores.length;
+        let totalGpa = 0;
+
+        this.courseScores.forEach(course => {
+          totalGpa += course.gpa;
+          if (course.gpa >= 85) {
+            excellentCount++;
+          } else if (course.gpa >= 60 && course.gpa < 85) {
+            goodCount++;
+          } else if (course.gpa < 60) {
+            failingCount++;
+          }
+        });
+        this.average = totalGpa / totalCount;
+        this.excellentRate = (excellentCount / totalCount) * 100;
+        this.goodRate = (goodCount / totalCount) * 100;
+        this.failingRate = (failingCount / totalCount) * 100;
+        this.courseScoreDistribution={
+          labels: ['优秀', '良好', '挂科'],
+            datasets: [{
+            data: [this.excellentRate, this.goodRate, this.failingRate],
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF0000'],
+            hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF0000']
+          }]
+        }
+      }).catch(error => {
+        console.error('Error fetching course scores:', error);
+      });
+    },
+
+    handleExpand(index, row) {
+      this.expandedScores = row.details;
+    },
+    doTest(){
+      getCourseInfo(this.id).then(res=>{
+          console.log(res);
+          this.courseList = res.data;
+          this.courseCount = this.courseList.length;
+          // 将课程信息的name、type和credit字段赋值给teachingHistory
+          this.teachingHistory = this.courseList.map(course => ({
+            name: course.name,
+            type: course.type,
+            credit: course.credit
+          }));
+          this.courses= this.courseList.map(course => ({
+            id:course.id,
+            name: course.name,
+          }));
+        this.teachingHistory.forEach(course => {
+          this.totalClassHours += course.credit*18;
+        });
+        }).catch(error => {
+          console.error('Error fetching course info:', error);
+        });
+    },
+
   }
+
 };
 </script>
 

@@ -61,36 +61,24 @@
             </el-col><el-col :span="6">
             <el-card>
               <div slot="header">优秀率</div>
-              <div>{{ analysisData.excellentRate }}%</div>
+              <div>{{ excellentRate  }}%</div>
             </el-card>
           </el-col>
             <el-col :span="6">
               <el-card>
                 <div slot="header">良好率</div>
-                <div>{{ analysisData.goodRate }}%</div>
+                <div>{{ goodRate }}%</div>
               </el-card>
             </el-col>
             <el-col :span="6">
               <el-card>
-                <div slot="header">挂科率</div>
-                <div>{{ analysisData.failingRate }}%</div>
+                <div slot="header">预警率</div>
+                <div>{{ fallingRate }}%</div>
               </el-card>
             </el-col>
           </el-row>
         </div>
-        <el-row>
-          <el-col>
-            <div class="rankings">
-              <h2>排名</h2>
-              <el-table :data="rankings" style="width: 100%">
-                <el-table-column prop="semester" label="学期" width="180"></el-table-column>
-                <el-table-column prop="grade" label="年级" width="180"></el-table-column>
-                <el-table-column prop="class" label="班级" width="180"></el-table-column>
-                <el-table-column prop="rank" label="排名" width="180"></el-table-column>
-              </el-table>
-            </div>
-          </el-col>
-        </el-row>
+
         <div class="class-scores">
           <h2>班级成员成绩</h2>
           <el-input
@@ -113,19 +101,22 @@
 
           <!-- 展开详情 -->
           <el-table :data="expandedScores" style="width: 100%" v-if="expandedScores.length">
-            <el-table-column prop="subject" label="科目" width="180"></el-table-column>
-            <el-table-column prop="score" label="成绩" width="180"></el-table-column>
+            <el-table-column prop="courseName" label="科目" width="180"></el-table-column>
+            <el-table-column prop="average" label="成绩" width="180"></el-table-column>
+            <el-table-column prop="pass" label="是否通过" width="180"></el-table-column>
           </el-table>
         </div>
-        <div class="failing-students" v-if="isHeadTeacher">
-          <h2>挂科学生名单</h2>
-          <el-table :data="failingStudents" style="width: 100%">
-            <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-            <el-table-column prop="subject" label="科目" width="180"></el-table-column>
-            <el-table-column prop="score" label="成绩" width="180"></el-table-column>
-          </el-table>
-        </div>
-
+        <el-row>
+          <el-col>
+            <div class="rankings">
+              <h2>挂科名单</h2>
+              <el-table :data="failingStudents" style="width: 100%" v-if="failingStudents.length">
+                <el-table-column prop="name" label="名字" width="180"></el-table-column>
+                <el-table-column prop="subject" label="科目" width="180"></el-table-column>
+              </el-table>
+            </div>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
 
@@ -135,8 +126,13 @@
 <script>
 import LineChart from "@/views/dashboard/LineChart.vue";
 import PieChart3 from "@/views/dashboard/PieChart3.vue";
-import { fetchClassScores, fetchClassComparisonData, fetchFailingStudents, fetchDataAnalysis, fetchRankings } from "@/api/teacher";
+import {
+  getCourseInfo,
+  getClassInfo,
+  getStuInfo, getStuScoreInfoByStuId
+} from "@/api/tm/teacher";
 
+import {getScoreInfo,getGPA,getCreditInfo,getAvgScore, getScoreRank} from "@/api/tm/info";
 export default {
   components: {
     LineChart,
@@ -144,113 +140,55 @@ export default {
   },
   data() {
     return {
-      chartData: {
-        cType: [],
-        score: [],
-      },
+      stuList:[],
+      scoreList :[],
+      noPass:'',
+      average: 0,
       pieChartData: {
-        labels: ['优秀率', '良好率', '挂科率'],
+        labels: ['优秀率', '良好率', '预警率'],
         datasets: [{
-          data: [ 15, 20, 10],
+          data: [ 5, 50, 25],
           backgroundColor: [ '#36A2EB', '#FFCE56', '#4BC0C0'],
           hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0'],
         }],
       },
-      id: 1,
-      options: [{
-        value: 0,
-        label: '饼状图'
-      }, {
-        value: 1,
-        label: '折线图'
-      }],
-      value: '',
+      id: 100,
+      excellentStudentCount: 0,
+      classScores: [],
+      excellentRate:0,
+      studentCount: 0,
+      goodRate:0,
+      fallingRate:0,
+      expandedScores: [],
+      allStudentScores: [], // 存储所有学生的成绩数据
+      failingStudents: [],
       activePieChart: true,
       activeLineChart: false,
-      passNum: 1,
-      rank: 50,
-      rankTotal: 150,
-      average: 82,
-      scoreCurrent: 60,
-      scoreTotal: 160,
-      studentCount: 30,
-      averageGPA: 3.2,
-      excellentStudentCount: 6,
-      classScores: [
-        { name: '李明', gpa: 3.5, details: [
-            { subject: '高等数学', score: 85 },
-            { subject: '大学英语', score: 78 },
-            { subject: '线性代数', score: 92 },
-            { subject: '计算机基础', score: 66 },
-            { subject: '大学物理', score: 80 }
-          ] },
-        { name: '张华', gpa: 3.0, details: [] },
-        { name: '王强', gpa: 3.8, details: [] },
-        { name: '赵敏', gpa: 2.7, details: [] },
-        { name: '陈杰', gpa: 3.2, details: [] },
-        { name: '孙丽', gpa: 3.1, details: [] },
-        { name: '周勇', gpa: 2.9, details: [] },
-        { name: '吴涛', gpa: 2.5, details: [] },
-        { name: '郑飞', gpa: 3.4, details: [] },
-        { name: '朱娜', gpa: 3.0, details: [] },
-        { name: '冯雷', gpa: 3.7, details: [] },
-        { name: '何艳', gpa: 3.2, details: [] },
-        { name: '吕刚', gpa: 2.8, details: [] },
-        { name: '韩梅', gpa: 3.3, details: [] },
-        { name: '沈强', gpa: 2.6, details: [] },
-        { name: '姚欣', gpa: 3.1, details: [] },
-        { name: '郭伟', gpa: 3.5, details: [] },
-        { name: '陶静', gpa: 2.9, details: [] },
-        { name: '蒋磊', gpa: 3.2, details: [] },
-        { name: '戴勇', gpa: 3.0, details: [] },
-        { name: '魏鑫', gpa: 3.6, details: [] },
-        { name: '蔡霞', gpa: 3.3, details: [] },
-        { name: '宋云', gpa: 2.7, details: [] },
-        { name: '钟成', gpa: 3.4, details: [] },
-        { name: '庞波', gpa: 2.8, details: [] },
-        { name: '梁慧', gpa: 3.1, details: [] },
-        { name: '段飞', gpa: 3.5, details: [] },
-        { name: '谭晓', gpa: 2.9, details: [] },
-        { name: '贾宁', gpa: 3.2, details: [] },
-        { name: '彭宇', gpa: 2.6, details: [] },
-      ],
-      failingStudents: [
-        { name: '赵敏', subject: '计算机基础', score: 66 },
-        { name: '吴涛', subject: '概率论', score: 69 }
-      ],
-      analysisData: {
-        average: 85,
-        excellentRate: 20,
-        goodRate: 70,
-        failingRate: 10
-      },
-      rankings: [
-        { semester: '2023-2024', grade: '大一', class: '一班', rank: 5 },
-        { semester: '2023-2024', grade: '大一', class: '二班', rank: 3 },
-        { semester: '2023-2024', grade: '大一', class: '三班', rank: 8 },
-      ],
-      expandedScores: [],
+      averageGPA: 0,
+      analysisData: [],
       searchText: '',
+
+      chartData: {
+        cType: [],
+        score: [],
+      },
+      value: '',
       isHeadTeacher: false
     }
   },
   created() {
-    this.checkUserRole();
     this.handleSetLineChartData();
-    this.getClassScores();
-    this.getClassComparisonData();
-    this.getDataAnalysis();
     this.getRankings();
-    if (this.isHeadTeacher) {
-      this.getFailingStudents();
-    }
+
+  },
+  mounted(){
+    this.doTest();
   },
   computed: {
     // 根据搜索文本过滤显示的成绩数据
     displayedClassScores() {
       if (!this.searchText.trim()) {
-        // 如果搜索文本为空，则显示前5条数据
-        return this.classScores.slice(0, 5);
+        return this.classScores;
       } else {
         // 否则根据姓名进行搜索过滤
         return this.classScores.filter(student =>
@@ -260,64 +198,106 @@ export default {
     }
   },
   methods: {
-    checkUserRole() {
-      // 检查用户角色，设置 isHeadTeacher 标志
-      const userRole = this.$store.getters.roles;
-      this.isHeadTeacher = userRole.includes('班主任');
+    doTest(){
+      getClassInfo(this.id).then(res => {
+        console.log(res);
+      });
+      getStuInfo(this.id).then(res => {
+        console.log(res);
+        this.stuList = res.data;
+        this.studentCount = this.stuList.length;
+        this.classScores = this.stuList.map(item => ({
+          name: item.studentName,
+          gpa: item.average, // 假设你想用 average 作为 gpa
+          studentId: item.studentId,
+        }));
+        let totalGpa = 0;
+        let goodCount = 0;
+        let failingCount = 0;
+        const totalCount = this.classScores.length;
+        this.classScores.forEach(student => {
+          totalGpa += student.gpa;
+          if (student.gpa >= 85) {
+            this.excellentStudentCount++;
+          } else if (student.gpa >= 60 && student.gpa < 85) {
+            goodCount++;
+          } else {
+            failingCount++;
+          }
+        });
+        this.average = totalGpa / totalCount;
+        //GPA应该如何计算？
+        this.averageGPA = (this.average -50)/10;
+        this.excellentRate = (this.excellentStudentCount / totalCount) * 100;
+        this.goodRate = (goodCount / totalCount) * 100;
+        this.fallingRate = (failingCount / totalCount) * 100;
+
+        this.pieChartData = {
+          labels: ['优秀率', '良好率', '预警率'],
+          datasets: [{
+            data: [
+              this.excellentRate,
+              this.goodRate,
+              this.fallingRate,
+            ],
+            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0'],
+            hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0'],
+          }],
+        };
+
+        // 获取所有学生的课程及成绩
+        this.fetchAllScores().then(() => {
+          this.handleNoPass(); // 确保在获取所有成绩后再调用 handleNoPass
+        });
+      });
     },
-    async getClassScores() {
-      // 模拟数据
-      // const response = await fetchClassScores();
-      // this.classScores = response.data;
-    },
-    async getClassComparisonData() {
-      // 模拟数据
-      // const response = await fetchClassComparisonData();
-      // this.chartData = response.data;
-    },
-    async getFailingStudents() {
-      // 模拟数据
-      // const response = await fetchFailingStudents();
-      this.failingStudents = [
-        { name: '赵六', subject: '计算机基础', score: 66 },
-        { name: '吴十', subject: '概率论', score: 69 }
-      ];
+    fetchAllScores() {
+      const scorePromises = this.stuList.map(student =>
+        getScoreInfo(student.studentId).then(response => ({
+          studentId: student.studentId,
+          scores: response.data.map(item => ({
+            average: item.average,
+            courseName: item.courseName,
+            pass: parseInt(item.pass, 10)
+          }))
+        }))
+      );
+
+      return Promise.all(scorePromises).then(allScores => {
+        console.log(allScores);
+        // 处理所有学生的成绩数据
+        this.allStudentScores = allScores;
+      }).catch(error => {
+        console.error('Error fetching all scores:', error);
+      });
     },
     handleExpand(index, row) {
-      this.expandedScores = row.details;
-    },
-    async getDataAnalysis() {
-      const response = await fetchDataAnalysis();
-      this.analysisData = response.data;
-
-      // 构建饼状图数据
-      this.pieChartData = {
-        labels: ['平均分', '优秀率', '良好率', '挂科率'],
-        datasets: [{
-          data: [
-            this.analysisData.average,
-            this.analysisData.excellentRate,
-            this.analysisData.goodRate,
-            this.analysisData.failingRate,
-          ],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-        }],
-      };
-    },
-    async getRankings() {
-      const response = await fetchRankings();
-      this.rankings = response.data;
-    },
-    changeSelect(val) {
-      if (this.value === 0) {
-        this.activePieChart = true;
-        this.activeLineChart = false;
-      } else if (this.value === 1) {
-        this.activePieChart = false;
-        this.activeLineChart = true;
+      // 根据学生ID查找相应的成绩
+      const studentScores = this.allStudentScores.find(scores => scores.studentId === this.stuList[index].studentId);
+      if (studentScores) {
+        this.expandedScores = studentScores.scores;
+      } else {
+        console.error('No scores found for student:', this.stuList[index].studentId);
       }
-    }
+    },
+    handleNoPass() {
+      this.failingStudents = []; // 确保每次调用时清空挂科学生名单
+      this.allStudentScores.forEach(student => {
+        student.scores.forEach(score => {
+          if (score.pass === 0) { // 判断课程是否挂科
+            const studentInfo = this.stuList.find(item => item.studentId === student.studentId);
+            if (studentInfo) {
+              this.failingStudents.push({
+                name: studentInfo.studentName,
+                subject: score.courseName,
+                score: score.average
+              });
+            }
+          }
+        });
+      });
+    },
+
   }
 };
 </script>
