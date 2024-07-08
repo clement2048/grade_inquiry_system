@@ -34,6 +34,29 @@ public class ClassInfo extends BaseEntity
     @Excel(name = "班号")
     private Long classNum;
 
+    /** 成绩等级 */
+    private String level;
+
+    /** 成绩等级人数 */
+    private String levelNum;
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getLevelNum() {
+        return levelNum;
+    }
+
+    public void setLevelNum(String levelNum) {
+        this.levelNum = levelNum;
+    }
+
+
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
     }

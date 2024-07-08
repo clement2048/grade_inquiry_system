@@ -127,4 +127,14 @@ public class ClassInfoController extends BaseController
         return AjaxResult.success(message);
     }
 
+    /**
+     * 获取班级信息详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('tm:Class:query')")
+    @GetMapping(value = "/getClassScore")
+    public AjaxResult getClassScore()
+    {
+        return success(classInfoService.getClassScore());
+    }
+
 }

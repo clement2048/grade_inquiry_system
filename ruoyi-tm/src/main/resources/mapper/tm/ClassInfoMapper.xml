@@ -10,6 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="teachId"    column="teach_id"    />
         <result property="teacherName"    column="name"    />
         <result property="classNum"    column="class_num"    />
+        <result property="level" column="level"/>
+        <result property="levelNum" column="levelNum"/>
     </resultMap>
 
     <sql id="selectClassInfoVo">
@@ -38,7 +40,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from class_info
         where teach_id = #{id}
     </select>
-        
+
+
+    <select id="getClassScore" resultType="com.ruoyi.tm.domain.ClassInfo">
+        SELECT
+            grade_level AS level,
+            COUNT(*) AS levelNum , classId AS id, grade
+        FROM (
+                 SELECT
+                     STU.id,
+                     C.id AS classId, C.grade,
+                     CASE
+                         WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 90 THEN '优秀'
+                         WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 80 THEN '良好'
+                         WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 70 THEN '中等'
+                         WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 60 THEN '及格'
+                         ELSE '不及格'
+                         END AS grade_level
+                 FROM score_info AS S
+                          JOIN choose_course AS CH ON S.choose_id = CH.id
+                          JOIN stu_info AS STU ON STU.id = CH.stu_id
+                          JOIN class_info AS C ON STU.class_id = C.id
+                 GROUP BY STU.id
+             ) AS subquery
+        GROUP BY grade_level,classId;
+    </select>
+
     <insert id="insertClassInfo" parameterType="ClassInfo" useGeneratedKeys="true" keyProperty="id">
         insert into class_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

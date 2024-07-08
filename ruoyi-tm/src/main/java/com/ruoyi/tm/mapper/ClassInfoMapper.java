@@ -68,4 +68,11 @@ public interface ClassInfoMapper
      * @return 结果
      */
     public ClassInfo selectClassByTeacherId(Long id);
+
+    /**
+     * 获取班级信息详细信息
+     *
+     * @return 结果
+     */
+    public List<ClassInfo> getClassScore();
 }
