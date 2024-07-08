@@ -48,9 +48,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="getMajorPeopleNumById" resultType="com.ruoyi.tm.domain.MajorInfo">
-        <include refid="getMajorPeopleNumVo"/>
-        WHERE STU.major_id = M.id
-          AND M.id = #{id}
+        SELECT COUNT(*) AS peopleNum
+        FROM (SELECT major_id
+              FROM stu_info AS STU
+                       JOIN major_info AS M ON STU.major_id = M.id
+              WHERE STU.id = #{id}) AS MJ, stu_info
+        WHERE MJ.major_id = stu_info.major_id;
     </select>
 
 
