@@ -8,7 +8,7 @@
             <i class="el-icon-user"></i>
             <div class="text-container">
               <span class="text-top">学生人数</span>
-              <span class="text-bottom">1000</span>
+              <span class="text-bottom">{{peoNum}}</span>
             </div>
           </div>
         </el-col>
@@ -17,7 +17,7 @@
             <i class="el-icon-user-solid"></i>
             <div class="text-container">
               <span class="text-top">教师总数</span>
-              <span class="text-bottom">30</span>
+              <span class="text-bottom">{{teaNum}}</span>
             </div>
           </div>
         </el-col >
@@ -26,14 +26,14 @@
             <i class="el-icon-warning-outline"></i>
             <div class="text-container">
               <span class="text-top">挂科提醒</span>
-              <span class="text-bottom">4</span>
+              <span class="text-bottom">{{passNum}}</span>
             </div>
           </div>
         </el-col>
       </el-row>
     </div>
     <el-row>
-      <div class="chart-wrapper">
+      <div class="chart-wrapper1">
         <el-select v-model="value"
                      placeholder="请选择"
                      @change="changeSelect"
@@ -59,6 +59,9 @@
 <script>
 import gradeScoreLineChart from "@/views/dashboard/gradeScoreLineChart.vue";
 import gradeBarChart from "@/views/dashboard/gradeBarChart.vue";
+import {getPeoNum, getTeacherNum} from "@/api/tm/major";
+import {getPassNum} from "@/api/tm/choose";
+
 export default {
   name: "ScoreIndex",
   data() {
@@ -76,17 +79,33 @@ export default {
         label: '柱状图'
       }],
       value:0,
+      teaNum:'',
+      passNum:'',
+      peoNum:'',
     };
   },
   components: {
     gradeScoreLineChart,
     gradeBarChart
   },
-  created() {
-    this.getList();
+  mounted() {
+    this.getAll();
   },
   methods: {
-
+    getAll(){
+      getPeoNum().then(res=>{
+        console.log(res)
+        this.peoNum = res.data.peopleNum
+      });
+      getTeacherNum().then(res=>{
+        console.log(res)
+        this.teaNum = res.data.teacherNum
+      });
+      getPassNum().then(res=>{
+        console.log(res)
+        this.passNum = res.data.passNum
+      })
+    }
   }
 };
 </script>
@@ -110,13 +129,19 @@ export default {
   position: relative;
   height: 100%;
   background-color: rgb(240, 242, 245);
-
+  .chart-wrapper1{
+    background: #fff;
+    padding: 16px 16px 0;
+    margin-bottom: 32px;
+    border-radius: 5px;
+    height: 450px;
+  }
   .chart-wrapper {
     background: #fff;
     padding: 16px 16px 0;
     margin-bottom: 32px;
     border-radius: 5px;
-    height: 400px;
+    height: 350px;
   }
 }
 .data-container {
