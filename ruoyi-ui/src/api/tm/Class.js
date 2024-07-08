@@ -42,3 +42,11 @@ export function delClass(id) {
     method: 'delete'
   })
 }
+
+// 获取班级信息详细信息
+export function getClassSco() {
+  return request({
+    url: '/tm/Class/getClassScore' ,
+    method: 'get'
+  })
+}
