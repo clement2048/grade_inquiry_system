@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="rank" column="rank"/>
         <result property="average" column="average"/>
         <result property="studentId" column="stu_id"/>
-        <result property="studentName" column="name"/>
+        <result property="studentName" column="stuName"/>
     </resultMap>
 
     <sql id="selectScoreInfoVo">
@@ -207,15 +207,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getStuScoreInfo" resultType="com.ruoyi.tm.domain.ScoreInfo">
-        SELECT AVG((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit)/100 as average, STU.`name`
-        FROM score_info AS S, choose_course AS CH, course_info AS C, class_info AS CL, stu_info AS STU
-        WHERE S.choose_id = CH.id
-          AND C.id = CH.course_id
-          AND CH.pass = 1
-          AND CH.stu_id = STU.id
-          AND CL.id = STU.class_id
-          AND CL.teach_id = #{id}
-        GROUP BY CH.stu_id
+
+        SELECT COALESCE(SUM((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit) / NULLIF(SUM(C.credit), 0), 0) as average, STU.`name` AS stuName
+        FROM stu_info AS STU
+                 LEFT JOIN choose_course AS CH ON STU.id = CH.stu_id
+                 LEFT JOIN score_info AS S ON S.choose_id = CH.id AND CH.pass = 1
+                 LEFT JOIN course_info AS C ON C.id = CH.course_id
+                 JOIN class_info AS CL ON CL.id = STU.class_id
+        WHERE CL.teach_id = #{id}
+        GROUP BY STU.id, STU.`name`
     </select>
 
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
