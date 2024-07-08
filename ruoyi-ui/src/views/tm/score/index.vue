@@ -1,10 +1,34 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="课程ID" prop="courseId">
+      <el-form-item label="选课ID" prop="courseId">
         <el-input
-          v-model="queryParams.courseId"
-          placeholder="请输入课程ID"
+          v-model="queryParams.chooseId"
+          placeholder="选课ID"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="课程名" prop="courseName">
+        <el-input
+          v-model="queryParams.courseName"
+          placeholder="课程名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="学年" prop="year">
+        <el-input
+          v-model="queryParams.year"
+          placeholder="学年"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="学期" prop="term">
+        <el-input
+          v-model="queryParams.term"
+          placeholder="学期"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -215,7 +239,10 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        courseId: null
+        chooseId: null,
+        year: null,
+        term: null,
+        courseName: null
       },
       // 表单参数
       form: {},

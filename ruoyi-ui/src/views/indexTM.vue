@@ -34,23 +34,12 @@
     </div>
     <el-row>
       <div class="chart-wrapper1">
-        <el-select v-model="value"
-                     placeholder="请选择"
-                     @change="changeSelect"
-                     size="small">
-          <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-          </el-option>
-        </el-select>
         <grade-score-line-chart :chart-data="lineData"/>
       </div>
     </el-row>
     <el-row>
       <div class="chart-wrapper">
-        <grade-bar-chart :chart-data="gradeData"/>
+        <grade-bar-chart/>
       </div>
     </el-row>
   </div>
@@ -61,24 +50,20 @@ import gradeScoreLineChart from "@/views/dashboard/gradeScoreLineChart.vue";
 import gradeBarChart from "@/views/dashboard/gradeBarChart.vue";
 import {getPeoNum, getTeacherNum} from "@/api/tm/major";
 import {getPassNum} from "@/api/tm/choose";
+import {getStuRank} from "@/api/tm/score";
+import {getClass} from "@/api/tm/Class";
 
 export default {
   name: "ScoreIndex",
   data() {
     return {
       lineData:[],
-      gradeData:[],
-      options:[{
-        value: 0,
-        label: '饼状图'
-      }, {
-        value: 1,
-        label: '折线图'
-      }, {
-        value: 2,
-        label: '柱状图'
-      }],
-      value:0,
+      gradeData:{
+        xName:[],
+        yName:[],
+        data: []
+      },
+      gradeList:[],
       teaNum:'',
       passNum:'',
       peoNum:'',
@@ -94,18 +79,21 @@ export default {
   methods: {
     getAll(){
       getPeoNum().then(res=>{
-        console.log(res)
+        // console.log(res)
         this.peoNum = res.data.peopleNum
       });
       getTeacherNum().then(res=>{
-        console.log(res)
+        // console.log(res)
         this.teaNum = res.data.teacherNum
       });
       getPassNum().then(res=>{
-        console.log(res)
+        // console.log(res)
         this.passNum = res.data.passNum
       })
-    }
+      getStuRank().then(res=>{
+        // console.log(res)
+      })
+    },
   }
 };
 </script>
@@ -134,7 +122,7 @@ export default {
     padding: 16px 16px 0;
     margin-bottom: 32px;
     border-radius: 5px;
-    height: 450px;
+    height: 400px;
   }
   .chart-wrapper {
     background: #fff;

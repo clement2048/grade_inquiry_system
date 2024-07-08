@@ -1,11 +1,12 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div :class="className" :style="{ height: height, width: width }" />
 </template>
 
 <script>
 import * as echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import { getClassSco } from "@/api/tm/Class"
 
 export default {
   mixins: [resize],
@@ -26,23 +27,15 @@ export default {
       type: Boolean,
       default: true
     },
-    chartData: {
-      type: Object,
-      required: true
-    }
   },
   data() {
     return {
       chart: null,
-      rawData : [
-        [20, 21, 30, 17, 60, 70, 70],
-        [30, 40, 80, 38, 90, 100, 100],
-        [30, 32, 60, 50, 100, 80, 88],
-        [15, 10, 20, 11, 40, 60, 60],
-        [5, 2, 6, 1, 10, 10, 15]
-      ],
+      rawData: [],
       totalData: [],
-
+      xName: [],
+      yName: [],
+      gradeList: []
     }
   },
   watch: {
@@ -56,8 +49,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.initChart()
-    });
-    this.handledData();
+    })
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -67,14 +59,24 @@ export default {
     this.chart = null
   },
   methods: {
+    doTest() {
+      getClassSco().then(res => {
+        this.gradeList = res.data
+        this.handleGrade()
+        this.handleNum()
+        this.handledData()
+        this.setOptions()
+      })
+    },
+
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.doTest()
     },
-    setOptions(data) {
+    setOptions() {
       this.chart.setOption({
-        title:{
-          text:'各班级成绩等级分布',
+        title: {
+          text: '各班级成绩等级分布',
         },
         tooltip: {
           trigger: 'axis',
@@ -83,29 +85,23 @@ export default {
           },
           padding: [5, 10]
         },
-          legend: {
-            selectedMode: false
-          },
-          grid:{
-            left: 100,
-            right: 100,
-            top: 50,
-            bottom: 50
-          },
-          yAxis: {
-            type: 'value'
-          },
-          xAxis: {
-            type: 'category',
-            data: ['1班', '2班', '3班', '4班', '5班', '6班', '7班']
-          },
-        series: [
-          '优秀',
-          '良好',
-          '中等',
-          '及格',
-          '不及格'
-        ].map((name, sid) => {
+        legend: {
+          selectedMode: false
+        },
+        grid: {
+          left: 100,
+          right: 100,
+          top: 50,
+          bottom: 50
+        },
+        yAxis: {
+          type: 'value'
+        },
+        xAxis: {
+          type: 'category',
+          data: this.xName
+        },
+        series: this.yName.map((name, sid) => {
           return {
             name,
             type: 'bar',
@@ -118,19 +114,42 @@ export default {
             data: this.rawData[sid].map((d, did) =>
               this.totalData[did] <= 0 ? 0 : d / this.totalData[did]
             )
-          };
+          }
         })
-
       })
     },
-    handledData(){
+    handledData() {
+      this.totalData = []
       for (let i = 0; i < this.rawData[0].length; ++i) {
-        let sum = 0;
+        let sum = 0
         for (let j = 0; j < this.rawData.length; ++j) {
-          sum += this.rawData[j][i];
+          sum += this.rawData[j][i]
         }
-        this.totalData.push(sum);
+        this.totalData.push(sum)
       }
+    },
+    handleGrade() {
+      this.xName = []
+      this.yName = []
+      this.gradeList.forEach(item => {
+        const newName = `${item.grade}级${item.classNum}班`
+        if (!this.xName.includes(newName)) {
+          this.xName.push(newName)
+        }
+        if (!this.yName.includes(item.level)) {
+          this.yName.push(item.level)
+        }
+      })
+    },
+    handleNum() {
+      this.rawData = Array.from({length: this.yName.length}, () => Array(this.xName.length).fill(0))
+      this.gradeList.forEach(item => {
+        const xIndex = this.xName.indexOf(`${item.grade}级${item.classNum}班`)
+        const yIndex = this.yName.indexOf(item.level)
+        if (xIndex !== -1 && yIndex !== -1) {
+          this.rawData[yIndex][xIndex] = +item.levelNum // 确保数字转换
+        }
+      })
     }
   }
 }
