@@ -16,6 +16,7 @@ public class TeaInfo extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 教师id */
+    @Excel(name = "教师id")
     private Long id;
 
     /** 教师姓名 */
