@@ -13,3 +13,5 @@ export function fetchChartData() {
     method: 'get'
   })
 }
+
+

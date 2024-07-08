@@ -42,3 +42,42 @@ export function delTeacher(id) {
     method: 'delete'
   })
 }
+
+// 获取教师课程信息
+export function getCourseInfo(teacherId) {
+  return request({
+    url: `/tm/teacher/getCourse/` + teacherId,
+    method: 'get'
+  });
+}
+export function getClassInfo(teacherId) {
+  return request({
+    url: `/tm/teacher/getClass/` + teacherId,
+    method: 'get'
+  });
+}
+export function getStuInfo(teacherId) {
+  return request({
+    url: `/tm/teacher/getStuScoreInfo/` + teacherId,
+    method: 'get'
+  });
+}
+export function getScoreInfoBycId(Id) {
+  return request({
+    url: `/tm/Course/StudentScore/` + Id,
+    method: 'get'
+  });
+}
+export function getStuScoreInfoByStuId(Id) {
+  return request({
+    url: `/system/info//StuScoreInfo` +Id,
+    method: 'get'
+  });
+}
+
+export function getScoreByCourse(teacherId, courseId) {
+  return request({
+    url: `/tm/score/${teacherId}/${courseId}`,
+    method: 'get'
+  });
+}

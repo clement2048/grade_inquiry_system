@@ -186,11 +186,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getScoreInfoByCourseId" resultType="com.ruoyi.tm.domain.ScoreInfo">
-        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
-        FROM score_info AS S, choose_course AS CH, course_info AS C
-        where C.id = #{courseId} and
+        SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem,AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) AS average, STU.`name` AS studentName
+        FROM score_info AS S, choose_course AS CH, course_info AS C, stu_info AS STU
+        where C.id = #{id} and
             S.choose_id = CH.id and
-            C.id = CH.course_id
+            C.id = CH.course_id AND
+            STU.id = CH.stu_id
+        GROUP BY S.ID
     </select>
 
     <select id="getStuScoreAndMRankByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
