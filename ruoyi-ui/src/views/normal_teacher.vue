@@ -34,7 +34,7 @@
             <i class="el-icon-trophy"></i>
             <div class="text-container">
               <span class="text-top">课程通过率</span>
-              <span class="text-bottom">{{ serveScore }}</span>
+              <span class="text-bottom">{{ serveScore }}%</span>
             </div>
           </div>
         </el-col>
@@ -49,7 +49,7 @@
             <div slot="header">年度和学期选择</div>
             <div class="filters">
               <el-select v-model="selectedYear" placeholder="选择年度" @change="fetchData">
-                <el-option v-for="year in years" :key="year" :label="year" :value="year"></el-option>
+                <el-option     v-for="item in years" :key="item" :label="item" :value="item"></el-option>
               </el-select>
               <el-select v-model="selectedSemester" placeholder="选择学期" @change="fetchData">
                 <el-option v-for="semester in semesters" :key="semester" :label="semester" :value="semester"></el-option>
@@ -102,21 +102,23 @@
         ></el-input>
 
         <!-- 表格展示 -->
-        <el-table :data="courseScores" style="width: 100%" row-key="name">
+        <el-table :data="displayedClassScores" style="width: 100%" row-key="name">
           <el-table-column prop="name" label="姓名" width="180"></el-table-column>
           <el-table-column prop="gpa" label="得分" width="180"></el-table-column>
           <el-table-column prop="pass" label="是否通过" width="180"></el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button @click="handleExpand(scope.$index, scope.row)">查看详情</el-button>
-            </template>
-          </el-table-column>
+<!--          <el-table-column label="操作">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-button @click="handleExpand(scope.$index, scope.row)">查看详情</el-button>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
         </el-table>
 
       </div>
       <div class="teaching-history">
         <h2>教学历史记录</h2>
         <el-table :data="teachingHistory" style="width: 100%">
+          <el-table-column prop="year" label="学年"></el-table-column>
+          <el-table-column prop="sem" label="学期"></el-table-column>
           <el-table-column prop="name" label="任教课程"></el-table-column>
           <el-table-column prop="type" label="课程类型"></el-table-column>
           <el-table-column prop="credit" label="学分"></el-table-column>
@@ -158,13 +160,12 @@ export default {
       goodRate :0,
       failingRate:0,
 
-      years: [2020, 2021, 2022, 2023, 2024],
+      years: [],
       semesters: ['春季', '秋季'],
       courseCount: 0,
       studentTotalCount: 74,
       totalClassHours: 0,
-      serveScore: '95%',
-      courseAverageScore: 78,
+      serveScore: 0,
       classScores: [],
       expandedScores: [],
       teachingHistory: [],
@@ -184,9 +185,9 @@ export default {
   computed: {
     displayedClassScores() {
       if (!this.searchText.trim()) {
-        return this.classScores.slice(0, 5);
+        return this.courseScores.slice(0, 15);
       } else {
-        return this.classScores.filter(student =>
+        return this.courseScores.filter(student =>
           student.name.includes(this.searchText.trim())
         );
       }
@@ -242,7 +243,12 @@ export default {
     },
 
     handleExpand(index, row) {
-      this.expandedScores = row.details;
+      const filteredTeachingHistory = this.teachingHistory.filter(course =>
+        (!this.selectedYear || course.year === this.selectedYear) &&
+        (!this.selectedSemester || course.sem === this.selectedSemester) &&
+        (!this.selectedCourse || course.id === this.selectedCourse)
+      );
+      this.expandedScores = filteredTeachingHistory;
     },
     doTest(){
       getCourseInfo(this.id).then(res=>{
@@ -253,21 +259,102 @@ export default {
           this.teachingHistory = this.courseList.map(course => ({
             name: course.name,
             type: course.type,
-            credit: course.credit
+            credit: course.credit,
+            sem: course.startSem === 1 ? '秋季' : course.startSem === 2 ? '春季' : '未知',
+            year:course.startYear
           }));
+          this.years = this.courseList.map(course => ({
+            year: course.startYear,
+          }));
+          this.years = Array.from(new Set(this.courseList.map(course => course.startYear))).sort();
           this.courses= this.courseList.map(course => ({
             id:course.id,
             name: course.name,
           }));
-        this.teachingHistory.forEach(course => {
-          this.totalClassHours += course.credit*18;
+          this.teachingHistory.forEach(course => {
+            this.totalClassHours += course.credit*18;
+          });
+        const promises = this.courses.map(course => {
+          return getScoreInfoBycId(course.id).then(res => {
+            return res.data.map(student => ({
+              gpa: student.average,
+            }));
+          });
         });
+
+        Promise.all(promises).then(results => {
+          const allScores = results.flat();
+          const totalCount = allScores.length;
+          let failingCount = 0;
+
+          allScores.forEach(score => {
+            if (score.gpa < 60) {
+              failingCount++;
+            }
+          });
+
+          this.studentTotalCount = totalCount;
+          this.serveScore = 100-(failingCount / totalCount) * 100;
+
+          console.log(`学生总人数: ${this.studentTotalCount}`);
+          console.log(`挂科率: ${this.failingRate}%`);
+
+        })
+
+
+
+
         }).catch(error => {
           console.error('Error fetching course info:', error);
         });
+      // 根据选择的课程ID获取得分信息
+      this.courses.forEach (course=>{
+        getScoreInfoBycId(course.id).then(res => {
+          console.log(res);
+          this.studentTotalCount += res.data.length;
+          this.courseScores = res.data.map(course => ({
+            name: course.studentName,
+            gpa: course.average,
+            pass: course.pass,
+          }));
+          let excellentCount = 0;
+          let goodCount = 0;
+          let failingCount = 0;
+          const totalCount = this.courseScores.length;
+          let totalGpa = 0;
+
+          this.courseScores.forEach(course => {
+            totalGpa += course.gpa;
+            if (course.gpa >= 85 && course.pass === '1') {
+              excellentCount++;
+            } else if (course.gpa >= 60 && course.gpa < 85&& course.pass === '1') {
+              goodCount++;
+            } else if (course.pass === '0') {
+              failingCount++;
+            }
+          });
+          this.average = totalGpa / totalCount;
+          this.excellentRate = (excellentCount / totalCount) * 100;
+          this.goodRate = (goodCount / totalCount) * 100;
+          this.failingRate = (failingCount / totalCount) * 100;
+          this.courseScoreDistribution = {
+            labels: ['优秀', '良好', '挂科'],
+            datasets: [{
+              data: [this.excellentRate, this.goodRate, this.failingRate],
+              backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF0000'],
+              hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF0000']
+            }]
+          }
+
+        }).catch(error => {
+          console.error('Error fetching course scores:', error);
+        });
+      })
+      }
+
     },
 
-  }
+
 
 };
 </script>

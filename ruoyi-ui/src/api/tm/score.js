@@ -58,3 +58,11 @@ export function analysisScore(id) {
     method: 'get'
   })
 }
+
+// 返回不同年级和学期的成绩
+export function getStuRank() {
+  return request({
+    url: '/tm/score/getYearAndSemScore',
+    method: 'get'
+  })
+}
