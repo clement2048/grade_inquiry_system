@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           AND SYS.del_flag = 0
     </select>
 
-    <insert id="insertChooseCourse" parameterType="ChooseCourse">
+    <insert id="insertChooseCourse" parameterType="ChooseCourse" useGeneratedKeys="true" keyColumn="id">
         insert into choose_course
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
