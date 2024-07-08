@@ -249,6 +249,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY C.start_year, C.start_sem;
     </select>
 
+
+    <select id="selectScoreInfoListByStudentId" parameterType="ScoreInfo" resultMap="ScoreInfoResult">
+        <include refid="selectScoreInfoVo"/>
+        <where>
+            <if test="usualPor != null "> and usual_por = #{usualPor}</if>
+            <if test="usualSco != null "> and usual_sco = #{usualSco}</if>
+            <if test="midPor != null "> and mid_por = #{midPor}</if>
+            <if test="midSco != null "> and mid_sco = #{midSco}</if>
+            <if test="finalPor != null "> and final_por = #{finalPor}</if>
+            <if test="finalSco != null "> and final_sco = #{finalSco}</if>
+            <if test="others != null  and others != ''"> and others = #{others}</if>
+            <if test="chooseId != null "> and choose_id = #{chooseId}</if>
+            <if test="courseName != null  and courseName != '' "> and courseName = #{courseName}</if>
+            <if test="year != null  and  year != ''"> and start_year = #{year}</if>
+            <if test="term != null and term != '' " > and start_sem = #{term}</if>
+            and S.choose_id = CH.id
+            and C.id = CH.course_id
+            and CH.stu_id = #{studentId}
+        </where>
+        group by S.id
+    </select>
+
     <insert id="insertScoreInfo" parameterType="ScoreInfo" useGeneratedKeys="true" keyProperty="userId">
         insert into score_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

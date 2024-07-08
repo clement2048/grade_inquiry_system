@@ -16,6 +16,7 @@ public class CourseInfo extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 课程id */
+    @Excel(name = "课程id")
     private Long id;
 
     /** 课程名字 */

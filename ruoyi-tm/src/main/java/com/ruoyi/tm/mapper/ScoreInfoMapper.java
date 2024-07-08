@@ -31,6 +31,15 @@ public interface ScoreInfoMapper
      */
     public List<ScoreInfo> selectScoreInfoList(ScoreInfo scoreInfo);
 
+
+    /**
+     * 查询成绩管理列表
+     *
+     * @param scoreInfo 学生成绩管理
+     * @return 成绩管理集合
+     */
+    public List<ScoreInfo> selectScoreInfoListByStudentId(ScoreInfo scoreInfo);
+
     /**
      * 新增成绩管理
      * 

@@ -44,6 +44,18 @@ public class ScoreInfoController extends BaseController
     }
 
     /**
+     * 按照学生id查询成绩管理列表
+     */
+    @PreAuthorize("@ss.hasPermi('tm:score:list')")
+    @GetMapping("/StuList/list")
+    public TableDataInfo StuList(ScoreInfo scoreInfo)
+    {
+        startPage();
+        List<ScoreInfo> list = scoreInfoService.selectScoreInfoListByStudentId(scoreInfo);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出成绩管理列表
      */
     @PreAuthorize("@ss.hasPermi('tm:score:export')")

@@ -54,6 +54,18 @@ public class ScoreInfoServiceImpl implements IScoreInfoService
     }
 
     /**
+     * 查询成绩管理列表
+     *
+     * @param id 学生id
+     * @return 成绩管理集合
+     */
+    @Override
+    public List<ScoreInfo> selectScoreInfoListByStudentId(ScoreInfo scoreInfo){
+        return scoreInfoMapper.selectScoreInfoListByStudentId(scoreInfo);
+    }
+
+
+    /**
      * 新增成绩管理
      * 
      * @param scoreInfo 成绩管理
