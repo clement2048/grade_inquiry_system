@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM (
                  SELECT
                      STU.id,
-                     C.id AS classId, C.grade,C.class_num,
+                     C.id AS classId, C.grade, C.class_num,
                      CASE
                          WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 90 THEN '优秀'
                          WHEN AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) >= 80 THEN '良好'
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           JOIN class_info AS C ON STU.class_id = C.id
                  GROUP BY STU.id
              ) AS subquery
-        GROUP BY grade_level,classId,class_num
+        GROUP BY grade_level, classId, grade, class_num
     </select>
 
     <insert id="insertClassInfo" parameterType="ClassInfo" useGeneratedKeys="true" keyProperty="id">
