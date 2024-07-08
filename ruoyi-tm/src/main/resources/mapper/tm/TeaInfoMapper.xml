@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and teach_id = #{id}
     </select>
 
-    <insert id="insertTeaInfo" parameterType="TeaInfo">
+    <insert id="insertTeaInfo" parameterType="TeaInfo" useGeneratedKeys="true" keyProperty="id">
         insert into tea_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -46,6 +46,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null and name != ''">#{name},</if>
             <if test="type != null and type != ''">#{type},</if>
          </trim>
+    </insert>
+
+    <insert id="insertTeaInfoWithId">
+        insert into tea_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null and type != ''">type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null and type != ''">#{type},</if>
+        </trim>
     </insert>
 
     <update id="updateTeaInfo" parameterType="TeaInfo">

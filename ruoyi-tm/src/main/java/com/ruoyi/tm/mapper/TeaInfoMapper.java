@@ -40,6 +40,15 @@ public interface TeaInfoMapper
      */
     public int insertTeaInfo(TeaInfo teaInfo);
 
+
+    /**
+     * 新增带id的教师信息
+     *
+     * @param teaInfo 教师信息
+     * @return 结果
+     */
+    public int insertTeaInfoWithId(TeaInfo teaInfo);
+
     /**
      * 修改教师信息
      * 
@@ -71,4 +80,6 @@ public interface TeaInfoMapper
      * @return 教师信息
      */
     public List<StuInfo> getStuInfo(Long id);
+
+
 }

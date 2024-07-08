@@ -76,7 +76,7 @@ public class TeaInfoServiceImpl implements ITeaInfoService {
         sysUser.setNickName(teaInfo.getName());     // 给sys_user昵称赋值
         sysUser.setStatus("0"); // 默认状态正常
         sysUser.setDelFlag("0");    // 默认用户未删除
-        sysUser.setRemark(teaInfo.getType());    // sys_user备注为学生
+        sysUser.setRemark(teaInfo.getType());
 
         sysUser.setPassword("123456");  // 默认密码为123456
         sysUser.setPassword(SecurityUtils.encryptPassword(sysUser.getPassword()));
@@ -103,6 +103,50 @@ public class TeaInfoServiceImpl implements ITeaInfoService {
 
         teaInfo.setId(sysUser.getUserId());
         return teaInfoMapper.insertTeaInfo(teaInfo);
+    }
+
+
+    /**
+     * 新增带教师信息
+     *
+     * @param teaInfo 教师信息
+     * @return 结果
+     */
+    @Transactional
+    public int insertTeaInfoWithId(TeaInfo teaInfo) {
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(teaInfo.getId());
+        sysUser.setUserName(teaInfo.getName());    // 设置用户名
+        sysUser.setNickName(teaInfo.getName());     // 给sys_user昵称赋值
+        sysUser.setStatus("0"); // 默认状态正常
+        sysUser.setDelFlag("0");    // 默认用户未删除
+        sysUser.setRemark(teaInfo.getType());
+
+        sysUser.setPassword("123456");  // 默认密码为123456
+        sysUser.setPassword(SecurityUtils.encryptPassword(sysUser.getPassword()));
+        sysUserMapper.insertTeacherUser(sysUser);
+        if (teaInfo.getType().equals("教师")) {
+            // 插入用户的对应角色，便于进行权限控制
+            Long sid = (long) 101;   // 101为教师权限编号
+            Long[] roleIds = {sid};
+            sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+            teaInfo.setType("教师");
+        } else if (teaInfo.getType().equals("教务老师")) {
+            // 插入用户的对应角色，便于进行权限控制
+            Long sid = (long) 102;   // 102为教务老师权限编号
+            Long[] roleIds = {sid};
+            sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+            teaInfo.setType("教务老师");
+        } else {
+            // 插入用户的对应角色，便于进行权限控制
+            Long sid = (long) 103;   // 103为班主任权限编号
+            Long[] roleIds = {sid};
+            sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+            teaInfo.setType("班主任");
+        }
+
+        teaInfo.setId(sysUser.getUserId());
+        return teaInfoMapper.insertTeaInfoWithId(teaInfo);
     }
 
     /**
@@ -165,7 +209,7 @@ public class TeaInfoServiceImpl implements ITeaInfoService {
                 Validator validator = factory.getValidator();
                 BeanValidators.validateWithException(validator, teacher);
                 teacher.setCreateBy(operName);
-                this.insertTeaInfo(teacher);
+                this.insertTeaInfoWithId(teacher);
                 successNum++;
                 successMsg.append("<br/>" + successNum + "、教师 " + teacher.getName() + " 导入成功");
 
@@ -199,5 +243,6 @@ public class TeaInfoServiceImpl implements ITeaInfoService {
     public List<StuInfo> getStuInfo(Long id){
         return teaInfoMapper.getStuInfo(id);
     }
+
 }
 
