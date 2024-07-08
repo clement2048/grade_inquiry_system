@@ -49,7 +49,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['class:class_info:add']"
+          v-hasPermi="['tm:Class:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -60,7 +60,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['class:class_info:edit']"
+          v-hasPermi="['tm:Class:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,7 +71,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['class:class_info:remove']"
+          v-hasPermi="['tm:Class:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -81,7 +81,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['class:class_info:export']"
+          v-hasPermi="['tm:Class:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -97,7 +97,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="class_infoList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="ClassList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="班级id" align="center" prop="id" />
       <el-table-column label="所在年级" align="center" prop="grade" />
@@ -111,14 +111,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['class:class_info:edit']"
+            v-hasPermi="['tm:Class:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['class:class_info:remove']"
+            v-hasPermi="['tm:Class:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -132,7 +132,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改班级管理对话框 -->
+    <!-- 添加或修改班级信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="所在年级" prop="grade">
@@ -185,11 +185,11 @@
 </template>
 
 <script>
-import { listClass_info, getClass_info, delClass_info, addClass_info, updateClass_info } from "@/api/class/class_info";
+import { listClass, getClass, delClass, addClass, updateClass } from "@/api/tm/Class";
 import {getToken} from "@/utils/auth";
 
 export default {
-  name: "Class_info",
+  name: "Class",
   data() {
     return {
       // 遮罩层
@@ -204,8 +204,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 班级管理表格数据
-      class_infoList: [],
+      // 班级信息表格数据
+      ClassList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -216,7 +216,6 @@ export default {
         pageSize: 10,
         grade: null,
         teachId: null,
-        teacherName: null,
         classNum: null
       },
       // 表单参数
@@ -246,7 +245,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/class/class_info/importData"
+        url: process.env.VUE_APP_BASE_API + "/tm/Class/importData"
       }
     };
   },
@@ -254,11 +253,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询班级管理列表 */
+    /** 查询班级信息列表 */
     getList() {
       this.loading = true;
-      listClass_info(this.queryParams).then(response => {
-        this.class_infoList = response.rows;
+      listClass(this.queryParams).then(response => {
+        this.ClassList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -298,16 +297,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加班级管理";
+      this.title = "添加班级信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getClass_info(id).then(response => {
+      getClass(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改班级管理";
+        this.title = "修改班级信息";
       });
     },
     /** 提交按钮 */
@@ -315,13 +314,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateClass_info(this.form).then(response => {
+            updateClass(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addClass_info(this.form).then(response => {
+            addClass(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -333,8 +332,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除班级管理编号为"' + ids + '"的数据项？').then(function() {
-        return delClass_info(ids);
+      this.$modal.confirm('是否确认删除班级信息编号为"' + ids + '"的数据项？').then(function() {
+        return delClass(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -342,9 +341,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('class/class_info/export', {
+      this.download('tm/Class/export', {
         ...this.queryParams
-      }, `class_info_${new Date().getTime()}.xlsx`)
+      }, `Class_${new Date().getTime()}.xlsx`)
     },
     /** 导入按钮操作 */
     handleImport() {

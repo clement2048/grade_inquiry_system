@@ -22,8 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="grade != null "> and grade = #{grade}</if>
             <if test="teachId != null "> and teach_id = #{teachId}</if>
             <if test="classNum != null "> and class_num = #{classNum}</if>
-            <if test="teacherName != null and teacherName != '' "> and name = #{teacherName}</if>
-            and class_info.teach_id = tea_info.id
+            <if test="teacherName != null and teacherName != ''"> and name = #{teacherName}</if>
+             and class_info.teach_id = tea_info.id
         </where>
     </select>
     
@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from class_info
         where teach_id = #{id}
     </select>
-
+        
     <insert id="insertClassInfo" parameterType="ClassInfo" useGeneratedKeys="true" keyProperty="id">
         insert into class_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

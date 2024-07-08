@@ -5,7 +5,7 @@ import java.util.List;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanValidators;
-import com.ruoyi.tm.domain.TeaInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.tm.mapper.ClassInfoMapper;
@@ -17,10 +17,10 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 /**
- * 班级管理Service业务层处理
+ * 班级信息Service业务层处理
  * 
  * @author ruoyi
- * @date 2024-07-07
+ * @date 2024-07-08
  */
 @Service
 public class ClassInfoServiceImpl implements IClassInfoService 
@@ -29,10 +29,10 @@ public class ClassInfoServiceImpl implements IClassInfoService
     private ClassInfoMapper classInfoMapper;
 
     /**
-     * 查询班级管理
+     * 查询班级信息
      * 
-     * @param id 班级管理主键
-     * @return 班级管理
+     * @param id 班级信息主键
+     * @return 班级信息
      */
     @Override
     public ClassInfo selectClassInfoById(Long id)
@@ -41,10 +41,10 @@ public class ClassInfoServiceImpl implements IClassInfoService
     }
 
     /**
-     * 查询班级管理列表
+     * 查询班级信息列表
      * 
-     * @param classInfo 班级管理
-     * @return 班级管理
+     * @param classInfo 班级信息
+     * @return 班级信息
      */
     @Override
     public List<ClassInfo> selectClassInfoList(ClassInfo classInfo)
@@ -53,9 +53,9 @@ public class ClassInfoServiceImpl implements IClassInfoService
     }
 
     /**
-     * 新增班级管理
+     * 新增班级信息
      * 
-     * @param classInfo 班级管理
+     * @param classInfo 班级信息
      * @return 结果
      */
     @Override
@@ -65,9 +65,9 @@ public class ClassInfoServiceImpl implements IClassInfoService
     }
 
     /**
-     * 修改班级管理
+     * 修改班级信息
      * 
-     * @param classInfo 班级管理
+     * @param classInfo 班级信息
      * @return 结果
      */
     @Override
@@ -77,9 +77,9 @@ public class ClassInfoServiceImpl implements IClassInfoService
     }
 
     /**
-     * 批量删除班级管理
+     * 批量删除班级信息
      * 
-     * @param ids 需要删除的班级管理主键
+     * @param ids 需要删除的班级信息主键
      * @return 结果
      */
     @Override
@@ -89,9 +89,9 @@ public class ClassInfoServiceImpl implements IClassInfoService
     }
 
     /**
-     * 删除班级管理信息
+     * 删除班级信息信息
      * 
-     * @param id 班级管理主键
+     * @param id 班级信息主键
      * @return 结果
      */
     @Override
@@ -110,9 +110,8 @@ public class ClassInfoServiceImpl implements IClassInfoService
         return classInfoMapper.selectClassByTeacherId(id);
     }
 
-
     /**
-     * 批量导入教师信息
+     * 批量导入班级信息
      *
      * @param ClassList      课程信息集合
      * @param updateSupport 是否更新支持，如果已存在，则进行更新数据
@@ -122,7 +121,7 @@ public class ClassInfoServiceImpl implements IClassInfoService
     public String importClass(List<ClassInfo> ClassList, boolean updateSupport, String operName) {
         if (StringUtils.isNull(ClassList) || ClassList.size() == 0)
         {
-            throw new ServiceException("导入教师数据不能为空！");
+            throw new ServiceException("导入班级数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;

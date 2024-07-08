@@ -6,10 +6,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 班级管理对象 class_info
+ * 班级信息对象 class_info
  * 
  * @author ruoyi
- * @date 2024-07-07
+ * @date 2024-07-08
  */
 public class ClassInfo extends BaseEntity
 {
