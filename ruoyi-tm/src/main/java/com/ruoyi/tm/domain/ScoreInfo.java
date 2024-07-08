@@ -81,13 +81,13 @@ public class ScoreInfo extends BaseEntity
     private Long studentId;
 
     /** 学生名 */
-    private Long studentName;
+    private String studentName;
 
-    public Long getStudentName() {
+    public String getStudentName() {
         return studentName;
     }
 
-    public void setStudentName(Long studentName) {
+    public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
 
