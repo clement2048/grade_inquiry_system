@@ -141,6 +141,7 @@ import {
 } from "@/api/tm/teacher";
 
 import PieChart3 from "@/views/dashboard/PieChart3.vue";
+import store from '@/store'
 
 
 export default {
@@ -151,7 +152,7 @@ export default {
     return {
       courseList:[],
       average:0,
-      id:100,
+      id:store.getters.userId,
       selectedYear: '',
       selectedSemester: '',
       courses: [],
@@ -241,14 +242,24 @@ export default {
         console.error('Error fetching course scores:', error);
       });
     },
+    fetchData() {
+      if (this.selectedYear && this.selectedSemester) {
+        // 根据选择的年度和学期过滤课程数据
+        const filteredCourses = this.courseList.filter(course =>
+          course.startYear === this.selectedYear &&
+          (course.startSem === (this.selectedSemester === '秋季' ? 1 : 2))
+        );
 
-    handleExpand(index, row) {
-      const filteredTeachingHistory = this.teachingHistory.filter(course =>
-        (!this.selectedYear || course.year === this.selectedYear) &&
-        (!this.selectedSemester || course.sem === this.selectedSemester) &&
-        (!this.selectedCourse || course.id === this.selectedCourse)
-      );
-      this.expandedScores = filteredTeachingHistory;
+        this.courses = filteredCourses.map(course => ({
+          id: course.id,
+          name: course.name,
+        }));
+
+        // 如果选择了课程，重新获取课程数据
+        if (this.selectedCourse) {
+          this.fetchCourseData();
+        }
+      }
     },
     doTest(){
       getCourseInfo(this.id).then(res=>{

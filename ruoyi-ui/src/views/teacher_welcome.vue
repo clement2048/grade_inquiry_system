@@ -133,6 +133,7 @@ import {
 } from "@/api/tm/teacher";
 
 import {getScoreInfo,getGPA,getCreditInfo,getAvgScore, getScoreRank} from "@/api/tm/info";
+import store from "@/store";
 export default {
   components: {
     LineChart,
@@ -152,7 +153,7 @@ export default {
           hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0'],
         }],
       },
-      id: 100,
+      id:store.getters.userId,
       excellentStudentCount: 0,
       classScores: [],
       excellentRate:0,
