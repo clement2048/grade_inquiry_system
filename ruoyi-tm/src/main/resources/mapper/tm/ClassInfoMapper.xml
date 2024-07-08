@@ -35,14 +35,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and class_info.teach_id = tea_info.id
     </select>
 
-    <select id="selectClassByTeacherId" resultType="com.ruoyi.tm.domain.ClassInfo">
+    <select id="selectClassByTeacherId" parameterType="Long" resultMap="ClassInfoResult">
         select grade, class_num
         from class_info
         where teach_id = #{id}
     </select>
 
 
-    <select id="getClassScore" resultType="com.ruoyi.tm.domain.ClassInfo">
+    <select id="getClassScore" resultMap="ClassInfoResult">
         SELECT
             grade_level AS level,
             COUNT(*) AS levelNum , classId AS id, grade, class_num
