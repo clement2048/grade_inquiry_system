@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getMajorPeoNumByStuId" parameterType="Long" resultMap="MajorInfoResult">
         SELECT COUNT(*) AS peopleNum
         FROM stu_info AS STU
-        WHERE STU.major_id = (SELECT major_id FROM stu_info WHERE id = {id})
+        WHERE STU.major_id = (SELECT major_id FROM stu_info WHERE id = #{id})
     </select>
 
     <select id="getPeoNum" resultMap="MajorInfoResult">
