@@ -103,6 +103,42 @@ public class StuInfoServiceImpl implements IStuInfoService
     }
 
     /**
+     * 新增带ID的Student
+     *
+     * @param stuInfo Student
+     * @return 结果
+     */
+    @Transactional
+    public int insertStuInfoWithID(StuInfo stuInfo)
+    {
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(stuInfo.getId());
+        sysUser.setDeptId(stuInfo.getMajorId());    // 设置专业id（目前未修改完成，在考虑是否将dept表修改为专业表）
+        sysUser.setUserName(stuInfo.getId().toString());    // 设置用户名
+        sysUser.setNickName(stuInfo.getName());     // 给sys_user昵称赋值
+        sysUser.setSex(stuInfo.getSex());   // 给用户性别赋值
+        sysUser.setStatus("0"); // 默认状态正常
+        sysUser.setDelFlag("0");    // 默认用户未删除
+        sysUser.setRemark("学生");    // sys_user备注为学生
+        sysUser.setPassword("123456");
+        sysUser.setPassword(SecurityUtils.encryptPassword(sysUser.getPassword()));
+
+        sysUserMapper.insertStuUser(sysUser);
+
+        // 插入用户的对应角色，便于进行权限控制
+        Long sid = (long)100;   // 100为学生权限编号
+        Long[] roleIds = {sid};
+        sysUserService.insertUserRole(sysUser.getUserId(), roleIds);
+//
+//        stuInfo.setId(sysUser.getUserId());
+//        stuInfo.setUser_name(sysUser.getUserName());
+//        sysUser.setUserName(sysUser.getUserName());
+//        sysUserMapper.updateUser(sysUser);
+
+        return stuInfoMapper.insertStuInfo(stuInfo);
+    }
+
+    /**
      * 修改Student
      * 
      * @param stuInfo Student
@@ -160,7 +196,7 @@ public class StuInfoServiceImpl implements IStuInfoService
                 Validator validator = factory.getValidator();
                 BeanValidators.validateWithException(validator, user);
                 user.setCreateBy(operName);
-                this.insertStuInfo(user);
+                this.insertStuInfoWithID(user);
                 successNum++;
                 successMsg.append("<br/>" + successNum + "、账号 " + user.getName() + " 导入成功");
 

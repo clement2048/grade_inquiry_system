@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         group by S.id
     </select>
 
-    <select id="selectScoreInfoByCourseId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="selectScoreInfoByCourseId" parameterType="Long" resultMap="ScoreInfoResult">
         SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, others, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem
         FROM score_info AS S, choose_course AS CH, course_info AS C
         where C.id = #{courseId} and
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM score_info AS S, choose_course AS CH, course_info AS C, tea_info AS T, major_info AS M, faculties_info AS F,
     </sql>
 
-    <select id="selectScoreInfoByMTeacherId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="selectScoreInfoByMTeacherId" parameterType="Long" resultMap="ScoreInfoResult">
         <include refid="selectScoreInfoByMTeacherVo"/>
         WHERE S.choose_id = CH.id
         AND C.id = CH.course_id
@@ -104,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM score_info AS S, choose_course AS CH, course_info AS C, tea_info AS T, major_info AS M, faculties_info AS F
     </sql>
 
-    <select id="selectAvgScoreInfoByMTeacherId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="selectAvgScoreInfoByMTeacherId" parameterType="Long" resultMap="ScoreInfoResult">
         <include refid="selectAvgScoreInfoByMTeacherVo"/>
         WHERE S.choose_id = CH.id
           AND C.id = CH.course_id
@@ -120,7 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM score_info AS S, choose_course AS CH, course_info AS C
     </sql>
 
-    <select id="selectScoreInfoByTeacherId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="selectScoreInfoByTeacherId" parameterType="Long" resultMap="ScoreInfoResult">
         <include refid="selectScoreInfoByTeacherVo"/>
         WHERE S.choose_id = CH.id
         AND C.id = CH.course_id
@@ -129,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <select id="selectUnPassByTeacherId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="selectUnPassByTeacherId" parameterType="Long" resultMap="ScoreInfoResult">
         <include refid="selectScoreInfoByTeacherVo"/>
         WHERE S.choose_id = CH.id
         AND C.id = CH.course_id
@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
 <!--    根据班级id查询学生成绩信息-->
-    <select id="selectScoreByClassId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="selectScoreByClassId" parameterType="Long" resultMap="ScoreInfoResult">
         <include refid="selectScoreByClassId"/>
         WHERE S.choose_id = CH.id
         AND C.id = CH.course_id
@@ -155,7 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 <!--    根据学生id查询学生所有成绩的绩点-->
-    <select id="getStuScoreByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="getStuScoreByStuId" parameterType="Long" resultMap="ScoreInfoResult">
         SELECT AVG((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit)/100 as average
         FROM score_info AS S, choose_course AS CH, course_info AS C
         WHERE S.choose_id = CH.id
@@ -166,7 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 <!--    根据学生id计算平均分-->
-    <select id="getStuAvgScoreByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="getStuAvgScoreByStuId" parameterType="Long" resultMap="ScoreInfoResult">
         SELECT AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) as average
         FROM score_info AS S, choose_course AS CH, course_info AS C
         WHERE S.choose_id = CH.id
@@ -176,7 +176,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY CH.stu_id
     </select>
 
-    <select id="getStuScoreInfoByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="getStuScoreInfoByStuId" parameterType="Long" resultMap="ScoreInfoResult">
      -- 通过学生id获取成绩信息
     <include refid="selectScoreInfoVo"/>
         WHERE S.choose_id  = CH.id
@@ -185,7 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY S.id
     </select>
 
-    <select id="getScoreInfoByCourseId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="getScoreInfoByCourseId" parameterType="Long" resultMap="ScoreInfoResult">
         SELECT S.id, usual_por, usual_sco, mid_por, mid_sco, final_por, final_sco, pass, choose_id,C.id AS course_id, C.name AS courseName, start_year, start_sem,AVG(final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) AS average, STU.`name` AS studentName
         FROM score_info AS S, choose_course AS CH, course_info AS C, stu_info AS STU
         where C.id = #{id} and
@@ -195,7 +195,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY S.ID
     </select>
 
-    <select id="getStuScoreAndMRankByStuId" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="getStuScoreAndMRankByStuId" parameterType="Long" resultMap="ScoreInfoResult">
         SELECT `rank`, average
         FROM(SELECT STU.id, RANK() OVER(PARTITION BY M.id ORDER BY AVG((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit)/100 desc) AS 'rank', AVG((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit)/100 AS average
              FROM score_info AS S, choose_course AS CH, course_info AS C, major_info AS M, stu_info AS STU
@@ -208,7 +208,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE T.id = #{id}
     </select>
 
-    <select id="getStuScoreInfo" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="getStuScoreInfo" parameterType="Long" resultMap="ScoreInfoResult">
         SELECT COALESCE(SUM((final_sco*final_por*0.01 + mid_sco*mid_por*0.01 + usual_sco*usual_por*0.01) * C.credit) / NULLIF(SUM(C.credit), 0), 0) as average, STU.`name` AS studentName, STU.id AS studentId
         FROM stu_info AS STU
                  LEFT JOIN choose_course AS CH ON STU.id = CH.stu_id
@@ -219,7 +219,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY STU.id, STU.`name`
     </select>
 
-    <select id="getCourseScoreInfo" resultType="com.ruoyi.tm.domain.ScoreInfo">
+    <select id="getCourseScoreInfo" parameterType="Long" resultMap="ScoreInfoResult">
         SELECT course_id, courseName, start_year, start_sem, AVG(average) AS average
         FROM (
                  SELECT pass, choose_id, C.id AS course_id, C.name AS courseName, start_year, start_sem,
@@ -235,7 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <select id="getYearAndSemScore" resultType="com.ruoyi.tm.domain.Score">
+    <select id="getYearAndSemScore" resultMap="ScoreInfoResult">
         SELECT
             C.start_year AS start_year,
             C.start_sem AS start_sem,
