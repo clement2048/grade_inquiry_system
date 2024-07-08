@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <select id="selectCourseInfoByTeacherId" resultType="com.ruoyi.tm.domain.CourseInfo">
+    <select id="selectCourseInfoByTeacherId" parameterType="Long" resultMap="CourseInfoResult">
         SELECT *
         FROM course_info AS CS
         WHERE CS.teach_id
