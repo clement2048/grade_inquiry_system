@@ -61,6 +61,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="finalSco != null "> and final_sco = #{finalSco}</if>
             <if test="others != null  and others != ''"> and others = #{others}</if>
             <if test="chooseId != null "> and choose_id = #{chooseId}</if>
+            <if test="courseName != null  and courseName != '' "> and courseName = #{courseName}</if>
+            <if test="year != null  and  year != ''"> and start_year = #{year}</if>
+            <if test="term != null and term != '' " > and start_sem = #{term}</if>
             and S.choose_id = CH.id and
             C.id = CH.course_id
         </where>
