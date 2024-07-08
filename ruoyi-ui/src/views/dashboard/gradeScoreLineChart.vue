@@ -1,16 +1,16 @@
 <template>
-    <div >
-      <el-button @click="download" icon="el-icon-download">下载</el-button>
-      <div id="download" :class="className" :style="{height:height,width:width}" ref="chart"/>
-    </div>
-
+  <div>
+    <el-button @click="download" icon="el-icon-download">下载</el-button>
+    <div id="download" :class="className" :style="{ height: height, width: width }" ref="chart" />
+  </div>
 </template>
 
 <script>
-import * as echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
-import html2canvas from 'html2canvas'
+import * as echarts from 'echarts';
+require('echarts/theme/macarons'); // echarts theme
+import resize from './mixins/resize';
+import html2canvas from 'html2canvas';
+import { getStuRank } from "@/api/tm/score";
 
 export default {
   mixins: [resize],
@@ -30,49 +30,73 @@ export default {
     autoResize: {
       type: Boolean,
       default: true
-    },
-    chartData: {
-      type: Object,
-      required: true
     }
   },
   data() {
     return {
-      chart: null
-    }
+      chart: null,
+      xName: ['第一学期', '第二学期', '第三学期'],
+      dataList: [],
+      year: [],
+      term: [],
+      yearLabel: [],
+      average: []
+    };
   },
   watch: {
     chartData: {
       deep: true,
       handler(val) {
-        this.setOptions(val)
+        this.setOptions(val);
       }
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
-    })
+      this.initChart();
+    });
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$refs.chart, 'macarons')
-      this.setOptions(this.chartData)
+      getStuRank().then(res => {
+        this.dataList = res.data;
+        this.year = Array.from(new Set(this.dataList.map(item => item.year))).sort();
+        this.term = Array.from(new Set(this.dataList.map(item => item.term))).sort();
+        this.yearLabel = this.year.map(year => `${year}级`);
+        this.average = this.year.map(year => {
+          const avg = this.term.map(term => {
+            const record = this.dataList.find(item => item.year === year && item.term === term);
+            return record ? record.average : 0;
+          });
+          return avg;
+        });
+        console.log(this.average);
+        this.setOptions(); // 初始化数据后设置图表
+      });
+      this.chart = echarts.init(this.$refs.chart, 'macarons');
     },
-    setOptions(data) {
+    setOptions() {
+      const seriesData = this.yearLabel.map((label, index) => {
+        return {
+          name: label,
+          type: 'line',
+          data: this.average[index]
+        };
+      });
+
       this.chart.setOption({
-        title:{
-          text:'各年级成绩平均分对比'
+        title: {
+          text: '各年级成绩平均分对比'
         },
         xAxis: {
-          data: ['大一上','大一下','大二上','大二下','大三上','大三下'],
+          data: this.xName,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -97,28 +121,15 @@ export default {
             show: false
           },
           type: 'value',
-          scale:true
+          scale: true
         },
         legend: {
-          data: ['21级','22级','23级']
+          data: this.yearLabel
         },
-        series: [{
-          name: '23级',
-          type: 'line',
-          data: [86, 90],
-        },{
-          name: '22级',
-          type: 'line',
-          data: [83, 85, 82, 90]
-        },{
-          name: '21级',
-          type: 'line',
-          data: [86, 88, 87, 90, 91, 92]
-        }
-        ]
-      })
+        series: seriesData
+      });
     },
-  // 将echarts图表转换为canvas,并将canvas下载为图片
+    // 将echarts图表转换为canvas,并将canvas下载为图片
     download() {
       // 图表转换成canvas
       html2canvas(document.getElementById("download")).then(function (canvas) {
@@ -133,7 +144,7 @@ export default {
         creatIMg.click();
         creatIMg.remove(); // 下载之后把创建的元素删除
       });
-    },
+    }
   }
-}
+};
 </script>
