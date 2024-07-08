@@ -206,13 +206,15 @@
         <el-button @click="upload.open = false">取 消</el-button>
       </div>
     </el-dialog>
+    <!-- 柱状图 -->
+    <div id="courseScoresChart" style="width: 60%; height: 60vh; margin: 0 auto;"></div>
   </div>
 </template>
 
 <script>
 import { listScore, getScore, delScore, addScore, updateScore } from "@/api/tm/score";
 import {getToken} from "@/utils/auth";
-
+import * as echarts from 'echarts';
 export default {
   name: "Score",
   data() {
@@ -299,6 +301,53 @@ export default {
     this.getList();
   },
   methods: {
+    drawChart() {
+      const chartDom = document.getElementById('courseScoresChart');
+      if (!chartDom) {
+        console.error("Chart DOM element not found");
+        return;
+      }
+      const myChart = echarts.init(chartDom);
+      const option = {
+        title: {
+          text: '课程成绩分布'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: this.scoreList.map(score => score.courseName),
+          axisLabel: {
+            interval: 0, // 强制显示所有标签
+            rotate: 45  // 标签旋转45度角
+          }
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          name: '成绩',
+          data: this.scoreList.map(score => score.average),
+          type: 'bar',
+          itemStyle: {
+            color: (params) => {
+              const colorList = ['#3398DB', '#FF8C00', '#32CD32', '#8A2BE2', '#FF1493', '#FFD700', '#1E90FF'];
+              return colorList[params.dataIndex % colorList.length];
+            }
+          },
+          label: {
+            show: true,
+            position: 'top',
+            formatter: '{c}'
+          }
+        }]
+      };
+      myChart.setOption(option);
+    },
     /** 查询课程成绩列表 */
     getList() {
       this.loading = true;
@@ -307,6 +356,7 @@ export default {
         console.log(response.rows);
         this.total = response.total;
         this.loading = false;
+        this.drawChart();
       });
     },
     // 取消按钮
