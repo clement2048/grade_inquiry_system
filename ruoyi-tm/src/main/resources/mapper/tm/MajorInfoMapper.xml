@@ -58,8 +58,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="getMajorPeoNumByStuId" parameterType="Long" resultMap="MajorInfoResult">
-        <include refid="getMajorPeopleNumVo"/>
-        WHERE STU.major_id = (SELECT id FROM stu_info WHERE id = #{id})
+        SELECT COUNT(*) AS peopleNum
+        FROM stu_info AS STU
+        WHERE STU.major_id = (SELECT major_id FROM stu_info WHERE id = {id})
     </select>
 
     <select id="getPeoNum" resultMap="MajorInfoResult">
@@ -76,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           AND SYS.del_flag = 0
     </select>
 
-    <insert id="insertMajorInfo" parameterType="MajorInfo">
+    <insert id="insertMajorInfo" parameterType="MajorInfo" useGeneratedKeys="true" keyColumn="id">
         insert into major_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
