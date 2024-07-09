@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container1">
     <div class="title">
       <el-row type="flex" align="middle" >
         <el-col :span="12" :offset="6">
@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="6">
           <div class="right">
-            <router-link to="/tm/score">
+            <router-link to="/tm/stuscore">
               <el-button type="text">更多</el-button>
             </router-link >
           </div>
@@ -43,15 +43,15 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.container1{
   display: flex;
   flex-direction: column;
 }
-.container .center{
+.container1 .center{
   font-size: 24px;
   margin-left: 120px;
 }
-.container .right{
+.container1 .right{
   margin-left: 80px;
   font-size: 18px;
 }
