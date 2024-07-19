@@ -117,11 +117,7 @@
       <el-table-column label="重修次数" align="center" prop="numRebuild" />
       <el-table-column label="补考次数" align="center" prop="numMakeup" />
       <el-table-column label="缓考标志" align="center" prop="deferSign" />
-      <el-table-column label="通过标志" align="center" prop="pass">
-        <template slot-scope="scope">
-          {{ scope.row.pass === 1 ? '通过' : '未通过' }}
-        </template>
-      </el-table-column>
+      <el-table-column label="通过标志" align="center" prop="pass" />
       <el-table-column label="学生id" align="center" prop="stuId" />
       <el-table-column label="课程id" align="center" prop="courseId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
